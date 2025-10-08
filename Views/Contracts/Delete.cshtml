@@ -1,0 +1,73 @@
+﻿@model Shusha_project_BackUp.Contract
+
+@{
+    ViewData["Title"] = "حذف العقد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div dir="rtl" class="container mt-4">
+    <div class="card">
+        <div class="card-header text-center bg-danger text-white">
+            <h1>حذف العقد</h1>
+        </div>
+        <div class="card-body">
+            <h3 class="text-center mb-4">هل أنت متأكد أنك تريد حذف هذا العقد؟</h3>
+
+            <h4>تفاصيل العقد</h4>
+            <hr />
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    تفاصيل العقد
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.contract_description)
+                </dd>
+                <dt class="col-sm-2">
+                    اسم الموظف
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.employees.emp_name)
+                </dd>
+                <dt class="col-sm-2">
+                    المرتب الاجمالي
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Gross_salary)
+                </dd>
+                <dt class="col-sm-2">
+                    التأمين الطبي
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Medical_Assurance)
+                </dd>
+                <dt class="col-sm-2">
+                    الضرائب
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.taxes)
+                </dd>
+                <dt class="col-sm-2">
+                    الحوافز
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Incentives)
+                </dd>
+                <dt class="col-sm-2">
+                    التاريخ
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+
+            <div class="text-center">
+                <form asp-action="Delete" style="direction: rtl;">
+                    <input type="hidden" asp-for="contract_id" />
+                    <button type="submit" class="btn btn-danger btn-lg mr-2">حذف</button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">العودة إلى القائمة</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

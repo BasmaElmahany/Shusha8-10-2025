@@ -1,0 +1,68 @@
+﻿@model Shusha_project_BackUp.Ward
+
+@{
+    ViewData["Title"] = "تعديل العنبر";
+}
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">تعديل بيانات العنبر</h1>
+
+    <!-- Card for Edit Form -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-warning text-white">
+            <h5 class="mb-0">تفاصيل العنبر</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="Ward_ID" />
+
+                <!-- Ward Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="WardName" class="form-label">اسم العنبر</label>
+                    <input asp-for="WardName" class="form-control" />
+                    <span asp-validation-for="WardName" class="text-danger"></span>
+                </div>
+
+                <!-- Number of White Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="No_of_Whherd" class="form-label">عدد القطيع الأبيض</label>
+                    <input asp-for="No_of_Whherd" class="form-control" />
+                    <span asp-validation-for="No_of_Whherd" class="text-danger"></span>
+                </div>
+
+                <!-- Number of Brown Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="No_of_Brherd" class="form-label">عدد القطيع البني</label>
+                    <input asp-for="No_of_Brherd" class="form-control" />
+                    <span asp-validation-for="No_of_Brherd" class="text-danger"></span>
+                </div>
+
+                <!-- Branch Dropdown -->
+                <div class="form-group mb-3">
+                    <label asp-for="branchId" class="form-label">المشروع</label>
+                    <select asp-for="branchId" class="form-control" asp-items="ViewBag.branchId"></select>
+                    <span asp-validation-for="branchId" class="text-danger"></span>
+                </div>
+
+                <!-- Save Button -->
+                <div class="form-group text-center">
+                    <input type="submit" value="حفظ" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to List Button -->
+    <div class="mt-3 text-center">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> العودة إلى القائمة
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

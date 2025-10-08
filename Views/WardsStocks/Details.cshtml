@@ -1,0 +1,154 @@
+﻿@model Shusha_project_BackUp.Data.WardsStock
+
+@{
+    ViewData["Title"] = "تفاصيل المخزون";
+}
+<title>@ViewData["Title"]</title>
+
+<!-- Bootstrap RTL -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+  
+
+    .details-container {
+        margin: 20px auto;
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .details-header h1 {
+            font-size: 1.8rem;
+            color: #007bff;
+        }
+
+        .details-header a {
+            text-decoration: none;
+        }
+
+    dt {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    dd {
+        font-size: 1.1rem;
+        color: #212529;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .icon {
+        margin-right: 10px;
+        color: #6c757d;
+    }
+</style>
+<div class="container">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-warehouse"></i> @ViewData["Title"]</h1>
+            <a asp-action="Index" class="btn btn-secondary text-light">
+                <i class="fas fa-arrow-left"></i> العودة للقائمة
+            </a>
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3">
+                <i class="fas fa-egg icon"></i> البيض الأبيض
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.whiteEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-box icon"></i> المتبقي أبيض
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.rest_whEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-egg icon"></i> البيض البني
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.brownEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-box icon"></i> المتبقي بني
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.rest_brEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-crack icon"></i> البيض المكسور
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.brokenEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-box icon"></i> المتبقي مكسور
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.rest_bkEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-egg icon"></i> البيض المزدوج
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.doubleEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-box icon"></i> المتبقي مزدوج
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.rest_dbEggs)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-warehouse icon"></i> العنبر
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.ward.WardName)
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-calendar-alt icon"></i> التاريخ
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+        </dl>
+        @if(User.IsInRole("Admin")){
+            <div class="text-center">
+                <a asp-action="Edit" asp-route-id="@Model?.stockID" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> تعديل
+                </a>
+            </div>
+        }
+       
+    </div>
+</div>

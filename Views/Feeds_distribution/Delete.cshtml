@@ -1,0 +1,65 @@
+﻿@model Shusha_project_BackUp.Feeds_distribution
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<style>
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .card-title i {
+        margin-right: 5px;
+    }
+
+    .btn i {
+        margin-left: 5px;
+    }
+</style>
+
+
+
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="card-title text-center text-danger mb-3">
+        <i class="fas fa-trash-alt"></i> تأكيد الحذف
+    </h4>
+    <p class="text-center text-muted">هل انت متأكد من حذف هذا السجل؟</p>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-4 fw-bold">
+                    <i class="fas fa-box text-secondary"></i> الكمية
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.quantity)
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    <i class="fas fa-map-marker-alt text-secondary"></i> العنبر
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.ward.WardName)
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    <i class="fas fa-calendar-alt text-secondary"></i> التاريخ
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Delete" class="text-center mt-4">
+        <input type="hidden" asp-for="dis_Id" />
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> حذف
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> العودة الى القائمة
+        </a>
+    </form>
+</div>

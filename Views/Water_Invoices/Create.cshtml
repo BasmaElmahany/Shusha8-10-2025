@@ -1,0 +1,54 @@
+﻿@model Shusha_project_BackUp.Data.Water_Invoices
+
+
+<h1>إنشاء فاتورة جديدة</h1>
+
+<h4>فاتورة المياه</h4>
+<hr />
+<!-- Form to upload a new invoice -->
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Branch Dropdown -->
+            <div class="form-group mb-4">
+                <label asp-for="BranchID" class="form-label">اختر المشروع</label>
+                <select asp-for="BranchID" class="form-select" asp-items="ViewBag.BranchID">
+                    <option value="" disabled selected>اختر المشروع</option>
+                </select>
+                <span asp-validation-for="BranchID" class="text-danger"></span>
+            </div>
+
+            <!-- Amount input -->
+            <div class="form-group">
+                <label asp-for="amount" class="control-label">المبلغ</label>
+                <input asp-for="amount" class="form-control" placeholder="أدخل المبلغ" />
+                <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+
+            <!-- Invoice photo input -->
+            <div class="form-group">
+                <label asp-for="Invoice_photo" class="control-label">رفع صورة الفاتورة</label>
+                <input asp-for="Invoice_photo" type="file" class="form-control" />
+                <span asp-validation-for="Invoice_photo" class="text-danger"></span>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-group text-center">
+                <input type="submit" value="إنشاء" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Link back to the list of invoices -->
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

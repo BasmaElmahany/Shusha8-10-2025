@@ -1,0 +1,51 @@
+﻿@model Shusha_project_BackUp.Data.Proceed
+
+@{
+    ViewData["Title"] = "تعديل";
+}
+
+<div class="container text-right" dir="rtl" style="font-family: 'Tahoma', sans-serif;">
+    <h1 class="text-primary mb-4">تعديل المعاملة</h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">تعديل بيانات المعاملة</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                <input type="hidden" asp-for="id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="centerId" class="control-label">المركز</label>
+                    <select asp-for="centerId" class="form-control" asp-items="ViewBag.centerId"></select>
+                    <span asp-validation-for="centerId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="amount" class="control-label">المبلغ</label>
+                    <input asp-for="amount" class="form-control" />
+                    <span asp-validation-for="amount" class="text-danger"></span>
+                </div>
+
+               
+
+               
+
+                <div class="form-group mb-3">
+                    <input type="submit" value="حفظ" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-end">
+            <a asp-action="Index" class="btn btn-secondary btn-sm">الرجوع للقائمة</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

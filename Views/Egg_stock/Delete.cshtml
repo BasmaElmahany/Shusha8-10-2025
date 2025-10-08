@@ -1,0 +1,54 @@
+﻿@model Shusha_project_BackUp.Data.Egg_stock
+
+@{
+    ViewData["Title"] = "حذف المخزون";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+
+    h1, h3, h4 {
+        text-align: center;
+    }
+
+    label, dt {
+        font-weight: bold;
+    }
+</style>
+
+<h1 class="mb-4">حذف المخزون</h1>
+
+<div class="card shadow-lg p-4">
+    <h3 class="text-center text-danger mb-4">هل أنت متأكد أنك تريد حذف هذا السجل؟</h3>
+    <h4 class="text-center mb-4">تفاصيل السجل</h4>
+
+    <dl class="row mb-4">
+        <dt class="col-sm-4">عدد أطباق البيض الأبيض:</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.plates_whiteEggs)</dd>
+
+        <dt class="col-sm-4">عدد أطباق البيض البني:</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.plates_BrownEggs)</dd>
+
+        <dt class="col-sm-4">عدد أطباق البيض الكسر:</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.brokenPlates)</dd>
+
+        <dt class="col-sm-4">عدد أطباق البيض مزدوج الصفارة:</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.doubleEggs)</dd>
+
+        <dt class="col-sm-4">المجموع الكلي للأطباق:</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.total)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger mx-2">حذف</button>
+            <a asp-action="Index" class="btn btn-secondary mx-2">العودة إلى القائمة</a>
+        </div>
+    </form>
+</div>

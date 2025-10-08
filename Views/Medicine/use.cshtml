@@ -1,0 +1,48 @@
+﻿@model Shusha_project_BackUp.Models.MedicineUsage
+
+@{
+    ViewData["Title"] = "استخدام الدواء";
+}
+
+<div dir="rtl">
+    <h1>استخدام الدواء</h1>
+
+    @if (ViewData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @ViewData["تم بنجاح"]
+        </div>
+    }
+
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @ViewData["عفوا خطأ"]
+        </div>
+    }
+
+    <form method="post" asp-action="use">
+        <div class="form-group">
+            <label for="medicineName">اسم الدواء</label>
+            <input type="hidden" id="medicineName" name="medicineName" value="@Model.medicineName" />
+
+            <input type="text" class="form-control" id="medicineName" value="@Model.medicineName" readonly />
+            <span class="text-danger" asp-validation-for="medicineName"></span>
+        </div>
+        <div class="form-group">
+            <label for="use_qty">الكمية المستخدمة</label>
+            <input type="number" class="form-control" id="use_qty" name="use_qty" required min="1" />
+            <span class="text-danger" asp-validation-for="use_qty"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="purpose">الغرض من الاستخدام</label>
+            <textarea class="form-control" id="Purpose" name="Purpose" required></textarea>
+            <span class="text-danger" asp-validation-for="Purpose"></span>
+        </div>
+        <input type="hidden" asp-for="medicineID" />
+        <button type="submit" class="btn btn-primary">تنفيذ العملية</button>
+    </form>
+
+    <a href="@Url.Action("Index", "Medicine")" class="btn btn-secondary mt-3">رجوع إلى قائمة الأدوية</a>
+</div>

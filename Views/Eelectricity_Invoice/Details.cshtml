@@ -1,0 +1,45 @@
+﻿@model Shusha_project_BackUp.Eelectricity_Invoice
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div dir="rtl">
+<h1 class="text-center my-4">تفاصيل الفاتورة</h1>
+
+<h4>تفاصيل فاتورة كهرباء</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="form-group">
+                <label class="control-label">المحطة</label>
+                <p class="form-control-static">@Model.branch.branch_name</p>
+            <label class="control-label">المبلغ</label>
+            <p class="form-control-static">@Model.amount</p>
+                <label class="control-label">التاريخ</label>
+                <p class="form-control-static"> @Model.Date</p>
+        </div>
+
+        <div class="form-group" >
+            <label class="control-label">صورة الفاتورة</label>
+            @if (!string.IsNullOrEmpty(Model.Invoice_photo))
+            {
+                <div class="text-center">
+                    <img src="@Model.Invoice_photo" alt="Invoice Photo" class="img-fluid" style="max-width: 80%; height: auto;" />
+                </div>
+            }
+            <p>@(string.IsNullOrEmpty(Model.Invoice_photo) ? "لا توجد صورة" : "")</p>
+        </div>
+
+        <div class="form-group text-center">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">تعديل</a> |
+            <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">حذف</a>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+</div>
+</div>

@@ -1,0 +1,125 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    direction: rtl;
+}
+.table {
+    text-align: right;
+    direction: rtl;
+}
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #0077cc;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: lightsteelblue;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0; /* Move sidebar to the right */
+    width: 250px; /* Fixed width */
+    background-color: #343a40; /* Dark background */
+    color: white;
+    overflow-y: auto; /* Enable scrolling for long content */
+    z-index: 1000; /* Ensure it's above other elements */
+    text-align: right; /* Align text to the right */
+}
+
+.sidebar-header {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #495057;
+    color: #fff;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+    text-align: right; /* Align links to the right */
+}
+
+    .sidebar a:hover {
+        background-color: #495057;
+    }
+
+.icon {
+    margin-left: 10px; /* Adjust icon spacing for right alignment */
+    margin-right: 0; /* Remove unnecessary margin */
+}
+
+
+.main-content {
+    margin-right: 250px; /* Matches the sidebar width */
+    padding: 20px;
+    overflow-x: auto; /* Handle horizontal content overflow */
+}
+
+
+@media (max-width: 767px) {
+    .sidebar {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        width: 250px;
+        height: 100vh;
+    }
+
+        .sidebar.show {
+            display: block;
+        }
+
+    .main-content {
+        margin-right: 0;
+    }
+
+    .sidebar-toggle {
+        display: inline-block;
+        color: white;
+        cursor: pointer;
+    }
+}

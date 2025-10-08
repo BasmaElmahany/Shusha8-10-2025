@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Data.MedicineUsed>
+
+@{
+    ViewData["Title"] = "القائمة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+<div dir="rtl">
+    <h1>القائمة</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> إضافة جديد
+        </a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>اسم الدواء</th>
+                <th>الغرض</th>
+                <th>الكمية</th>
+                <th>التاريخ</th>
+                <th>وصف الدواء</th>
+                <th class="text-center">الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.purpose)</td>
+                    <td>@Html.DisplayFor(modelItem => item.quantityUsed)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Medicine.Description)</td>
+                    <td class="text-center">
+                        @if (User.IsInRole("Admin")){
+                            <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> تعديل
+                            </a>
+                        }
+                         |
+                        <a asp-action="Details" asp-route-id="@item.id" class="btn btn-info">
+                            <i class="fas fa-eye"></i> التفاصيل
+                        </a> |
+                        @if (User.IsInRole("Admin")){
+                            <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> حذف
+                            </a>
+                        }
+                      
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

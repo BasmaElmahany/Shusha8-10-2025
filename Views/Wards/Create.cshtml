@@ -1,0 +1,83 @@
+﻿@model Shusha_project_BackUp.Ward
+
+@{
+    ViewData["Title"] = "إضافة عنبر جديد";
+}
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">إضافة عنبر جديد</h1>
+
+    <!-- Form Card -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">تفاصيل العنبر</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <!-- Ward Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="WardName" class="form-label">اسم العنبر</label>
+                    <input asp-for="WardName" class="form-control" placeholder="أدخل اسم العنبر" />
+                    <span asp-validation-for="WardName" class="text-danger"></span>
+                </div>
+
+                
+
+                <!-- Number of White Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="No_of_Whherd" class="form-label">عدد القطيع الأبيض</label>
+                    <input asp-for="No_of_Whherd" class="form-control" placeholder="أدخل عدد القطيع الأبيض" />
+                    <span asp-validation-for="No_of_Whherd" class="text-danger"></span>
+                </div>
+                <!-- Number of White Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="WhAge" class="form-label">عمر القطيع الأبيض</label>
+                    <input asp-for="WhAge" class="form-control" placeholder="أدخل عمر القطيع الأبيض" />
+                    <span asp-validation-for="WhAge" class="text-danger"></span>
+                </div>
+
+               
+                <!-- Number of Brown Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="No_of_Brherd" class="form-label">عدد القطيع البني</label>
+                    <input asp-for="No_of_Brherd" class="form-control" placeholder="أدخل عدد القطيع البني" />
+                    <span asp-validation-for="No_of_Brherd" class="text-danger"></span>
+                </div>
+
+                <!-- Number of Brown Herd -->
+                <div class="form-group mb-3">
+                    <label asp-for="BrAge" class="form-label">عمر القطيع البني</label>
+                    <input asp-for="BrAge" class="form-control" placeholder="أدخل عمر القطيع البني" />
+                    <span asp-validation-for="BrAge" class="text-danger"></span>
+                </div>
+
+                <!-- Branch Dropdown -->
+                <div class="form-group mb-4">
+                    <label asp-for="branchId" class="form-label">اختر المشروع</label>
+                    <select asp-for="branchId" class="form-select" asp-items="ViewBag.branchId">
+                        <option value="" disabled selected>اختر المشروع</option>
+                    </select>
+                    <span asp-validation-for="branchId" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="bi bi-check-circle"></i> إضافة
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary ms-2">
+                        <i class="bi bi-arrow-left"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

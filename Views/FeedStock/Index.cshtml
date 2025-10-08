@@ -1,0 +1,28 @@
+﻿@model Shusha_project_BackUp.Models.FeedStockVm
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+    .btn:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+
+</style>
+<h1 class="text-center text-primary mb-4">المخزون الكلي للعلف</h1>
+<h2 class="text-center"><strong> @Model.feedStock طن</strong></h2>
+
+<!-- Container for Buttons -->
+<div class="text-center mt-4">
+    <!-- Button for Controller 1 and View 1 -->
+    <a href="@Url.Action("Index", "FeedInventories")" class="btn btn-lg btn-outline-primary m-3">
+        <i class="fas fa-cogs"></i> سجلات العلف المنتج
+    </a>
+
+    <!-- Button for Controller 2 and View 2 -->
+    <a href="@Url.Action("Index", "FeedPurchases")" class="btn btn-lg btn-outline-success m-3">
+        <i class="fas fa-shopping-cart"></i> سجلات العلف المشترى
+    </a>
+</div>
+

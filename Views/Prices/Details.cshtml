@@ -1,0 +1,63 @@
+﻿@model Shusha_project_BackUp.Data.Prices
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<h1 class="text-center my-4">تفاصيل الأسعار</h1>
+
+<div class="container" dir="rtl">
+    <h4>تفاصيل الأسعار</h4>
+    <hr />
+
+    <!-- Data Display -->
+    <dl class="row text-right" dir="rtl">
+        <dt class="col-sm-2">
+            سعر البيض الابيض
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.white_Egg_Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            سعر البيض البني
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.brown_Egg_Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            سعر البيض الكسر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.broken_Egg_Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            سعر البيض مزدوج الصفارة
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.double_Egg_Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            تاريخ السعر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+    </dl>
+</div>
+
+<div class="container text-center">
+    <!-- Action Buttons -->
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.id">تعديل</a> |
+    <a class="btn btn-secondary" asp-action="Index">الرجوع إلى القائمة</a>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

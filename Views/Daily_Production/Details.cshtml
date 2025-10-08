@@ -1,0 +1,78 @@
+﻿@model Shusha_project_BackUp.DailySales
+
+@{
+    ViewData["Title"] = "تفاصيل";
+}
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">تفاصيل سجل الإنتاج اليومي</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4>تفاصيل الإنتاج اليومي</h4>
+            <hr />
+
+            <dl class="row">
+                <!-- Ward Name -->
+                <dt class="col-sm-3">
+                   اسم العنبر
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.ward.WardName)
+                </dd>
+
+                <!-- White Eggs -->
+                <dt class="col-sm-3">
+                   انتاج البيض الابيض
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.No_of_Wheggs)
+                </dd>
+
+                <!-- Brown Eggs -->
+                <dt class="col-sm-3">
+                    انتاج البيض البني
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.No_of_Breggs)
+                </dd>
+
+                <!-- Dead White Herd -->
+                <dt class="col-sm-3">
+                     النافق الابيض
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Whdead_herd)
+                </dd>
+
+                <!-- Dead Brown Herd -->
+                <dt class="col-sm-3">
+                    النافق البني
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Brdead_herd)
+                </dd>
+
+                <!-- Date -->
+                <dt class="col-sm-3">
+                    التاريخ
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <!-- Edit Button -->
+        <a asp-action="Edit" asp-route-id="@Model?.id" class="btn btn-warning btn-lg">
+            <i class="fas fa-edit"></i> تعديل
+        </a>
+
+        <!-- Back to Index Button -->
+        <a asp-action="Index" class="btn btn-secondary btn-lg">
+            <i class="fas fa-arrow-left"></i> الرجوع إلى القائمة
+        </a>
+    </div>
+</div>

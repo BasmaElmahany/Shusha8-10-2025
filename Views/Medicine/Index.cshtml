@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Data.Medicine>
+
+@{
+    ViewData["Title"] = "قائمة الأدوية";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div dir="rtl">
+    <h1 class="text-center mb-4">قائمة الأدوية</h1>
+
+    <div class="d-flex justify-content-between mb-4">
+        <a href="@Url.Action("Create", "Medicine")" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> إضافة دواء جديد
+        </a>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>اسم الدواء</th>
+                <th>الوصف</th>
+                <th>الكمية المتوفرة</th>
+                <th>السعر</th>
+                <th>الوحدة</th>
+                <th>التفاصيل</th>
+                <th>التعديل</th>
+                <th>الحذف</th>
+                <th>شراء</th>
+                <th>استخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicine in Model)
+            {
+                <tr>
+                    <td>@medicine.Name</td>
+                    <td>@medicine.Description</td>
+                    <td>@medicine.Quantity</td>
+                    <td>@medicine.Price</td> <!-- Format price as currency -->
+                    <td>@medicine.Type</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Medicine", new { id = medicine.ID })" class="btn btn-info btn-sm">
+                            <i class="bi bi-eye"></i> عرض
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Medicine", new { id = medicine.ID })" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i> تعديل
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", "Medicine", new { id = medicine.ID })" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> حذف
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Buy", "Medicine", new { id = medicine.ID })" class="btn btn-primary btn-sm">
+                            <i class="bi bi-cart-plus"></i> شراء
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("use", "Medicine", new { id = medicine.ID })" class="btn btn-primary btn-sm">
+                            <i class="bi bi-cart-plus"></i> استخدام
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

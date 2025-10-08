@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Shusha_project_BackUp.DailySales>
+
+@{
+    ViewData["Title"] = "سجلات الإنتاج اليومي";
+}
+
+<!-- Include DataTables CSS -->
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">سجلات الإنتاج اليومي</h1>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Lohman") || User.IsInRole("Bayad A") || User.IsInRole("Bayad B") || User.IsInRole("Magary"))
+    {
+        <!-- Button to Create a New Daily Record -->
+        <div class="text-end mb-3">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> إضافة سجل جديد
+            </a>
+        </div>
+    }
+    <div class="row text-white text-center mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary shadow-sm p-3 rounded">
+                <h5 class="fw-bold">إجمالي البيض الأبيض</h5>
+                <p class="fs-4">@ViewBag.TotalWhiteEggs</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning shadow-sm p-3 rounded">
+                <h5 class="fw-bold">إجمالي البيض البني</h5>
+                <p class="fs-4">@ViewBag.TotalBrownEggs</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger shadow-sm p-3 rounded">
+                <h5 class="fw-bold">إجمالي البيض مزدوج الصفارة</h5>
+                <p class="fs-4">@ViewBag.TotalDoubleEggs</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-secondary shadow-sm p-3 rounded">
+                <h5 class="fw-bold">إجمالي البيض الكسر</h5>
+                <p class="fs-4">@ViewBag.TotalBrokenEggs</p>
+            </div>
+        </div>
+    </div>
+    <!-- Table for Listing Daily Sales -->
+    <div class="table-responsive">
+        <table id="dailySalesTable" class="table table-bordered table-striped shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>العنبر</th>
+                    <th>البيض الأبيض</th>
+                    <th>البيض البني</th>
+                    <th>النافق الأبيض</th>
+                    <th>النافق البني</th>
+                    <th>البيض الكسر</th>
+                    <th>بيض مزدوج الصفارة</th>
+                    <th>التاريخ</th>
+                    <th class="text-center">تعديل</th>
+                    <th class="text-center">تفاصيل</th>
+                    <th class="text-center">حذف</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ward.WardName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.No_of_Wheggs)</td>
+                            <td>@Html.DisplayFor(modelItem => item.No_of_Breggs)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Whdead_herd)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Brdead_herd)</td>
+                            <td>@Html.DisplayFor(modelItem => item.no_of_carton_broken)</td>
+                            <td>@Html.DisplayFor(modelItem => item.double_eggs)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                            <td class="text-center">
+                                @if (User.IsInRole("Admin") || User.IsInRole("Magary"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> تعديل
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.id" class="btn btn-sm btn-info text-white">
+                                        <i class="bi bi-eye"></i> تفاصيل
+                                    </a>
+                                }
+                            </td>
+
+                          <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> حذف
+                                    </a>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">لا توجد بيانات لعرضها</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+                     $(document).ready(function() {
+            $('#dailySalesTable').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/Arabic.json",
+                    "emptyTable": "لا توجد بيانات لعرضها",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الآخر",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "info": "عرض _START_ إلى _END_ من _TOTAL_ سجل",
+                    "infoEmpty": "لا توجد بيانات لعرضها",
+                    "infoFiltered": "(تم تصفيتها من _MAX_ إجمالي العناصر)"
+                },
+                "pagingType": "full_numbers",
+                "responsive": true,
+                "ordering": true,
+
+                // Sort by the Date column (index 7) in descending order
+                "order": [[7, "desc"]]
+            });
+        });
+
+
+    </script>
+}

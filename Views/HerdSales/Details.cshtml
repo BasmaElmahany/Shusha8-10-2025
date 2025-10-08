@@ -1,0 +1,70 @@
+﻿@model Shusha_project_BackUp.Data.HerdSales
+
+@{
+    ViewData["Title"] = "تفاصيل المبيعات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="fas fa-info-circle"></i> تفاصيل عملية البيع</h4>
+            <span class="badge bg-light text-dark">التاريخ: @Model.Date.ToShortDateString()</span>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- White Herd Details -->
+                <div class="col-md-6">
+                    <h5 class="text-success"><i class="fas fa-egg"></i> بيانات القطيع الأبيض</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">عدد القطيع الأبيض: <strong>@Model.NO_wh_herd</strong></li>
+                        <li class="list-group-item">وزن الدجاجة بالكيلو: <strong>@Model.weight_white</strong></li>
+                        <li class="list-group-item">سعر الكيلو: <strong class="text-primary">@Model.wh_price_kilo.ToString("C")</strong></li>
+                        <li class="list-group-item bg-light">إجمالي المطلوب: <strong class="text-success">@Model.req_total_wh.ToString("C")</strong></li>
+                    </ul>
+                </div>
+
+                <!-- Brown Herd Details -->
+                <div class="col-md-6">
+                    <h5 class="text-warning"><i class="fas fa-drumstick-bite"></i> بيانات القطيع البني</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">عدد القطيع البني: <strong>@Model.NO_br_herd</strong></li>
+                        <li class="list-group-item">وزن الدجاجة بالكيلو: <strong>@Model.weight_brown</strong></li>
+                        <li class="list-group-item">سعر الكيلو: <strong class="text-primary">@Model.br_price_kilo.ToString("C")</strong></li>
+                        <li class="list-group-item bg-light">إجمالي المطلوب: <strong class="text-success">@Model.req_total_br.ToString("C")</strong></li>
+                    </ul>
+                </div>
+
+                <!-- Summary -->
+                <div class="col-12 mt-4">
+                    <div class="alert alert-info d-flex justify-content-between align-items-center">
+                        <strong><i class="fas fa-coins"></i> إجمالي المطلوب:</strong>
+                        <span class="fs-5 text-dark">@Model.total_request_proceed.ToString("C")</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong><i class="fas fa-money-check-alt"></i> حالة الدفع:</strong>
+                        @if (Model.IsPaid)
+                        {
+                            <span class="badge bg-success ms-2"><i class="fas fa-check-circle"></i> تم الدفع</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger ms-2"><i class="fas fa-times-circle"></i> لم يتم الدفع</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <a asp-action="Edit" asp-route-id="@Model?.id" class="btn btn-warning">
+                <i class="fas fa-edit"></i> تعديل
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> عودة للقائمة
+            </a>
+        </div>
+    </div>
+</div>

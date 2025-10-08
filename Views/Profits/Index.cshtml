@@ -1,0 +1,105 @@
+﻿@model Shusha_project_BackUp.Models.WardSalesViewModel
+
+@{
+    ViewData["Title"] = "Ward Sales Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<div dir="rtl">
+    <h1 class="text-center mt-3 mb-5" style="font-family: 'Cairo', sans-serif; font-size: 2.5rem;">العوائد والارباح</h1>
+
+    <div class="container">
+        <div class="row">
+           
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-primary shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-users"></i> اجمالى الرواتب</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;"> @Model.emp_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-secondary shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-cogs"></i> اجمالى مصروفات العلف الذي تم شراؤه</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;">@Model.feed_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-success shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-seedling"></i> اجمالى مصروفات العلف الذي تم انتاجه</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;">@Model.feed_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-danger shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-pills"></i> اجمالى مصروفات الادوية</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;">@Model.medicine_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-info shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-bolt"></i> اجمالى فواتير الكهرباء</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;">@Model.solar_Invoices_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-warning shadow-lg">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-gas-pump"></i> اجمالى فواتير السولار</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 1.1rem;">@Model.Electricity_Invoices_expenses جنيها</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-white bg-dark shadow-lg mb-3" style="max-width: 20rem; margin: auto;">
+        <div class="card-header">
+            <h5 class="card-title"><i class="fas fa-credit-card"></i> اجمالي المصروفات</h5>
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text" style="font-size: 1.25rem;"> @Model.Total جنيها</p>
+        </div>
+    </div>
+
+    <div class="card text-white bg-success shadow-lg mb-3" style="max-width: 20rem; margin: auto;">
+        <div class="card-header">
+            <h5 class="card-title"><i class="fas fa-dollar-sign"></i> اجمالي الربح الصافي </h5>
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text" style="font-size: 1.25rem;"> @Model.netProfit جنيها</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model Shusha_project_BackUp.Data.WardsStock
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>WardsStock</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="stockID" />
+            <div class="form-group">
+                <label asp-for="whiteEggs" class="control-label"></label>
+                <input asp-for="whiteEggs" class="form-control" />
+                <span asp-validation-for="whiteEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rest_whEggs" class="control-label"></label>
+                <input asp-for="rest_whEggs" class="form-control" />
+                <span asp-validation-for="rest_whEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="brownEggs" class="control-label"></label>
+                <input asp-for="brownEggs" class="form-control" />
+                <span asp-validation-for="brownEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rest_brEggs" class="control-label"></label>
+                <input asp-for="rest_brEggs" class="form-control" />
+                <span asp-validation-for="rest_brEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="brokenEggs" class="control-label"></label>
+                <input asp-for="brokenEggs" class="form-control" />
+                <span asp-validation-for="brokenEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rest_bkEggs" class="control-label"></label>
+                <input asp-for="rest_bkEggs" class="form-control" />
+                <span asp-validation-for="rest_bkEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="doubleEggs" class="control-label"></label>
+                <input asp-for="doubleEggs" class="form-control" />
+                <span asp-validation-for="doubleEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rest_dbEggs" class="control-label"></label>
+                <input asp-for="rest_dbEggs" class="form-control" />
+                <span asp-validation-for="rest_dbEggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="wardID" class="control-label"></label>
+                <select asp-for="wardID" class="form-control" asp-items="ViewBag.wardID"></select>
+                <span asp-validation-for="wardID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

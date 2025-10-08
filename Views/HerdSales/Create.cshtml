@@ -1,0 +1,88 @@
+﻿@model Shusha_project_BackUp.Data.HerdSales
+
+@{
+    ViewData["Title"] = "إضافة عملية بيع جديدة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="fas fa-cow"></i> تسجيل مبيعات القطيع</h4>
+            <a asp-action="Index" class="btn btn-light btn-sm">
+                <i class="fas fa-arrow-left"></i> العودة للقائمة
+            </a>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="NO_wh_herd" class="form-label"><i class="fas fa-boxes"></i> عدد الأبيض</label>
+                        <input asp-for="NO_wh_herd" class="form-control" />
+                        <span asp-validation-for="NO_wh_herd" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="weight_white" class="form-label"><i class="fas fa-weight"></i> وزن الأبيض</label>
+                        <input asp-for="weight_white" class="form-control" />
+                        <span asp-validation-for="weight_white" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="wh_price_kilo" class="form-label"><i class="fas fa-dollar-sign"></i> سعر الكيلو الأبيض</label>
+                        <input asp-for="wh_price_kilo" class="form-control" />
+                        <span asp-validation-for="wh_price_kilo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="NO_br_herd" class="form-label"><i class="fas fa-boxes"></i> عدد البني</label>
+                        <input asp-for="NO_br_herd" class="form-control" />
+                        <span asp-validation-for="NO_br_herd" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="weight_brown" class="form-label"><i class="fas fa-weight"></i> وزن البني</label>
+                        <input asp-for="weight_brown" class="form-control" />
+                        <span asp-validation-for="weight_brown" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="br_price_kilo" class="form-label"><i class="fas fa-dollar-sign"></i> سعر الكيلو البني</label>
+                        <input asp-for="br_price_kilo" class="form-control" />
+                        <span asp-validation-for="br_price_kilo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Date" class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label>
+                        <input asp-for="Date" class="form-control" type="date" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 d-flex align-items-center pt-3">
+                        <div class="form-check">
+                            <input class="form-check-input" asp-for="IsPaid" />
+                            <label class="form-check-label" asp-for="IsPaid">
+                                <i class="fas fa-check-circle text-success"></i> تم الدفع؟
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="fas fa-save"></i> حفظ العملية
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-x..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

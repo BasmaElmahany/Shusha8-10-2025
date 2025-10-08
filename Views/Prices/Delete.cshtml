@@ -1,0 +1,64 @@
+﻿@model Shusha_project_BackUp.Data.Prices
+
+@{
+    ViewData["Title"] = "حذف الأسعار";
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<h1 class="text-center my-4">حذف الأسعار</h1>
+
+<div class="container" dir="rtl">
+    <h4>هل أنت متأكد أنك تريد حذف هذا العنصر؟</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h4>تفاصيل الأسعار</h4>
+            <dl class="row">
+                <dt class="col-sm-3">
+                    سعر البيض الابيض
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.white_Egg_Price)
+                </dd>
+                <dt class="col-sm-3">
+                    سعر البيض البني
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.brown_Egg_Price)
+                </dd>
+                <dt class="col-sm-3">
+                    سعر بيض الكسر
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.broken_Egg_Price)
+                </dd>
+                <dt class="col-sm-3">
+                   سعر بيض المزدوج الصفارة
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.double_Egg_Price)
+                </dd>
+                <dt class="col-sm-3">
+                    التاريخ 
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="id" />
+                <div class="text-center">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                    <a class="btn btn-secondary" asp-action="Index">العودة الى القائمة الرئيسية</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

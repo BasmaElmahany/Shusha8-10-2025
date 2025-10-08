@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@model IEnumerable<IdentityUser>
+
+<h2>Manage Users</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a href="@Url.Action("ResetPassword", "Admin", new { id = user.Id })" class="btn btn-warning btn-sm">Reset Password</a>
+                    <form asp-action="Delete" asp-controller="Admin" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@user.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

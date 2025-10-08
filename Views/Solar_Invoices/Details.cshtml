@@ -1,0 +1,31 @@
+﻿@model Shusha_project_BackUp.Solar_Invoices
+
+@{
+    ViewData["Title"] = "تفاصيل الفاتورة الشمسية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Ensure RTL direction for Arabic layout -->
+<div dir="rtl" class="container mt-5">
+    <h1 class="text-center mb-4">تفاصيل الفاتورة </h1>
+    <h4 class="text-center mb-4">معلومات الفاتورة</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <dl class="row">
+                <dt class="col-sm-3">المبلغ</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.amount)</dd>
+
+                <dt class="col-sm-3">التاريخ</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Date)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-center">
+        <a asp-action="Edit" asp-route-id="@Model?.invoice_id" class="btn btn-warning">تعديل</a> |
+        <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+    </div>
+</div>

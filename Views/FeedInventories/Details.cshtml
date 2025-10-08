@@ -1,0 +1,31 @@
+﻿@model Shusha_project_BackUp.Data.FeedInventory
+
+@{
+    ViewData["Title"] = "تفاصيل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center my-4">تفاصيل البيانات</h1>
+
+<div class="bg-light p-4 rounded shadow-sm">
+    <h4>تفاصيل البيانات</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">كمية بالأطنان</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Tons_qty)</dd>
+
+        <dt class="col-sm-2">تكلفة الطن</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ton_cost)</dd>
+
+        <dt class="col-sm-2">التاريخ</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Date)</dd>
+
+        <dt class="col-sm-2">الإجمالي</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.total)</dd>
+    </dl>
+
+    <div class="text-center">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">تعديل</a> |
+        <a asp-action="Index" class="btn btn-secondary">رجوع إلى القائمة</a>
+    </div>
+</div>

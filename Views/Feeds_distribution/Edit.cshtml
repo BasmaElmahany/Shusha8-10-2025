@@ -1,0 +1,79 @@
+﻿@model Shusha_project_BackUp.Feeds_distribution
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<style>
+
+
+    .form-label i {
+        margin-left: 5px;
+    }
+
+    .btn i {
+        margin-left: 5px;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .alert {
+        font-size: 0.9rem;
+    }
+</style>
+
+
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="card-title text-center mb-3">
+        <i class="fas fa-edit text-warning"></i> تعديل استهلاك العلف
+    </h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="dis_Id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="quantity" class="form-label">
+                        <i class="fas fa-box text-secondary"></i> الكمية
+                    </label>
+                    <input asp-for="quantity" class="form-control" />
+                    <span asp-validation-for="quantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="WardID" class="form-label">
+                        <i class="fas fa-map-marker-alt text-secondary"></i> العنبر
+                    </label>
+                    <select asp-for="WardID" class="form-select" asp-items="ViewBag.WardID"></select>
+                    <span asp-validation-for="WardID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Date" class="form-label">
+                        <i class="fas fa-calendar-alt text-secondary"></i> التاريخ
+                    </label>
+                    <input asp-for="Date" type="date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <input type="submit" value="حفظ" class="btn btn-success">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> العودة الى القائمة
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,66 @@
+﻿@model Shusha_project_BackUp.Branch
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<!-- Bootstrap and DataTables RTL CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-rtl@4.6.1/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<div dir="rtl">
+<!-- Page Title -->
+<h1 class="text-center my-4 text-primary">تعديل الفرع</h1>
+
+<!-- Form Container -->
+<div class="container">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-info text-white text-center">
+            <h4>تفاصيل الفرع</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="branch_id" />
+
+                <!-- Branch Name Field -->
+                <div class="form-group mb-4">
+                    <label asp-for="branch_name" class="form-label text-dark fw-bold">اسم الفرع</label>
+                    <input asp-for="branch_name" class="form-control border-info shadow-sm" placeholder="أدخل اسم الفرع" />
+                    <span asp-validation-for="branch_name" class="text-danger"></span>
+                </div>
+
+                <!-- Total Number of Herd Field
+                <div class="form-group mb-4">
+                    <label asp-for="total_no_of_Whherd" class="form-label text-dark fw-bold">عدد القطيع الابيض</label>
+                        <input asp-for="total_no_of_Whherd" class="form-control border-info shadow-sm" readonly />
+                        <span asp-validation-for="total_no_of_Whherd" class="text-danger"></span>
+                    </div> -->
+                    <!-- Total Number of Herd Field 
+                    <div class="form-group mb-4">
+                        <label asp-for="total_no_of_Brherd" class="form-label text-dark fw-bold">عدد القطيع البني</label>
+                        <input asp-for="total_no_of_Brherd" class="form-control border-info shadow-sm" readonly />
+                        <span asp-validation-for="total_no_of_Brherd" class="text-danger"></span>
+                    </div>-->
+
+                <!-- Save Button -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4 py-2 shadow-sm">
+                        <i class="fa fa-save me-2"></i>حفظ التعديلات
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary px-4 py-2 shadow-sm">
+                        <i class="fa fa-arrow-left me-2"></i>الرجوع إلى القائمة
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Validation Scripts -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<!-- Optional: FontAwesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">

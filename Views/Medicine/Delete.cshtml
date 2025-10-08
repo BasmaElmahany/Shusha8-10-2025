@@ -1,0 +1,30 @@
+﻿@model Shusha_project_BackUp.Data.Medicine
+
+@{
+    ViewData["Title"] = "حذف الدواء";
+}
+<div class="container" dir="rtl">
+    <h1 class="text-center mb-4 text-danger">هل أنت متأكد أنك تريد حذف هذا الدواء؟</h1>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <div class="mb-3">
+            <p><strong>اسم الدواء:</strong> @Model.Name</p>
+            <p><strong>الوصف:</strong> @Model.Description</p>
+            <p><strong>الكمية المتوفرة:</strong> @Model.Quantity</p>
+            <p><strong>السعر:</strong> @Model.Price</p>
+            <p><strong>الوحدة:</strong> @Model.Type</p>
+            <p><strong>تاريخ الانتاج:</strong> @Model.ProductionDate</p>
+            <p><strong>تاريخ الانتهاء:</strong> @Model.ExpirationDate</p>
+            
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="ID" />
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-danger">حذف</button>
+                <a href="@Url.Action("Index", "Medicine")" class="btn btn-secondary">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>

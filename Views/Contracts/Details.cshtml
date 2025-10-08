@@ -1,0 +1,85 @@
+﻿@model Shusha_project_BackUp.Contract
+
+@{
+    ViewData["Title"] = "تفاصيل العقد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div dir="rtl" class="container mt-4">
+    <!-- Card for Contract Details -->
+    <div class="card">
+        <div class="card-header text-center bg-info text-white">
+            <h1>تفاصيل العقد</h1>
+        </div>
+        <div class="card-body">
+            <h4>العقد</h4>
+            <hr />
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    تفاصيل العقد
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.contract_description)
+                </dd>
+
+                <dt class="col-sm-2">
+                    اسم الموظف
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.employees.emp_name)
+                </dd>
+
+                <dt class="col-sm-2">
+                    المرتب الاجمالي
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Gross_salary)
+                </dd>
+
+                <dt class="col-sm-2">
+                    التأمين الطبي
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Medical_Assurance)
+                </dd>
+
+                <dt class="col-sm-2">
+                    الضرائب
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.taxes)
+                </dd>
+
+                <dt class="col-sm-2">
+                    الحوافز
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Incentives)
+                </dd>
+
+                <dt class="col-sm-2">
+                    التاريخ
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+
+            <!-- Buttons to Delete or Navigate -->
+            <div class="text-center mt-4">
+                <form asp-action="Delete" style="direction: rtl;">
+                    <input type="hidden" asp-for="contract_id" />
+                    <button type="submit" class="btn btn-danger btn-lg mr-2">حذف</button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">العودة إلى القائمة</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit and Back to List links -->
+    <div class="text-center mt-3">
+        <a asp-action="Edit" asp-route-id="@Model?.contract_id" class="btn btn-warning btn-lg">تعديل</a> 
+        <a asp-action="Index" class="btn btn-secondary btn-lg">العودة إلى القائمة</a>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model Shusha_project_BackUp.Data.TraderSales
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+</style>
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>تفاصيل المبيعات</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row text-end">
+                <dt class="col-sm-4 fw-bold">عدد البيض الأبيض بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.NoOfWhiteEggs</dd>
+
+                <dt class="col-sm-4 fw-bold">سعر البيض الأبيض بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.WhiteEggPrice.ToString("C")</dd>
+
+                <dt class="col-sm-4 fw-bold">عدد البيض البني بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.NoOfBrownEggs</dd>
+
+                <dt class="col-sm-4 fw-bold">سعر البيض البني بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.BrownEggPrice.ToString("C")</dd>
+
+                <dt class="col-sm-4 fw-bold">عدد البيض الكسر بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.NoOfBrokenEggs</dd>
+
+                <dt class="col-sm-4 fw-bold">سعر البيض الكسر بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.BrokenEggPrice.ToString("C")</dd>
+
+                <dt class="col-sm-4 fw-bold">عدد البيض مزدوج الصفارة بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.NoOfDoubleEggs</dd>
+
+                <dt class="col-sm-4 fw-bold">سعر البيض مزدوج الصفارة بالكرتونة:</dt>
+                <dd class="col-sm-8">@Model.DoubleEggPrice.ToString("C")</dd>
+
+                <dt class="col-sm-4 fw-bold">هل تم السداد؟:</dt>
+                <dd class="col-sm-8">@((Model.IsPaid) ? "نعم" : "لا")</dd>
+
+                <dt class="col-sm-4 fw-bold">التاريخ:</dt>
+                <dd class="col-sm-8">@Model.date.ToShortDateString()</dd>
+
+                <dt class="col-sm-4 fw-bold">اسم التاجر:</dt>
+                <dd class="col-sm-8">@Model.name_ofTrader</dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                <i class="bi bi-pencil-square"></i> تعديل
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> العودة للقائمة
+            </a>
+        </div>
+    </div>
+</div>
+

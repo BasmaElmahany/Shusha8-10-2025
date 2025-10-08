@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Data.Proceed>
+
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+
+<div class="container text-right" dir="rtl" style="font-family: 'Tahoma', sans-serif;">
+    <h1 class="text-primary mb-4">قائمة المستحقات</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">إنشاء جديد</a>
+        <a class="btn btn-success mb-3" asp-action="ExportProceedsReportToExcel" asp-controller="Proceeds">
+            <i class="fas fa-file-excel"></i> تحميل تقرير الإيرادات (Excel)
+        </a>
+
+    </p>
+
+    <div class="table-responsive">
+        <table id="dailySalesTable" class="table table-bordered table-striped shadow-sm">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>اسم المركز</th>
+                <th>القيمة المتحصلة</th>
+                <th>القيمة المتبقية</th>
+                <th>التاريخ</th>
+                <th class="text-center">العمليات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.center.centerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rest_amount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td class="text-center">
+                        @if (User.IsInRole("Admin")){
+                            <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-warning btn-sm">تعديل</a>
+                        }
+                      |
+                        <a asp-action="Details" asp-route-id="@item.id" class="btn btn-info btn-sm">تفاصيل</a> |
+                        @if (User.IsInRole("Admin")){
+                            <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger btn-sm">حذف</a>
+                        }
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dailySalesTable').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/Arabic.json",
+                    "emptyTable": "لا توجد بيانات لعرضها",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الآخر",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "info": "عرض _START_ إلى _END_ من _TOTAL_ سجل",
+                    "infoEmpty": "لا توجد بيانات لعرضها",
+                    "infoFiltered": "(تم تصفيتها من _MAX_ إجمالي العناصر)"
+                },
+                "pagingType": "full_numbers",
+                "responsive": true,
+                "ordering": true
+            });
+        });
+    </script>
+}

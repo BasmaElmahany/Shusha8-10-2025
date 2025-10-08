@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Ward>
+
+@{
+    ViewData["Title"] = "إدارة العنابر";
+}
+
+<!-- Include DataTables CSS -->
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">إدارة العنابر</h1>
+    @if (User.IsInRole("Admin"))
+    {
+        <!-- Button to Create a New Ward -->
+        <div class="text-end mb-3">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> إضافة عنبر جديد
+            </a>
+        </div>
+    }
+
+    <!-- Table for Listing Wards -->
+    <div class="table-responsive">
+        <table id="wardsTable" class="table table-bordered table-striped shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>اسم العنبر</th>
+                    <th>عدد القطيع الأبيض</th>
+                    <th>عدد القطيع البني</th>
+                    <th>المشروع</th>
+                    <th class="text-center">الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.WardName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.No_of_Whherd)</td>
+                            <td>@Html.DisplayFor(modelItem => item.No_of_Brherd)</td>
+                            <td>@Html.DisplayFor(modelItem => item.branch.branch_name)</td>
+                            <td class="text-center">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Ward_ID" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> تعديل
+                                    </a>
+                                }
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.Ward_ID" class="btn btn-sm btn-info text-white">
+                                        <i class="bi bi-eye"></i> تفاصيل
+                                    </a>
+                                }
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.Ward_ID" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> حذف
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">لا توجد بيانات لعرضها</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#wardsTable').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/Arabic.json",  // Load Arabic language for RTL support
+                    "emptyTable": "لا توجد بيانات لعرضها",  // Custom message when there is no data
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الآخر",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "info": "عرض _START_ إلى _END_ من _TOTAL_ عنبر",
+                    "infoEmpty": "لا توجد بيانات لعرضها",
+                    "infoFiltered": "(تم تصفيتها من _MAX_ إجمالي العناصر)"
+                },
+                "pagingType": "full_numbers", // Full pagination controls (next/previous, page numbers)
+                "responsive": true,           // Makes the table responsive on smaller screens
+                "ordering": true              // Allow column sorting
+            });
+        });
+    </script>
+}
+<!-- Initialize DataTables and apply RTL direction -->

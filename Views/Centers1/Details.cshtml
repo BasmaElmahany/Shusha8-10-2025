@@ -1,0 +1,32 @@
+﻿@model Shusha_project_BackUp.Center
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div dir="rtl" class="container mt-5">
+
+    <h1 class="text-center text-primary">تفاصيل المركز</h1>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>المركز</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-2">اسم المركز</dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.centerName)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model?.centerId" class="btn btn-warning">تعديل</a>
+        <a asp-action="Index" class="btn btn-secondary">عودة إلى القائمة</a>
+    </div>
+
+</div>

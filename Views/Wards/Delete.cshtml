@@ -1,0 +1,43 @@
+﻿@model Shusha_project_BackUp.Ward
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-center mt-4" style="font-family: 'Cairo', sans-serif; font-size: 2.5rem;">حذف العنبر</h1>
+
+<div dir="rtl" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-danger text-white text-center">
+                    <h5 class="card-title">تأكيد الحذف</h5>
+                </div>
+                <div class="card-body">
+                    <h4 class="text-center mb-4">هل أنت متأكد أنك تريد حذف هذا العنبر؟</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">اسم العنبر:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.WardName)</dd>
+
+                        <dt class="col-sm-3">انتاج البيض الأبيض:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.No_of_Whherd)</dd>
+
+                        <dt class="col-sm-3">انتاج البيض البني:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.No_of_Brherd)</dd>
+
+                        <dt class="col-sm-3">اسم الفرع:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.branch.branch_name)</dd>
+                    </dl>
+
+                    <div class="text-center">
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="Ward_ID" />
+                            <button type="submit" class="btn btn-danger btn-lg">حذف</button>
+                        </form>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg mt-3">العودة إلى القائمة</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

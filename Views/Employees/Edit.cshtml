@@ -1,0 +1,48 @@
+﻿@model Shusha_project_BackUp.Employees
+
+@{
+    ViewData["Title"] = "تعديل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div dir="rtl">
+
+<h1>تعديل</h1>
+
+<h4>الموظفين</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="emp_id" />
+            <div class="form-group">
+                <label asp-for="emp_name" class="control-label">اسم الموظف</label>
+                <input asp-for="emp_name" class="form-control" />
+                <span asp-validation-for="emp_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NID" class="control-label">الرقم القومي</label>
+                <input asp-for="NID" class="form-control" />
+                <span asp-validation-for="NID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phoneNumber" class="control-label">رقم الهاتف</label>
+                <input asp-for="phoneNumber" class="form-control" />
+                <span asp-validation-for="phoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+</div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

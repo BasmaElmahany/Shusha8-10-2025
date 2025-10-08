@@ -1,0 +1,60 @@
+﻿@model Shusha_project_BackUp.Solar_Invoices
+
+@{
+    ViewData["Title"] = "تعديل الفاتورة الشمسية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Ensure RTL direction for Arabic layout -->
+<div dir="rtl" class="container mt-5">
+    <h1 class="text-center mb-4">تعديل الفاتورة </h1>
+    <h4 class="text-center mb-4">تعديل تفاصيل الفاتورة</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Hidden field for invoice_id -->
+                <input type="hidden" asp-for="invoice_id" />
+                <div class="form-group">
+                    <label asp-for="BranchID" class="control-label">
+                        <i class="fas fa-building"></i> المحطة
+                    </label>
+                    <select asp-for="BranchID" class="form-control" asp-items="ViewBag.BranchID"></select>
+                    <span asp-validation-for="BranchID" class="text-danger"></span>
+                </div>
+                <!-- Amount Field -->
+                <div class="form-group">
+                    <label asp-for="amount" class="control-label">المبلغ</label>
+                    <input asp-for="amount" class="form-control" placeholder="أدخل المبلغ" />
+                    <span asp-validation-for="amount" class="text-danger"></span>
+                </div>
+
+                <!-- Date Field -->
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label">التاريخ</label>
+                    <input asp-for="Date" class="form-control" placeholder="أدخل التاريخ" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group text-center">
+                    <input type="submit" value="حفظ التغييرات" class="btn btn-primary btn-lg" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to List Button -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

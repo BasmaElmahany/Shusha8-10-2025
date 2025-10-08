@@ -1,0 +1,39 @@
+﻿@model Shusha_project_BackUp.Models.BuyMedicineViewModel
+
+@{
+    ViewData["Title"] = "شراء دواء";
+}
+<div class="container" dir="rtl">
+    <h1 class="text-center mb-4">شراء دواء</h1>
+
+    <form asp-action="Buy" method="post" class="p-4 border rounded shadow-sm">
+        <div class="form-group mb-3">
+            <label for="MedicineName"><strong>اسم الدواء</strong></label>
+            <input type="text" class="form-control" id="MedicineName" name="MedicineName" value="@Model.MedicineName" readonly />
+            <span asp-validation-for="MedicineName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="MedicinePrice">السعر</label>
+            <input type="number" class="form-control" id="MedicinePrice" name="MedicinePrice" value="@Model.MedicinePrice" readonly />
+            <span asp-validation-for="MedicinePrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="QuantityToBuy">الكمية التي ترغب في شرائها</label>
+            <input type="number" class="form-control" id="QuantityToBuy" name="QuantityToBuy" value="@Model.QuantityToBuy" required />
+            <span asp-validation-for="QuantityToBuy" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Supplier"><strong>اسم المورد</strong></label>
+            <input type="text" class="form-control" id="Supplier" name="Supplier" value="@Model.Supplier" readonly />
+            <span asp-validation-for="Supplier" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="MedicineID" />
+
+        <button type="submit" class="btn btn-primary btn-lg w-100">شراء</button>
+    </form>
+
+    <a href="@Url.Action("Index", "Medicine")" class="btn btn-secondary btn-lg mt-3 w-100">رجوع إلى قائمة الأدوية</a>
+</div>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Contract>
+
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div dir="rtl">
+    <h1 class="text-center my-4">@ViewData["Title"]</h1>
+
+    <p class="text-right">
+        <a asp-action="Create" class="btn btn-primary mb-3">إنشاء جديد</a>
+    </p>
+
+    <div style="overflow-x: auto;">
+        <table id="contractsTable" class="table table-bordered table-striped table-hover" style="direction: rtl; table-layout: fixed;">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 20%;">تفاصيل العقد</th>
+                    <th style="width: 15%;">الموظف</th>
+                    <th style="width: 10%;">المرتب الاجمالي</th>
+                    <th style="width: 10%;">التامين الطبي</th>
+                    <th style="width: 10%;">الضرائب</th>
+                    <th style="width: 10%;">الحوافز</th>
+                    <th style="width: 10%;">المرتب الصافي</th>
+                    <th style="width: 10%;">التاريخ</th>
+                    <th style="width: 15%;">تعديل</th>
+                    <th style="width: 15%;">تفاصيل</th>
+                    <th style="width: 15%;">حذف</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.contract_description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.employees.emp_name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Gross_salary)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Medical_Assurance)</td>
+                        <td>@Html.DisplayFor(modelItem => item.taxes)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Incentives)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NetSalary)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                       
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.contract_id" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> تعديل</a>
+                            }
+                            
+                          
+                        </td>
+                        <td> <a asp-action="Details" asp-route-id="@item.contract_id" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> تفاصيل</a> </td>
+                        <td>
+                            @if (User.IsInRole("Admin")){
+                                <a asp-action="Delete" asp-route-id="@item.contract_id" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> حذف</a>
+                            }
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#contractsTable').DataTable({
+                "autoWidth": true, // Allow DataTables to auto adjust column widths
+                "language": {
+                    "sEmptyTable": "لا توجد بيانات لعرضها",
+                    "sInfo": "عرض _START_ إلى _END_ من _TOTAL_ مدخلات",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من 0 مدخلات",
+                    "sInfoFiltered": "(تم تصفيتها من _MAX_ مدخلات إجمالية)",
+                    "sLengthMenu": "عرض _MENU_ مدخلات",
+                    "sLoadingRecords": "جاري التحميل...",
+                    "sProcessing": "جاري المعالجة...",
+                    "sSearch": "بحث:",
+                    "sZeroRecords": "لم يتم العثور على تطابقات",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sLast": "الأخير",
+                        "sNext": "التالي",
+                        "sPrevious": "السابق"
+                    }
+                },
+                "order": [[6, 'desc']], // Order by the 'Date' column
+                "scrollX": true // Enable horizontal scrolling for long tables
+            });
+        });
+    </script>
+}

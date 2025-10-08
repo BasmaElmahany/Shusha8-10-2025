@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Daily Production Chart";
+    var chartData = ViewBag.ChartData; // JSON data
+    var yFields = ViewBag.YFields as List<string>; // Selected Y-fields
+    var xField = ViewBag.XField as string; // Selected X-field
+}
+
+<h2>Daily Production Chart</h2>
+
+<form method="get">
+    <label for="wardId">Select Ward:</label>
+    <select name="wardId" id="wardId">
+        @foreach (var ward in ViewBag.Wards as SelectList)
+        {
+            <option value="@ward.Value">@ward.Text</option>
+        }
+    </select>
+
+    <label for="xField">Select X-axis:</label>
+    <select name="xField" id="xField">
+        <option value="Date">Date</option>
+    </select>
+
+    <label for="yFields">Select Y-axis:</label>
+    <select name="yFields" id="yFields" multiple>
+        <option value="No_of_Wheggs">No of White Eggs</option>
+        <option value="No_of_Breggs">No of Brown Eggs</option>
+        <option value="Whdead_herd">White Dead Herd</option>
+        <option value="Brdead_herd">Brown Dead Herd</option>
+        <option value="double_eggs">Double Eggs</option>
+        <option value="no_of_carton_broken">No of Carton Broken</option>
+        <option value="Feed_Inventory">Feed Inventory</option>
+    </select>
+
+    <button type="submit">Generate Chart</button>
+</form>
+
+@if (chartData != null)
+{
+    <div id="line-chart" style="width: 100%; height: 500px;"></div>
+
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = JSON.parse('@Html.Raw(chartData)');
+            var dataTable = new google.visualization.DataTable();
+
+            // Add X-axis (e.g., Date)
+            dataTable.addColumn('string', '@xField');
+
+            // Add Y-axis fields
+        @foreach (var field in yFields)
+        {
+            <text>dataTable.addColumn('number', '@field');</text>
+        }
+
+            // Add rows to the DataTable
+            data.forEach(item => {
+                var row = [item.X];
+        @foreach (var field in yFields)
+        {
+            <text>row.push(item.Y["@field"] || 0);</text>
+        }
+                dataTable.addRow(row);
+            });
+
+            var options = {
+                title: 'Daily Production Chart',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'], // Custom colors
+                hAxis: {
+                    title: '@xField'
+                },
+                vAxis: {
+                    title: 'Values'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('line-chart'));
+            chart.draw(dataTable, options);
+        }
+    </script>
+}

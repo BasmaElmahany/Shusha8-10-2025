@@ -1,0 +1,61 @@
+﻿@model Shusha_project_BackUp.Eelectricity_Invoice
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center my-4">تعديل الفاتورة</h1>
+
+<h4>تعديل فاتورة كهرباء</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form asp-action="Edit" asp-route-id="@Model.ID" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Branch Dropdown -->
+            <div class="form-group mb-4">
+                <label asp-for="BranchID" class="form-label">اختر المشروع</label>
+                <select asp-for="BranchID" class="form-select" asp-items="ViewBag.BranchID">
+                    <option value="" disabled selected>اختر المشروع</option>
+                </select>
+                <span asp-validation-for="BranchID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="amount" class="control-label">المبلغ</label>
+                <input asp-for="amount" class="form-control" placeholder="أدخل المبلغ" />
+                <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Invoice_photo" class="control-label">رفع صورة الفاتورة</label>
+                @if (Model.Invoice_photo != null)
+                {
+                    <div>
+                        <img src="@Model.Invoice_photo" alt="Invoice Photo" class="img-fluid" style="max-width: 150px; height: auto;" />
+                        <p>الصورة الحالية</p>
+                    </div>
+                }
+                <input asp-for="Invoice_photo" type="file" class="form-control" />
+                <span asp-validation-for="Invoice_photo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="تعديل" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

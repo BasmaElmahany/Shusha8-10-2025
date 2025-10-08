@@ -1,0 +1,54 @@
+﻿@model Shusha_project_BackUp.Ward
+
+@{
+    ViewData["Title"] = "تفاصيل العنبر";
+}
+
+<div class="container my-5" dir="rtl">
+    <h1 class="text-center mb-4">تفاصيل العنبر</h1>
+
+    <!-- Details Card -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">بيانات العنبر</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <!-- Ward Name -->
+                <dt class="col-sm-4 text-primary fw-bold">اسم العنبر:</dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.WardName)
+                </dd>
+
+                <!-- Number of White Herd -->
+                <dt class="col-sm-4 text-primary fw-bold">عدد القطيع الأبيض:</dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.No_of_Whherd)
+                </dd>
+
+                <!-- Number of Brown Herd -->
+                <dt class="col-sm-4 text-primary fw-bold">عدد القطيع البني:</dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.No_of_Brherd)
+                </dd>
+
+                <!-- Branch -->
+                <dt class="col-sm-4 text-primary fw-bold">المشروع:</dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.branch.branch_name)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-4 text-center">
+        <a asp-action="Edit" asp-route-id="@Model?.Ward_ID" class="btn btn-warning me-2">
+            <i class="bi bi-pencil-square"></i> تعديل
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> العودة إلى القائمة
+        </a>
+    </div>
+</div>
+

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Branch>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Bootstrap and DataTables RTL CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-rtl@4.6.1/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<h1 class="text-center my-4">إدارة المشاريع</h1>
+
+<div dir="rtl" class="container">
+    @if (User.IsInRole("Admin")){
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 text-primary">قائمة المشاريع</h2>
+            <a asp-action="Create" class="btn btn-info btn-sm">إضافة مشروع جديد</a>
+        </div>
+    }
+    
+
+    <table id="projectsTable" class="table table-striped table-bordered text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>اسم المشروع</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.branch_name)</td>
+                    
+                    <td>
+                        <div class="btn-group" role="group">
+                            @if (User.IsInRole("Admin")){
+                                <a asp-action="Edit" asp-route-id="@item.branch_id" class="btn btn-warning btn-sm">تعديل</a>
+                            }
+
+                            @if (User.Identity.IsAuthenticated){
+                                <a asp-action="Details" asp-route-id="@item.branch_id" class="btn btn-secondary btn-sm">تفاصيل</a>
+                            }
+                            @if (User.IsInRole("Admin")){
+                                <form asp-action="Delete" asp-route-id="@item.branch_id" method="post" style="display:inline;" onsubmit="return confirm('هل انت متاكد من الحذف؟');">
+                                    <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                                </form>
+                            }
+                           
+                           
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- jQuery, Bootstrap, and DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function () {
+        $('#projectsTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Arabic.json"
+            }
+        });
+    });
+</script>

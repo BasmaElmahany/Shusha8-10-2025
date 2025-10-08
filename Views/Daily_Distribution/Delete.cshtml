@@ -1,0 +1,74 @@
+﻿@model Shusha_project_BackUp.Daily_Distribution
+
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div dir="rtl" class="container mt-5">
+    <h1 class="text-center">حذف توزيع يومي</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">هل أنت متأكد أنك تريد حذف هذا التوزيع اليومي؟</h4>
+            <hr />
+
+            <div class="alert alert-warning" role="alert">
+                <strong>تحذير:</strong> بعد الحذف، لن تتمكن من استرجاع البيانات.
+            </div>
+
+            <h5 class="card-subtitle mb-2">تفاصيل التوزيع اليومي:</h5>
+            <dl class="row">
+                <dt class="col-sm-2">
+                   المركز
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Center.centerName)
+                </dd>
+                <dt class="col-sm-2">
+                   التاريخ
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-2">
+                  عدد اطباق البيض الابيض
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.WhEgg_platesnumber)
+                </dd>
+                <dt class="col-sm-2">
+                   عدد اطباق البيض مزدوج الصفارة
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.doubleEgg_platesnumber)
+                </dd>
+                <dt class="col-sm-2">
+                   عدد اطباق البيض البني
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.brEgg_platesnumber)
+                </dd>
+                <dt class="col-sm-2">
+                    عدد اطباق البيض الكسر
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BrokenEgg_platesnumber)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="dis_id" />
+                <button type="submit" class="btn btn-danger">حذف</button> |
+                <a asp-action="Index" class="btn btn-secondary">الرجوع إلى القائمة</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

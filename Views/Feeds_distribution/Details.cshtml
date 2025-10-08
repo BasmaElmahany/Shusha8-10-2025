@@ -1,0 +1,44 @@
+﻿@model Shusha_project_BackUp.Feeds_distribution
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center my-4">Details</h1>
+
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="card-title text-center mb-3">
+        <i class="fas fa-info-circle text-primary"></i> تفاصيل استهلاك العلف
+    </h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            <i class="fas fa-box text-secondary"></i> الكمية
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fas fa-map-marker-alt text-secondary"></i> العنبر
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ward.WardName)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fas fa-calendar-alt text-secondary"></i>التاريخ
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+    </dl>
+</div>
+
+<div class="d-flex justify-content-center gap-3">
+    <a asp-action="Edit" asp-route-id="@Model?.dis_Id" class="btn btn-warning">
+        <i class="fas fa-edit"></i> تعديل
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> العودة للقائمة الرئيسية
+    </a>
+</div>

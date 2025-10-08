@@ -1,0 +1,90 @@
+﻿@model Shusha_project_BackUp.Contract
+
+@{
+    ViewData["Title"] = "تعديل العقد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div dir="rtl" class="container mt-4">
+    <!-- Card for Edit Contract Form -->
+    <div class="card">
+        <div class="card-header text-center bg-info text-white">
+            <h1>تعديل العقد</h1>
+        </div>
+        <div class="card-body">
+            <h4>تفاصيل العقد</h4>
+            <hr />
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                <input type="hidden" asp-for="contract_id" />
+
+                <div class="form-group">
+                    <label asp-for="contract_description" class="control-label">تفاصيل العقد</label>
+                    <textarea asp-for="contract_description" class="form-control" placeholder="أدخل تفاصيل العقد"></textarea>
+                    <span asp-validation-for="contract_description" class="text-danger"></span>
+                </div>
+
+                <!-- Employee Name -->
+                <div class="form-group">
+                    <label asp-for="emp_id" class="control-label">اسم الموظف</label>
+                    <select asp-for="emp_id" class="form-control" asp-items="ViewBag.emp_id">
+                        <option value="">اختر موظفًا</option>
+                    </select>
+                    <span asp-validation-for="emp_id" class="text-danger"></span>
+                </div>
+
+                <!-- Gross Salary -->
+                <div class="form-group">
+                    <label asp-for="Gross_salary" class="control-label">المرتب الاجمالي</label>
+                    <input asp-for="Gross_salary" class="form-control" placeholder="أدخل المرتب الاجمالي" />
+                    <span asp-validation-for="Gross_salary" class="text-danger"></span>
+                </div>
+
+                <!-- Medical Assurance -->
+                <div class="form-group">
+                    <label asp-for="Medical_Assurance" class="control-label">التأمين الطبي</label>
+                    <input asp-for="Medical_Assurance" class="form-control" placeholder="أدخل التأمين الطبي" />
+                    <span asp-validation-for="Medical_Assurance" class="text-danger"></span>
+                </div>
+
+                <!-- Taxes -->
+                <div class="form-group">
+                    <label asp-for="taxes" class="control-label">الضرائب</label>
+                    <input asp-for="taxes" class="form-control" placeholder="أدخل الضرائب" />
+                    <span asp-validation-for="taxes" class="text-danger"></span>
+                </div>
+
+                <!-- Incentives -->
+                <div class="form-group">
+                    <label asp-for="Incentives" class="control-label">الحوافز</label>
+                    <input asp-for="Incentives" class="form-control" placeholder="أدخل الحوافز" />
+                    <span asp-validation-for="Incentives" class="text-danger"></span>
+                </div>
+
+                <!-- Date -->
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label">التاريخ</label>
+                    <input asp-for="Date" class="form-control" type="date" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group text-center mt-4">
+                    <input type="submit" value="حفظ التغييرات" class="btn btn-primary btn-lg" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Return to List Link -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-secondary btn-lg">العودة إلى القائمة</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

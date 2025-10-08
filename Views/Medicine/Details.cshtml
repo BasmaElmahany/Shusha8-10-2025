@@ -1,0 +1,26 @@
+﻿@model Shusha_project_BackUp.Data.Medicine
+
+@{
+    ViewData["Title"] = "تفاصيل الدواء";
+}
+<div class="container" dir="rtl">
+    <h1 class="text-center mb-4">تفاصيل الدواء</h1>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <div class="mb-3">
+            <p><strong>اسم الدواء:</strong> @Model.Name</p>
+            <p><strong>الوصف:</strong> @Model.Description</p>
+            <p><strong>الكمية المتوفرة:</strong> @Model.Quantity</p>
+            <p><strong>السعر:</strong> @Model.Price</p>
+            <p><strong>الوحدة:</strong> @Model.Type</p>
+            <p><strong>تاريخ الانتاج:</strong> @Model.ProductionDate</p>
+            <p><strong>تاريخ الانتهاء:</strong> @Model.ExpirationDate</p>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="@Url.Action("Edit", "Medicine", new { id = Model.ID })" class="btn btn-primary">تعديل</a>
+            <a href="@Url.Action("Delete", "Medicine", new { id = Model.ID })" class="btn btn-danger">حذف</a>
+            <a href="@Url.Action("Index", "Medicine")" class="btn btn-secondary">عودة</a>
+        </div>
+    </div>
+</div>

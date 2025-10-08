@@ -1,0 +1,53 @@
+﻿@model Shusha_project_BackUp.Data.MedicineUsed
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div dir="rtl" style="text-align:right">
+<h1>حذف</h1>
+
+<h3>هل انت متاكد من الحذف؟</h3>
+<div>
+    <h4>حذف</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           اسم الدواء 
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class = "col-sm-2">
+           الغرض
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.purpose)
+        </dd>
+        <dt class = "col-sm-2">
+            الكمية المستخدمة
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.quantityUsed)
+        </dd>
+        <dt class = "col-sm-2">
+            التاريخ
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            وصف الدواء
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Medicine.Description)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> |
+        <a asp-action="Index">العودة الي القائمة </a>
+    </form>
+</div>
+</div>

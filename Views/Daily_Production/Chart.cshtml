@@ -1,0 +1,204 @@
+﻿@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var chartData = ViewBag.ChartData; // JSON data
+    var yFields = ViewBag.YFields as List<string>; // Available Y-fields
+    var xField = ViewBag.XField as string;
+
+    @if (ViewBag.ChartData != null)
+    {
+        chartData = JsonConvert.DeserializeObject<List<object>>(ViewBag.ChartData.ToString());
+    }
+    else
+    {
+        <p>No data available to display chart.</p>
+    }
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<h2>Daily Production Chart</h2>
+
+<!-- Form to dynamically select X and Y fields -->
+<form method="get" id="chart-form" class="chart-form">
+    <label for="wardId">Select Ward:</label>
+    <select name="wardId" id="wardId">
+        @foreach (var ward in ViewBag.Wards as SelectList)
+        {
+            <option value="@ward.Value">@ward.Text</option>
+        }
+    </select>
+
+    <label for="xField">Select X-axis:</label>
+    <select name="xField" id="xField">
+        <option value="Date">Date</option> <!-- X-axis as Date -->
+    </select>
+
+    <label for="yFields">Select Y-axis:</label>
+    <select name="yFields" id="yFields" multiple>
+        @foreach (var field in ViewBag.YFields as List<string>)
+        {
+            <option value="@field">@field.Replace('_', ' ')</option>
+        }
+    </select>
+
+    <button type="submit">Generate Chart</button>
+</form>
+
+<!-- Chart Div -->
+<div id="line-chart" style="width: 100%; height: 500px; position: relative;"></div>
+
+<!-- Buttons for Download and Zoom -->
+<div>
+    <button id="download-btn" onclick="downloadChart()">Download Chart</button>
+    <button id="zoom-btn" onclick="toggleZoom()">Enable Zoom</button>
+</div>
+
+<script type="text/javascript">
+    let chart; // Chart instance
+    let chartDataTable; // Chart DataTable
+    let isZoomEnabled = false;
+
+    google.charts.load('current', { packages: ['corechart'] });
+
+    function generateChart() {
+        if (!chartData || chartData.length === 0) {
+            alert("No chart data available.");
+            return;
+        }
+
+        // Parse the JSON data (already passed from the server)
+        var data = chartData;
+
+        // Get selected X and Y fields
+        var selectedXField = document.getElementById("xField").value;
+        var selectedYFields = Array.from(document.getElementById("yFields").selectedOptions).map(opt => opt.value);
+
+        if (selectedYFields.length === 0) {
+            alert("Please select at least one Y-axis field.");
+            return;
+        }
+
+        // Create a DataTable for Google Charts
+        chartDataTable = new google.visualization.DataTable();
+        chartDataTable.addColumn('string', selectedXField); // X-axis as string
+
+        selectedYFields.forEach(field => {
+            chartDataTable.addColumn('number', field.replace('_', ' '));
+        });
+
+        // Add rows dynamically from the JSON data
+        data.forEach(item => {
+            var row = [item[selectedXField] || 'N/A']; // Ensure X-axis is not empty
+            selectedYFields.forEach(field => {
+                row.push(item[field] || 0); // Handle missing values
+            });
+            chartDataTable.addRow(row);
+        });
+
+        // Chart options
+        var options = {
+            title: 'Dynamic Daily Production Chart',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            hAxis: {
+                title: selectedXField,
+                slantedText: true,  // Ensure X-axis labels are slanted for visibility
+                slantedTextAngle: 45, // Angle of labels
+                textStyle: {
+                    fontSize: 12 // Adjust font size for better display
+                },
+                gridlines: {
+                    count: 10 // Ensure X-axis gridlines are visible
+                }
+            },
+            vAxis: {
+                title: 'Values',
+                gridlines: { count: 10 } // Ensure readable gridlines
+            },
+            explorer: isZoomEnabled ? { axis: 'horizontal', keepInBounds: true } : null,
+            colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
+        };
+
+        // Draw the chart
+        chart = new google.visualization.LineChart(document.getElementById('line-chart'));
+        chart.draw(chartDataTable, options);
+    }
+
+    function downloadChart() {
+        if (!chart) {
+            alert("Please generate the chart first!");
+            return;
+        }
+
+        // Get chart image URI
+        var chartImageURI = chart.getImageURI();
+
+        // Create a download link
+        var link = document.createElement('a');
+        link.href = chartImageURI;
+        link.download = 'chart.png';
+        link.click();
+    }
+
+    function toggleZoom() {
+        if (!chart) {
+            alert("Please generate the chart first!");
+            return;
+        }
+
+        isZoomEnabled = !isZoomEnabled;
+
+        var options = {
+            title: 'Dynamic Daily Production Chart',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            hAxis: {
+                title: document.getElementById("xField").value,
+                slantedText: true,
+                slantedTextAngle: 45
+            },
+            vAxis: { title: 'Values' },
+            explorer: isZoomEnabled ? { axis: 'horizontal', keepInBounds: true } : null,
+            colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
+        };
+
+        // Redraw chart with zoom enabled/disabled
+        chart.draw(chartDataTable, options);
+
+        // Update button text
+        document.getElementById("zoom-btn").innerText = isZoomEnabled ? "Disable Zoom" : "Enable Zoom";
+    }
+
+    // Run the chart generation when the page is ready
+    window.onload = generateChart;
+</script>
+
+<style>
+    .chart-form {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        margin: 20px 0;
+    }
+
+        .chart-form label {
+            margin-bottom: 10px;
+        }
+
+        .chart-form select {
+            margin-bottom: 15px;
+        }
+
+    #line-chart {
+        width: 100%;
+        height: 500px;
+        margin-top: 20px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+</style>

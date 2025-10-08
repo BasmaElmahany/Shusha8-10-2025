@@ -1,0 +1,131 @@
+﻿@model Shusha_project_BackUp.Data.DailySales
+
+@{
+    ViewData["Title"] = "تعديل بيانات المبيعات اليومية";
+}
+
+<!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+<style>
+    .form-group {
+        direction: rtl;
+    }
+
+</style>
+    
+<div class="container mt-5" dir="rtl">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <h4 class="text-center text-muted">تعديل بيانات المبيعات اليومية</h4>
+    <hr />
+
+    <form asp-action="Edit" class="needs-validation" novalidate style ="direction : rtl; text-align:right;">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <input type="hidden" asp-for="dailySales_id" />
+
+        <!-- Ward Dropdown -->
+        <div class="form-group">
+            <label for="wardID" class="form-label">اسم العنبر</label>
+            <select asp-for="wardID" class="form-control" asp-items="ViewBag.wardID"></select>
+            <span asp-validation-for="wardID" class="text-danger"></span>
+        </div>
+
+        <!-- White Egg Carton Production -->
+        <div class="form-group">
+            <label for="no_of_carton_WhEggs" class="form-label">انتاج البيض الابيض بالكرتونة</label>
+            <input asp-for="no_of_carton_WhEggs" class="form-control" />
+            <span asp-validation-for="no_of_carton_WhEggs" class="text-danger"></span>
+        </div>
+
+        <!-- White Egg Carton Price -->
+    @*    <div class="form-group">
+            <label for="Whprice" class="form-label">سعر كرتونة البيض الابيض</label>
+            <input asp-for="Whprice" class="form-control" />
+            <span asp-validation-for="Whprice" class="text-danger"></span>
+        </div>*@
+
+        <!-- Brown Egg Carton Production -->
+        <div class="form-group">
+            <label for="no_of_carton_BrEggs" class="form-label">انتاج البيض البني بالكرتونة</label>
+            <input asp-for="no_of_carton_BrEggs" class="form-control" />
+            <span asp-validation-for="no_of_carton_BrEggs" class="text-danger"></span>
+        </div>
+
+        @*  <!-- Brown Egg Carton Price -->
+        <div class="form-group">
+            <label for="Brprice" class="form-label">سعر كرتونة البيض البني</label>
+            <input asp-for="Brprice" class="form-control" />
+            <span asp-validation-for="Brprice" class="text-danger"></span>
+        </div>*@
+
+        <!-- Broken Egg Carton Production -->
+        <div class="form-group">
+            <label for="no_of_carton_broken" class="form-label">انتاج البيض الكسر بالكرتونة</label>
+            <input asp-for="no_of_carton_broken" class="form-control" />
+            <span asp-validation-for="no_of_carton_broken" class="text-danger"></span>
+        </div>
+
+        <!-- Broken Egg Carton Price -->
+       @*   <div class="form-group">
+            <label for="Broprice" class="form-label">سعر كرتونة البيض الكسر</label>
+            <input asp-for="Broprice" class="form-control" />
+            <span asp-validation-for="Broprice" class="text-danger"></span>
+        </div>
+        *@
+        <!-- Double Yolk Egg Production -->
+        <div class="form-group">
+            <label for="double_eggs" class="form-label">انتاج بيض مزدوج الصفارة</label>
+            <input asp-for="double_eggs" class="form-control" />
+            <span asp-validation-for="double_eggs" class="text-danger"></span>
+        </div>
+
+       @*  <!-- Double Yolk Egg Price -->
+        <div class="form-group">
+            <label for="Doprice" class="form-label">سعر كرتونة بيض مزدوج الصفارة</label>
+            <input asp-for="Doprice" class="form-control" />
+            <span asp-validation-for="Doprice" class="text-danger"></span>
+        </div>*@
+
+        <!-- Waste Volume -->
+        <div class="form-group">
+            <label for="waste_poultry" class="form-label">حجم السبلة (بالمتر المكعب)</label>
+            <input asp-for="waste_poultry" class="form-control" placeholder="مثال: 3" min="0" />
+            <span asp-validation-for="waste_poultry" class="text-danger"></span>
+        </div>
+
+        @*   <!-- Waste Price -->
+        <div class="form-group">
+            <label for="waste_price" class="form-label">سعر المتر المكعب من السبلة</label>
+            <input asp-for="waste_price" class="form-control" placeholder="مثال: 7.00" min="0" />
+            <span asp-validation-for="waste_price" class="text-danger"></span>
+        </div>*@
+
+        <!-- Date -->
+        <div class="form-group">
+            <label for="Date" class="form-label">التاريخ</label>
+            <input asp-for="Date" class="form-control" type="date" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <!-- Total -->
+       @*    <div class="form-group">
+            <label for="Total" class="form-label">المستحق</label>
+            <input asp-for="Total" class="form-control" readonly />
+            <span asp-validation-for="Total" class="text-danger"></span>
+        </div>
+        *@
+        <!-- Submit Button -->
+        <div class="form-group d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">حفظ</button>
+            <a asp-action="Index" class="btn btn-secondary">العودة الى القائمة الرئيسية</a>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

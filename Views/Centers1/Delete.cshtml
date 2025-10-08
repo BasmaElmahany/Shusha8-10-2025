@@ -1,0 +1,35 @@
+﻿@model Shusha_project_BackUp.Center
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div dir="rtl" class="container mt-5">
+
+    <h1 class="text-center text-danger">هل أنت متأكد من أنك تريد حذف هذا؟</h1>
+
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h4>حذف المركز</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-2">اسم المركز</dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.centerName)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="centerId" />
+            <button type="submit" class="btn btn-danger">حذف</button> |
+            <a asp-action="Index" class="btn btn-secondary">عودة إلى القائمة</a>
+        </form>
+    </div>
+
+</div>

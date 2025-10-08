@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "Chart Page";
+}
+
+
+
+<!-- Form for selecting a ward, month, and year -->
+<form method="get" asp-action="Index" style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f7f9; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+    <h3 style="text-align: center; color: #333; font-family: 'Arial', sans-serif; margin-bottom: 20px;">اختر البيانات المناسبة</h3>
+
+    <div style="margin-bottom: 15px;">
+        <label for="wardID" style="font-size: 16px; color: #555;">اختر العنبر:</label>
+        <select name="wardID" id="wardID" asp-items="ViewBag.Wards" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            <option value="">اختر العنبر</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="month" style="font-size: 16px; color: #555;">الشهر:</label>
+        <select name="month" id="month" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            <option value="">اختر الشهر</option>
+            <option value="1">يناير</option>
+            <option value="2">فبراير</option>
+            <option value="3">مارس</option>
+            <option value="4">أبريل</option>
+            <option value="5">مايو</option>
+            <option value="6">يونيو</option>
+            <option value="7">يوليو</option>
+            <option value="8">أغسطس</option>
+            <option value="9">سبتمبر</option>
+            <option value="10">أكتوبر</option>
+            <option value="11">نوفمبر</option>
+            <option value="12">ديسمبر</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="year" style="font-size: 16px; color: #555;">السنة:</label>
+        <select name="year" id="year" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            <option value="">اختر السنة</option>
+            @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - 5; i--)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+        تحديث المخطط البياني
+    </button>
+</form>
+
+<!-- Display Selected Ward ID -->
+<div style="text-align: center; margin-top: 20px;">
+    <h3 style="font-family: 'Arial', sans-serif; color: #333;">العنبر المختار: <span style="color: #4CAF50;">@ViewBag.SelectedWardID</span></h3>
+</div>
+
+
+<!-- Line Chart Container -->
+<div id="containerLineChart" style="width:100%; height:400px;"></div>
+
+<!-- Column Chart Container (new chart in a separate div) -->
+<div id="containerColumnChart" style="width:100%; height:400px; margin-top: 50px;"></div>
+
+@section Scripts {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script> <!-- Exporting module -->
+    <script>
+        // Get data from ViewBag
+        const data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData));
+
+        // Extract the data for each series (production metrics)
+        const dates = data.map(item => item.Date); // X-axis (Date)
+        const series1Data = data.map(item => item.No_of_Wheggs); // Y-axis for No_of_Wheggs
+        const series2Data = data.map(item => item.No_of_Breggs); // Y-axis for No_of_Breggs
+        const series3Data = data.map(item => item.No_of_Carton_Broken); // Y-axis for No_of_Carton_Broken
+        const series4Data = data.map(item => item.Double_Eggs); // Y-axis for Double_Eggs
+        const series5Data = data.map(item => item.Whdead_Herd); // Y-axis for Whdead_Herd
+        const series6Data = data.map(item => item.Brdead_Herd); // Y-axis for Brdead_Herd
+
+             // Create the Line Chart
+        Highcharts.chart('containerLineChart', {
+            chart: {
+                type: 'line' // Default to line chart for production trends
+            },
+            title: {
+                text: 'مخطط الإنتاج اليومي',
+                align: 'center'
+            },
+            xAxis: {
+                categories: dates, // Dates as X-axis categories
+                crosshair: true
+            },
+            yAxis: { // Single Y-axis for all series
+                title: {
+                    text: 'القيمة'
+                },
+                labels: {
+                    format: '{value}'
+                }
+            },
+            tooltip: {
+                shared: true // Shows data for all series on hover
+            },
+            series: [
+                { name: 'البيض الأبيض بالكرتونة', data: series1Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض البني بالكرتونة', data: series2Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض الكسر بالكرتونة', data: series3Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض المزدوج الصفارة بالكرتونة', data: series4Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'النافق الأبيض', data: series5Data, tooltip: { valueSuffix: ' دجاجة' } },
+                { name: 'النافق البني', data: series6Data, tooltip: { valueSuffix: ' دجاجة' } }
+            ]
+        });
+
+        // Create the Column Chart
+        Highcharts.chart('containerColumnChart', {
+            chart: {
+                type: 'column' // Set the chart type to column
+            },
+            title: {
+                text: 'رسم بياني للإنتاج اليومي',
+                align: 'center'
+            },
+            xAxis: {
+                categories: dates, // Dates as X-axis categories
+                crosshair: true
+            },
+            yAxis: { // Single Y-axis for all series
+                title: {
+                    text: 'القيمة'
+                },
+                labels: {
+                    format: '{value}'
+                }
+            },
+            tooltip: {
+                shared: true
+            },
+            series: [
+                { name: 'البيض الأبيض بالكرتونة', data: series1Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض البني بالكرتونة', data: series2Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض الكسر بالكرتونة', data: series3Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'البيض المزدوج الصفارة', data: series4Data, tooltip: { valueSuffix: ' كرتونة' } },
+                { name: 'النافق الأبيض', data: series5Data, tooltip: { valueSuffix: ' دجاجة' } },
+                { name: 'النافق البني', data: series6Data, tooltip: { valueSuffix: ' دجاجة' } }
+            ],
+            exporting: {
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        menuItems: [
+                            'downloadPNG',
+                            'downloadJPEG',
+                            'downloadPDF',
+                            'downloadSVG'
+                        ]
+                    }
+                }
+            }
+        });
+
+
+    </script>
+}

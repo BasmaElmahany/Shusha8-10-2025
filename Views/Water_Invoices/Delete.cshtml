@@ -1,0 +1,41 @@
+﻿@model Shusha_project_BackUp.Data.Water_Invoices
+
+@{
+    ViewData["Title"] = "حذف الفاتورة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>حذف الفاتورة</h1>
+
+<h3>هل أنت متأكد أنك تريد حذف هذه الفاتورة؟</h3>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="form-group">
+            <label class="control-label">المحطة</label>
+            <p class="form-control-static">@Model.branch.branch_name</p>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">المبلغ</label>
+            <p class="form-control-static">@Model.amount</p>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">صورة الفاتورة</label>
+            @if (!string.IsNullOrEmpty(Model.Invoice_photo))
+            {
+                <div>
+                    <img src="@Model.Invoice_photo" alt="Invoice Photo" class="img-fluid" style="max-width: 150px; height: auto;" />
+                </div>
+            }
+            <p>@(string.IsNullOrEmpty(Model.Invoice_photo) ? "لا توجد صورة" : "")</p>
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.ID" method="post">
+            <div class="form-group text-center">
+                <input type="submit" value="حذف" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>

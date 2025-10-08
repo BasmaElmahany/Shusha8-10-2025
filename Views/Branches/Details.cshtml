@@ -1,0 +1,79 @@
+﻿@model Shusha_project_BackUp.Branch
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div dir="rtl" class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">تفاصيل المشروع</h3>
+        </div>
+        <div class="card-body">
+            <h5 class="text-muted mb-4">معلومات المشروع</h5>
+            <div class="row">
+                <!-- Project Name -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label font-weight-bold">اسم المشروع:</label>
+                    <p class="form-control bg-light">@Html.DisplayFor(model => model.branch_name)</p>
+                </div>
+
+                <!-- Total Herd -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label font-weight-bold">عدد القطيع الابيض في المشروع كاملاً:</label>
+                    <p class="form-control bg-light">@Html.DisplayFor(model => model.total_no_of_Whherd)</p>
+                </div>
+                <!-- Total Herd -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label font-weight-bold">عدد القطيع البني في المشروع كاملاً:</label>
+                    <p class="form-control bg-light">@Html.DisplayFor(model => model.total_no_of_Brherd)</p>
+                </div>
+            </div>
+
+            <h5 class="text-muted mt-5 mb-4">العنابر</h5>
+            <!-- Wards Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>اسم العنبر</th>
+                            <th>عدد القطيع الابيض في العنبر</th>
+                            <th>عدد القطيع البني في العنبر</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.wards != null && Model.wards.Any())
+                        {
+                            foreach (var ward in Model.wards)
+                            {
+                                <tr>
+                                    <td>@ward.WardName</td>
+                                    <td>@ward.No_of_Whherd</td>
+                                    <td>@ward.No_of_Brherd</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2" class="text-danger">لا توجد عنابر مضافة لهذا المشروع.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Model?.branch_id">
+                <i class="fas fa-edit"></i> تعديل البيانات
+            </a>
+            <a class="btn btn-secondary btn-sm" asp-action="Index">
+                <i class="fas fa-arrow-left"></i> العودة الى القائمة الرئيسية
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}

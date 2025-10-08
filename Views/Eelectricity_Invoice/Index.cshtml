@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Eelectricity_Invoice>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+<!-- Ensure RTL direction for Arabic layout -->
+<div dir="rtl">
+    <h1 class="text-center my-4">الفواتير</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary">إنشاء جديد</a>
+    </p>
+
+    <!-- Table container for DataTables -->
+    <table id="invoiceTable" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                  المحطة
+                </th>
+                <th>
+                    التاريخ
+                </th>
+                <th>
+                    القيمة 
+                </th>
+                <th>
+                    صورة الفاتورة
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.branch.branch_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.amount)
+                    </td>
+                    <td>
+                        <!-- Display the image for each item with fixed width and auto-adjusting height -->
+                        <img src="@item.Invoice_photo" alt="الصورة المرفقة" class="img-fluid" style="max-width: 100px; height: auto;" />
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin")){
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning btn-sm">تعديل</a>
+
+                        }
+                        |
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-info btn-sm">تفاصيل</a> |
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger btn-sm">حذف</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <!-- jQuery (needed for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#invoiceTable').DataTable({
+                "language": {
+                    "sSearch": "بحث:",  // Label for the search input
+                    "lengthMenu": "عرض _MENU_ سجلات", // Label for the records display option
+                    "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ سجلات", // Pagination info
+                    "infoEmpty": "لا توجد سجلات لعرضها", // No data message
+                    "paginate": {
+                        "previous": "السابق", // Previous button text
+                        "next": "التالي" // Next button text
+                    }
+                },
+                "paging": true,    // Enable pagination
+                "searching": true, // Enable searching
+                "ordering": true   // Enable sorting
+            });
+        });
+    </script>
+
+
+}

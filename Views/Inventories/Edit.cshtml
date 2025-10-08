@@ -1,0 +1,64 @@
+﻿@model Shusha_project_BackUp.Inventory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Inventory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Inv_Id" />
+            <div class="form-group">
+                <label asp-for="No_of_Wheggs" class="control-label"></label>
+                <input asp-for="No_of_Wheggs" class="form-control" />
+                <span asp-validation-for="No_of_Wheggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="No_of_Breggs" class="control-label"></label>
+                <input asp-for="No_of_Breggs" class="form-control" />
+                <span asp-validation-for="No_of_Breggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="No_of_Brokeneggs" class="control-label"></label>
+                <input asp-for="No_of_Brokeneggs" class="form-control" />
+                <span asp-validation-for="No_of_Brokeneggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="No_of_Double_eggs" class="control-label"></label>
+                <input asp-for="No_of_Double_eggs" class="form-control" />
+                <span asp-validation-for="No_of_Double_eggs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feeds" class="control-label"></label>
+                <input asp-for="Feeds" class="form-control" />
+                <span asp-validation-for="Feeds" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hens_waste" class="control-label"></label>
+                <input asp-for="Hens_waste" class="form-control" />
+                <span asp-validation-for="Hens_waste" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

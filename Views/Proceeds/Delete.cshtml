@@ -1,0 +1,51 @@
+﻿@model Shusha_project_BackUp.Data.Proceed
+
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<div class="container text-right" dir="rtl" style="font-family: 'Tahoma', sans-serif;">
+    <h1 class="text-danger mb-4">حذف المعاملة</h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">تحذير! هل أنت متأكد أنك تريد حذف هذه المعاملة؟</h5>
+        </div>
+        <div class="card-body">
+            <h4>بيانات المعاملة</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                  اسم المركز
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.center.centerName)
+                </dd>
+                <dt class="col-sm-2">
+                    القيمة المستحقة 
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.amount)
+                </dd>
+                <dt class="col-sm-2">
+                    القيمة المتبقية
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.rest_amount)
+                </dd>
+                <dt class="col-sm-2">
+                   التاريخ 
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="id" />
+                <div class="form-group mb-3">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                    <a asp-action="Index" class="btn btn-secondary btn-sm">الرجوع للقائمة</a>
+                </div>
+            </form>
+            <

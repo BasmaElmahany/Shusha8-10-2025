@@ -1,0 +1,40 @@
+﻿@model Shusha_project_BackUp.Data.Request_Proceeds
+
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<div class="container text-right" dir="rtl" style="font-family: 'Tahoma', sans-serif;">
+    <h1 class="text-primary mb-4">حذف طلب</h1>
+
+    <h3 class="text-danger mb-4">هل أنت متأكد أنك تريد حذف هذا العنصر؟</h3>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">بيانات العائد المطلوب</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 font-weight-bold text-dark">
+                    اسم المركز
+                </dt>
+                <dd class="col-sm-8 text-secondary">
+                    @Html.DisplayFor(model => model.center.centerName)
+                </dd>
+                <dt class="col-sm-4 font-weight-bold text-dark">
+                   القيمة المستحقة
+                </dt>
+                <dd class="col-sm-8 text-secondary">
+                    @Html.DisplayFor(model => model.requested_proceeds)
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-end">
+            <form asp-action="Delete" class="d-inline">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="حذف" class="btn btn-danger btn-sm mx-2" />
+            </form>
+            <a asp-action="Index" class="btn btn-secondary btn-sm">الرجوع للقائمة</a>
+        </div>
+    </div>
+</div>

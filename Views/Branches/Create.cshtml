@@ -1,0 +1,57 @@
+﻿@model Shusha_project_BackUp.Branch
+
+@{
+    ViewData["Title"] = "Create";
+}
+<!-- Optional: FontAwesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<div dir="rtl">
+<h1 class="text-center text-primary mb-4">إضافة مشروع جديد</h1>
+
+<div class="row justify-content-center" >
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0 text-center">تفاصيل المشروع</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+
+                    <!-- Branch Name -->
+                    <div class="mb-3">
+                        <label asp-for="branch_name" class="form-label fw-bold">اسم المشروع</label>
+                        <input asp-for="branch_name" class="form-control" placeholder="أدخل اسم المشروع" />
+                        <span asp-validation-for="branch_name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Total Number of Herd 
+                    <div class="mb-3">
+                            <label asp-for="total_no_of_Whherd" class="form-label fw-bold">عدد القطيع الابيض</label>
+                            <input asp-for="total_no_of_Whherd" class="form-control" readonly />
+                            <span asp-validation-for="total_no_of_Whherd" class="text-danger"></span>
+                        </div>-->
+                        <!-- Total Number of Herd 
+                        <div class="mb-3">
+                            <label asp-for="total_no_of_Brherd" class="form-label fw-bold">عدد القطيع البني</label>
+                            <input asp-for="total_no_of_Brherd" class="form-control" readonly />
+                            <span asp-validation-for="total_no_of_Brherd" class="text-danger"></span>
+                        </div>-->
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">العودة</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save me-2"></i>حفظ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }}
+
+

@@ -1,0 +1,123 @@
+﻿@model Shusha_project_BackUp.Data.TraderSales
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .btn i {
+        margin-left: 5px;
+    }
+</style>
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-warning text-white text-center">
+            <h3>تعديل مبيعات تاجر</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfWhiteEggs" class="fw-bold">أدخل عدد البيض الأبيض بالكرتونة</label>
+                            <input asp-for="NoOfWhiteEggs" class="form-control" placeholder="أدخل عدد البيض الأبيض" />
+                            <span asp-validation-for="NoOfWhiteEggs" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="WhiteEggPrice" class="fw-bold"> سعر البيض الأبيض بالكرتونة</label>
+                            <input asp-for="WhiteEggPrice" class="form-control" placeholder="أدخل سعر البيض الأبيض" />
+                            <span asp-validation-for="WhiteEggPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfBrownEggs" class="fw-bold">أدخل عدد البيض البني بالكرتونة</label>
+                            <input asp-for="NoOfBrownEggs" class="form-control" placeholder="أدخل عدد البيض البني" />
+                            <span asp-validation-for="NoOfBrownEggs" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="BrownEggPrice" class="fw-bold">سعر البيض البني بالكرتونة</label>
+                            <input asp-for="BrownEggPrice" class="form-control" placeholder="أدخل سعر البيض البني" />
+                            <span asp-validation-for="BrownEggPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfBrokenEggs" class="fw-bold">أدخل عدد البيض الكسر بالكرتونة</label>
+                            <input asp-for="NoOfBrokenEggs" class="form-control" placeholder="أدخل عدد البيض الكسر" />
+                            <span asp-validation-for="NoOfBrokenEggs" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="BrokenEggPrice" class="fw-bold">سعر كرتونة البيض الكسر</label>
+                            <input asp-for="BrokenEggPrice" class="form-control" placeholder="أدخل سعر البيض الكسر" />
+                            <span asp-validation-for="BrokenEggPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfDoubleEggs" class="fw-bold">أدخل عدد البيض المزدوج بالكرتونة</label>
+                            <input asp-for="NoOfDoubleEggs" class="form-control" placeholder="أدخل عدد البيض المزدوج" />
+                            <span asp-validation-for="NoOfDoubleEggs" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="DoubleEggPrice" class="fw-bold">سعر كرتونة البيض المزدوج</label>
+                            <input asp-for="DoubleEggPrice" class="form-control" placeholder="أدخل سعر البيض المزدوج" />
+                            <span asp-validation-for="DoubleEggPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="form-group mb-3">
+                    <label asp-for="date" class="fw-bold">التاريخ</label>
+                    <input asp-for="date" type="date" class="form-control" />
+                    <span asp-validation-for="date" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="name_ofTrader" class="fw-bold"> اسم التاجر</label>
+                    <input asp-for="name_ofTrader" class="form-control" placeholder="أدخل اسم التاجر" />
+                    <span asp-validation-for="name_ofTrader" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check mb-3">
+                    <label class="form-check-label fw-bold">
+                        <input class="form-check-input" asp-for="IsPaid" /> هل تم الدفع؟
+                    </label>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-warning px-4">
+                        <i class="bi bi-save"></i> حفظ التعديلات
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary px-4">
+                        <i class="bi bi-arrow-left-circle"></i> العودة للقائمة
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("input[type='number']").forEach(input => {
+                input.addEventListener("input", function() {
+                    this.value = this.value.replace(/[^0-9.]/g, "");
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,97 @@
+﻿@model Shusha_project_BackUp.Data.WardsStock
+
+@{
+    ViewData["Title"] = "إضافة جديدة";
+}
+
+<!-- Bootstrap RTL -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<h1 class="text-primary">
+    <i class="fas fa-plus-circle"></i> @ViewData["Title"]
+</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="whiteEggs" class="form-label">البيض الابيض بالكرتونة</label>
+                <input asp-for="whiteEggs" class="form-control" />
+                <span asp-validation-for="whiteEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="rest_whEggs" class="form-label">البيض الابيض المتبقي بالكرتونة</label>
+                <input asp-for="rest_whEggs" class="form-control" />
+                <span asp-validation-for="rest_whEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="brownEggs" class="form-label">البيض البني بالكرتونة</label>
+                <input asp-for="brownEggs" class="form-control" />
+                <span asp-validation-for="brownEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="rest_brEggs" class="form-label">البيض البني المتبقي بالكرتونة</label>
+                <input asp-for="rest_brEggs" class="form-control" />
+                <span asp-validation-for="rest_brEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="brokenEggs" class="form-label">البيض الكسر بالكرتونة</label>
+                <input asp-for="brokenEggs" class="form-control" />
+                <span asp-validation-for="brokenEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="rest_bkEggs" class="form-label">البيض الكسر المتبقي بالكرتونة</label>
+                <input asp-for="rest_bkEggs" class="form-control" />
+                <span asp-validation-for="rest_bkEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="doubleEggs" class="form-label">البيض مزدوج الصفارة بالكرتونة</label>
+                <input asp-for="doubleEggs" class="form-control" />
+                <span asp-validation-for="doubleEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="rest_dbEggs" class="form-label">البيض مزدوج الصفارة المتبقي بالكرتونة</label>
+                <input asp-for="rest_dbEggs" class="form-control" />
+                <span asp-validation-for="rest_dbEggs" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="wardID" class="form-label">العنبر</label>
+                <select asp-for="wardID" class="form-select" asp-items="ViewBag.wardID"></select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Date" class="form-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="إضافة" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> العودة إلى القائمة
+    </a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

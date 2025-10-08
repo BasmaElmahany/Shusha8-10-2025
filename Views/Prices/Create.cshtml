@@ -1,0 +1,70 @@
+﻿@model Shusha_project_BackUp.Data.Prices
+
+@{
+    ViewData["Title"] = "إنشاء سعر جديد";
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<h1 class="text-center my-4">إنشاء سعر جديد</h1>
+
+<div class="container" dir="rtl">
+    <h4>إضافة الأسعار</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- White Egg Price -->
+                <div class="form-group">
+                    <label asp-for="white_Egg_Price" class="control-label">سعر البيض الأبيض</label>
+                    <input asp-for="white_Egg_Price" class="form-control" />
+                    <span asp-validation-for="white_Egg_Price" class="text-danger"></span>
+                </div>
+
+                <!-- Brown Egg Price -->
+                <div class="form-group">
+                    <label asp-for="brown_Egg_Price" class="control-label">سعر البيض البني</label>
+                    <input asp-for="brown_Egg_Price" class="form-control" />
+                    <span asp-validation-for="brown_Egg_Price" class="text-danger"></span>
+                </div>
+
+                <!-- Broken Egg Price -->
+                <div class="form-group">
+                    <label asp-for="broken_Egg_Price" class="control-label">سعر البيض الكسر</label>
+                    <input asp-for="broken_Egg_Price" class="form-control" />
+                    <span asp-validation-for="broken_Egg_Price" class="text-danger"></span>
+                </div>
+
+                <!-- Double Egg Price -->
+                <div class="form-group">
+                    <label asp-for="double_Egg_Price" class="control-label">سعر البيض المزدوج الصفارة</label>
+                    <input asp-for="double_Egg_Price" class="form-control" />
+                    <span asp-validation-for="double_Egg_Price" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group text-center">
+                    <input type="submit" value="إنشاء" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <!-- Return to List -->
+        <a class="btn btn-secondary" asp-action="Index">العودة الى القائمة الرئيسية</a>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

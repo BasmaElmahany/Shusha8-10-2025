@@ -1,0 +1,279 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">مشروع دواجن شوشة</h1>
+</div>
+<div class="container" dir="rtl">
+    <!-- Total Revenues Card -->
+    <div class="text-center p-4 mb-4 bg-light rounded-4 shadow-sm">
+        <h2 class="text-primary mb-2">إجمالي العوائد</h2>
+        <h2 class="text-success fw-bold">
+            @(ViewBag.ChartData != null && ViewBag.ChartData.Count > 0 ? ViewBag.ChartData[0].TotalRevenues : "لا يوجد بيانات")
+        </h2>
+        <p class="text-muted mt-2">= مبيعات القطيع +  مبيعات التجار + مبيعات المراكز</p>
+    </div>
+
+    <!-- Breakdown: Trader + Center Revenues -->
+    <div class="row text-end" dir="rtl">
+        <div class="col-md-4 mb-3">
+            <div class="text-center p-4 bg-white border rounded-4 shadow-sm h-100">
+                <i class="fas fa-handshake fa-2x text-warning mb-2"></i>
+                <h5 class="text-primary mb-2">إجمالي مبيعات التجار</h5>
+                <h4 class="text-success fw-bold">@ViewBag.Total_trader</h4>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="text-center p-4 bg-white border rounded-4 shadow-sm h-100">
+                <i class="fas fa-city fa-2x text-info mb-2"></i>
+                <h5 class="text-primary mb-2">إجمالي مبيعات المراكز</h5>
+                <h4 class="text-success fw-bold">@ViewBag.CenterRevenues</h4>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="text-center p-4 bg-white border rounded-4 shadow-sm h-100">
+                <i class="fas fa-dove text-primary"></i>
+                <i class="fas fa-drumstick-bite fa-2x text-secondary mb-2"></i> 
+               
+                <h5 class="text-primary mb-2">إجمالي مبيعات القطيع</h5>
+                <h4 class="text-success fw-bold">@ViewBag.total_herdSales</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Line Chart Container -->
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-top: 50px;">
+    <div id="containerPieChartAmount" style="flex: 1; height: 400px;"></div>
+    <div id="containerPieChartRestAmount" style="flex: 1; height: 400px;"></div>
+    <div id="containerPieChartTotalAmount" style="flex: 1; height: 400px;"></div>
+</div>
+
+<div id="containerLineChart" style="width:100%; height:400px;"></div>
+<div id="containerColumnChart" style="width:100%; height:400px; margin-top: 50px;"></div>
+
+
+@section Scripts {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script> <!-- Exporting module -->
+    <script>
+        // Get data from ViewBag
+        const data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData));
+
+        // Extract the data for each series (production metrics)
+        const centers = data.map(item => item.centerName); // X-axis (Centers or identifiers)
+        const series1Data = data.map(item => item.Amount); // Y-axis for "المسدد"
+        const series2Data = data.map(item => item.RestAmount); // Y-axis for "المديونية"
+
+        // Get total values from ViewBag (Ensure they are valid numbers)
+             // Get total values from first element in the array
+        const totalAmount = data.length > 0 ? data[0].TotalAmount : 0;
+        const totalRestAmount = data.length > 0 ? data[0].TotalRestAmount : 0;
+
+        console.log("Total Amount:", totalAmount);
+        console.log("Total Rest Amount:", totalRestAmount);
+
+
+        // Ensure values are not NaN (Debugging Step)
+     
+                Highcharts.chart('containerPieChartTotalAmount', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'إجمالي المسدد والمديونية'
+            },
+            tooltip: {
+                pointFormat: '<b>{point.percentage:.1f}%</b> ({point.y} جنيها)'
+            },
+            series: [{
+                name: 'الإجمالي',
+                data: [
+                    {
+                        name: 'إجمالي المسدد',
+                        y: totalAmount,
+                        color: '#4CAF50' // Green color for paid amount
+                    },
+                    {
+                        name: 'إجمالي المديونية',
+                        y: totalRestAmount,
+                        color: '#FF5733' // Red color for debt
+                    }
+                ]
+            }]
+        });
+
+            // Create the Line Chart
+        Highcharts.chart('containerLineChart', {
+            chart: {
+                type: 'line' // Line chart for trends
+            },
+            title: {
+                text: 'مخطط لاجمالي المسدد والمديونية من كل مركز',
+                align: 'center'
+            },
+            xAxis: {
+                categories: centers, // Use center IDs or other identifiers as X-axis labels
+                title: {
+                    text: 'المراكز'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'القيمة (جنيها)'
+                },
+                labels: {
+                    format: '{value} جنيها'
+                }
+            },
+            tooltip: {
+                shared: true, // Shows data for all series on hover
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y} جنيها</b><br/>'
+            },
+            series: [
+                {
+                    name: 'المسدد',
+                    data: series1Data,
+                    tooltip: {
+                        valueSuffix: ' جنيها'
+                    }
+                },
+                {
+                    name: 'المديونية',
+                    data: series2Data,
+                    tooltip: {
+                        valueSuffix: ' جنيها'
+                    }
+                }
+            ]
+        });
+
+        // Create the Column Chart
+        Highcharts.chart('containerColumnChart', {
+            chart: {
+                type: 'column' // Column chart for comparisons
+            },
+            title: {
+                text: 'رسم بياني لاجمالي المسدد والمديونية من كل مركز',
+                align: 'center'
+            },
+            xAxis: {
+                categories: centers, // Use center IDs or other identifiers as X-axis labels
+                title: {
+                    text: 'المراكز'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'القيمة (جنيها)'
+                },
+                labels: {
+                    format: '{value} جنيها'
+                }
+            },
+            tooltip: {
+                shared: true, // Show data for all series on hover
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y} جنيها</b><br/>'
+            },
+            series: [
+                {
+                    name: 'المسدد',
+                    data: series1Data,
+                    tooltip: {
+                        valueSuffix: ' جنيها'
+                    }
+                },
+                {
+                    name: 'المديونية',
+                    data: series2Data,
+                    tooltip: {
+                        valueSuffix: ' جنيها'
+                    }
+                }
+            ],
+            exporting: { // Enable exporting options
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        menuItems: [
+                            'downloadPNG',
+                            'downloadJPEG',
+                            'downloadPDF',
+                            'downloadSVG'
+                        ]
+                    }
+                }
+            }
+        });
+
+        // Create the Pie Chart for "Amount"
+        Highcharts.chart('containerPieChartAmount', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'نسب المسدد من المراكز'
+            },
+            tooltip: {
+                pointFormat: '<b>{point.percentage:.1f}%</b> ({point.y} جنيها)'
+            },
+            series: [{
+                name: 'المسدد',
+                data: centers.map((center, i) => ({
+                    name: center,
+                    y: series1Data[i]
+                }))
+            }]
+        });
+
+        // Create the Pie Chart for "Rest Amount"
+        Highcharts.chart('containerPieChartRestAmount', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'نسب المديونية من المراكز'
+            },
+            tooltip: {
+                pointFormat: '<b>{point.percentage:.1f}%</b> ({point.y} جنيها)'
+            },
+            series: [{
+                name: 'المديونية',
+                data: centers.map((center, i) => ({
+                    name: center,
+                    y: series2Data[i]
+                }))
+            }]
+        });
+                Highcharts.chart('containerPieChartTotalAmount', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'إجمالي المسدد والمديونية'
+            },
+            tooltip: {
+                pointFormat: '<b>{point.percentage:.1f}%</b> ({point.y} جنيها)'
+            },
+            series: [{
+                name: 'الإجمالي',
+                data: [
+                    {
+                        name: 'إجمالي المسدد',
+                        y: totalAmount,
+                        color: '#4CAF50' // Green color for paid amount
+                    },
+                    {
+                        name: 'إجمالي المديونية',
+                        y: totalRestAmount,
+                        color: '#FF5733' // Red color for debt
+                    }
+                ]
+            }]
+        });
+
+    </script>
+}

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Data.Egg_stock>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.rtl.min.css" rel="stylesheet" />
+<style>
+    body {
+    direction: rtl;
+    text-align: right;
+    }
+
+    table.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+
+    .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    }
+</style>
+<div dir="rtl">
+    <h1 class="text-center mb-4">المخزون اليومي للبيض</h1>
+
+    <div class="mb-3">
+        <a class="btn btn-primary" asp-action="Create">إضافة جديد</a>
+    </div>
+
+    <table id="eggStockTable" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>عدد أطباق البيض الأبيض</th>
+                <th>عدد أطباق البيض البني</th>
+                <th>عدد أطباق البيض الكسر</th>
+                <th>عدد أطباق البيض مزدوج الصفارة</th>
+                <th>المجموع الكلي للأطباق</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.plates_whiteEggs)</td>
+                    <td>@Html.DisplayFor(modelItem => item.plates_BrownEggs)</td>
+                    <td>@Html.DisplayFor(modelItem => item.brokenPlates)</td>
+                    <td>@Html.DisplayFor(modelItem => item.doubleEggs)</td>
+                    <td>@Html.DisplayFor(modelItem => item.total)</td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">تعديل</a>
+                        }
+
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">تفاصيل</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                        }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.6/i18n/ar.json"></script>
+    <script>
+        $(document).ready(function () {
+            $('#eggStockTable').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/ar.json"
+                }
+            });
+        });
+    </script>
+
+}
