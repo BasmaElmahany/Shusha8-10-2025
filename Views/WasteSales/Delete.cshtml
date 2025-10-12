@@ -1,0 +1,224 @@
+﻿@model Shusha_project_BackUp.Data.Waste_Sales
+
+@{
+    ViewData["Title"] = "حذف سجل المبيعات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+    .delete-container {
+        background: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+        border: 3px solid #dc3545;
+    }
+
+    .warning-section {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+        border-right: 4px solid #ffc107;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .warning-section h3 {
+            color: #856404;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .warning-section p {
+            color: #856404;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+        transition: background-color 0.2s ease;
+    }
+
+        .detail-row:hover {
+            background-color: #f8f9fa;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+    .detail-label {
+        font-weight: 600;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .detail-value {
+        font-weight: 700;
+        color: #212529;
+    }
+
+    .total-highlight {
+        background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+
+        .total-highlight h3 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+    .btn-action {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .danger-icon {
+        font-size: 4rem;
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-exclamation-triangle"></i>
+        حذف سجل مبيعات المخلفات
+    </h1>
+</div>
+
+<div class="delete-container">
+    <div class="text-center">
+        <i class="bi bi-trash danger-icon"></i>
+    </div>
+
+    <div class="warning-section">
+        <h3>
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            تحذير هام!
+        </h3>
+        <p>
+            هل أنت متأكد من رغبتك في حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء بعد التأكيد.
+        </p>
+    </div>
+
+    <h4 class="text-center mb-4" style="color: #dc3545;">تفاصيل السجل المراد حذفه</h4>
+
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-hash"></i>
+            رقم السجل
+        </div>
+        <div class="detail-value">@Model.Id</div>
+    </div>
+
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-calendar-event"></i>
+            التاريخ
+        </div>
+        <div class="detail-value">@Model.date.ToString("yyyy-MM-dd")</div>
+    </div>
+
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-person-badge"></i>
+            اسم التاجر
+        </div>
+        <div class="detail-value">@(Model.TraderName ?? "غير محدد")</div>
+    </div>
+
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-rulers"></i>
+            عدد الأمتار
+        </div>
+        <div class="detail-value">@Model.wasteMeters متر</div>
+    </div>
+
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-currency-dollar"></i>
+            السعر للمتر
+        </div>
+        <div class="detail-value">@Model.price.ToString("N2") جنيه</div>
+    </div>
+
+    <div class="total-highlight">
+        <p style="margin: 0; opacity: 0.9;">الإجمالي الكلي</p>
+        <h3>@((Model.wasteMeters * Model.price).ToString("N2")) جنيه</h3>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="alert alert-danger" role="alert">
+            <i class="bi bi-shield-exclamation"></i>
+            <strong>تنبيه نهائي:</strong> بالضغط على زر "تأكيد الحذف" سيتم حذف هذا السجل نهائياً من قاعدة البيانات.
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary btn-action">
+                <i class="bi bi-x-circle"></i>
+                إلغاء
+            </a>
+            <button type="submit" class="btn btn-danger btn-action">
+                <i class="bi bi-trash-fill"></i>
+                تأكيد الحذف
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Confirmation before delete
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                if (!confirm('هل أنت متأكد تماماً من رغبتك في حذف هذا السجل؟')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+

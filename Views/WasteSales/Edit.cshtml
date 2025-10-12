@@ -1,0 +1,201 @@
+﻿@model Shusha_project_BackUp.Data.Waste_Sales
+
+@{
+    ViewData["Title"] = "تعديل سجل مبيعات المخلفات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #000;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+    .form-container {
+        background: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border-radius: 0.5rem;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+        }
+
+    .btn-action {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .form-icon {
+        font-size: 1.2rem;
+        color: #ffc107;
+        margin-left: 0.5rem;
+    }
+
+    .input-group-text {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #000;
+        border: none;
+        font-weight: 600;
+    }
+
+    .validation-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .info-badge {
+        background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-pencil-square"></i>
+        تعديل سجل مبيعات المخلفات
+    </h1>
+</div>
+
+<div class="form-container">
+    <div class="info-badge">
+        <i class="bi bi-info-circle"></i>
+        رقم السجل: <strong>@Model.Id</strong>
+    </div>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="date" class="form-label">
+                    <i class="bi bi-calendar-event form-icon"></i>
+                    التاريخ
+                </label>
+                <input asp-for="date" type="date" class="form-control" />
+                <span asp-validation-for="date" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="TraderName" class="form-label">
+                    <i class="bi bi-person-badge form-icon"></i>
+                    اسم التاجر
+                </label>
+                <input asp-for="TraderName" class="form-control" placeholder="أدخل اسم التاجر" />
+                <span asp-validation-for="TraderName" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="wasteMeters" class="form-label">
+                    <i class="bi bi-rulers form-icon"></i>
+                    عدد الأمتار
+                </label>
+                <div class="input-group">
+                    <input asp-for="wasteMeters" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                    <span class="input-group-text">متر</span>
+                </div>
+                <span asp-validation-for="wasteMeters" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="price" class="form-label">
+                    <i class="bi bi-currency-dollar form-icon"></i>
+                    السعر للمتر الواحد
+                </label>
+                <div class="input-group">
+                    <input asp-for="price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                    <span class="input-group-text">جنيه</span>
+                </div>
+                <span asp-validation-for="price" class="validation-message"></span>
+            </div>
+
+            <div class="col-12">
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>تنبيه:</strong> تأكد من صحة البيانات قبل الحفظ. سيتم تحديث السجل في قاعدة البيانات.
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary btn-action">
+                <i class="bi bi-arrow-right"></i>
+                رجوع للقائمة
+            </a>
+            <button type="submit" class="btn btn-warning btn-action">
+                <i class="bi bi-save"></i>
+                حفظ التعديلات
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Auto-calculate total on input change
+        $(document).ready(function() {
+            function updateTotal() {
+                var meters = parseFloat($('#wasteMeters').val()) || 0;
+                var price = parseFloat($('#price').val()) || 0;
+                var total = meters * price;
+
+                console.log('Total: ' + total.toFixed(2));
+            }
+
+            $('#wasteMeters, #price').on('input', updateTotal);
+
+            // Show initial total
+            updateTotal();
+        });
+    </script>
+}
+

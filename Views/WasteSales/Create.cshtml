@@ -1,0 +1,184 @@
+﻿@model Shusha_project_BackUp.Data.Waste_Sales
+
+@{
+    ViewData["Title"] = "إضافة سجل مبيعات مخلفات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+    .form-container {
+        background: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border-radius: 0.5rem;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #6c757d;
+            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+        }
+
+    .btn-action {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .form-icon {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-left: 0.5rem;
+    }
+
+    .input-group-text {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        color: white;
+        border: none;
+        font-weight: 600;
+    }
+
+    .validation-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-plus-circle"></i>
+        إضافة سجل مبيعات مخلفات جديد
+    </h1>
+</div>
+
+<div class="form-container">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="date" class="form-label">
+                    <i class="bi bi-calendar-event form-icon"></i>
+                    التاريخ
+                </label>
+                <input asp-for="date" type="date" class="form-control" value="@ViewBag.DefaultDate" />
+                <span asp-validation-for="date" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="TraderName" class="form-label">
+                    <i class="bi bi-person-badge form-icon"></i>
+                    اسم التاجر
+                </label>
+                <input asp-for="TraderName" class="form-control" placeholder="أدخل اسم التاجر" />
+                <span asp-validation-for="TraderName" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="wasteMeters" class="form-label">
+                    <i class="bi bi-rulers form-icon"></i>
+                    عدد الأمتار
+                </label>
+                <div class="input-group">
+                    <input asp-for="wasteMeters" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                    <span class="input-group-text">متر</span>
+                </div>
+                <span asp-validation-for="wasteMeters" class="validation-message"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="price" class="form-label">
+                    <i class="bi bi-currency-dollar form-icon"></i>
+                    السعر للمتر الواحد
+                </label>
+                <div class="input-group">
+                    <input asp-for="price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                    <span class="input-group-text">جنيه</span>
+                </div>
+                <span asp-validation-for="price" class="validation-message"></span>
+            </div>
+
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>ملاحظة:</strong> سيتم حساب الإجمالي تلقائياً (عدد الأمتار × السعر للمتر)
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary btn-action">
+                <i class="bi bi-arrow-right"></i>
+                رجوع للقائمة
+            </a>
+            <button type="submit" class="btn btn-primary btn-action">
+                <i class="bi bi-save"></i>
+                حفظ
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Auto-calculate total on input change
+        $(document).ready(function() {
+            function updateTotal() {
+                var meters = parseFloat($('#wasteMeters').val()) || 0;
+                var price = parseFloat($('#price').val()) || 0;
+                var total = meters * price;
+
+                // You can display this if you add a total field
+                console.log('Total: ' + total.toFixed(2));
+            }
+
+            $('#wasteMeters, #price').on('input', updateTotal);
+        });
+    </script>
+}
+

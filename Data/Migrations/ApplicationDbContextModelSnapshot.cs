@@ -770,11 +770,29 @@ namespace Shusha_project_BackUp.Data.Migrations
                     b.Property<decimal>("BrownEggPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("BrownMedEggPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("DoubleEggPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("MedDoubleEggPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MedWhiteEggPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("NewBrownEggPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("NewDoubleEggPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("NewWhiteEggPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("NoOfBrokenEggs")
                         .HasColumnType("int");
@@ -783,6 +801,24 @@ namespace Shusha_project_BackUp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("NoOfDoubleEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfMedBrownEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfMedDoubleEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfMedWhiteEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfNewBrownEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfNewDoubleEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NoOfNewWhiteEggs")
                         .HasColumnType("int");
 
                     b.Property<int>("NoOfWhiteEggs")
@@ -849,6 +885,31 @@ namespace Shusha_project_BackUp.Data.Migrations
                     b.HasIndex("wardID");
 
                     b.ToTable("wardsStocks");
+                });
+
+            modelBuilder.Entity("Shusha_project_BackUp.Data.Waste_Sales", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TraderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("date")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("wasteMeters")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Waste_Sales");
                 });
 
             modelBuilder.Entity("Shusha_project_BackUp.Data.Water_Invoices", b =>

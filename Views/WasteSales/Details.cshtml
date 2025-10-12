@@ -1,0 +1,211 @@
+﻿@model Shusha_project_BackUp.Data.Waste_Sales
+
+@{
+    ViewData["Title"] = "تفاصيل سجل المبيعات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+    .details-container {
+        background: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .detail-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #0dcaf0;
+        transition: all 0.3s ease;
+    }
+
+        .detail-card:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+    .detail-label {
+        font-weight: 600;
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .detail-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #212529;
+        margin: 0;
+    }
+
+    .detail-icon {
+        font-size: 1.2rem;
+        color: #0dcaf0;
+    }
+
+    .total-section {
+        background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+        color: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        margin: 2rem 0;
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+    }
+
+        .total-section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .total-section p {
+            font-size: 1.2rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+    .btn-action {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .record-badge {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        display: inline-block;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-info-circle"></i>
+        تفاصيل سجل مبيعات المخلفات
+    </h1>
+</div>
+
+<div class="details-container">
+    <div class="text-center">
+        <div class="record-badge">
+            <i class="bi bi-hash"></i>
+            رقم السجل: <strong>@Model.Id</strong>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="detail-card">
+                <div class="detail-label">
+                    <i class="bi bi-calendar-event detail-icon"></i>
+                    التاريخ
+                </div>
+                <p class="detail-value">@Model.date.ToString("yyyy-MM-dd")</p>
+                <small class="text-muted">@Model.date.ToString("dddd", new System.Globalization.CultureInfo("ar-EG"))</small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="detail-card">
+                <div class="detail-label">
+                    <i class="bi bi-person-badge detail-icon"></i>
+                    اسم التاجر
+                </div>
+                <p class="detail-value">@(Model.TraderName ?? "غير محدد")</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="detail-card" style="border-left-color: #0d6efd;">
+                <div class="detail-label">
+                    <i class="bi bi-rulers detail-icon" style="color: #0d6efd;"></i>
+                    عدد الأمتار
+                </div>
+                <p class="detail-value" style="color: #0d6efd;">@Model.wasteMeters</p>
+                <small class="text-muted">متر</small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="detail-card" style="border-left-color: #ffc107;">
+                <div class="detail-label">
+                    <i class="bi bi-currency-dollar detail-icon" style="color: #ffc107;"></i>
+                    السعر للمتر الواحد
+                </div>
+                <p class="detail-value" style="color: #ffc107;">@Model.price.ToString("N2")</p>
+                <small class="text-muted">جنيه/متر</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="total-section">
+        <p>
+            <i class="bi bi-calculator"></i>
+            الإجمالي الكلي
+        </p>
+        <h2>@((Model.wasteMeters * Model.price).ToString("N2")) جنيه</h2>
+        <p>(@Model.wasteMeters متر × @Model.price.ToString("N2") جنيه)</p>
+    </div>
+
+    <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i>
+        <strong>معلومة:</strong> تم حساب الإجمالي بضرب عدد الأمتار في السعر للمتر الواحد
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-secondary btn-action">
+            <i class="bi bi-arrow-right"></i>
+            رجوع للقائمة
+        </a>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-action">
+                <i class="bi bi-pencil-square"></i>
+                تعديل
+            </a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-action">
+                <i class="bi bi-trash"></i>
+                حذف
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -67,6 +67,8 @@ namespace Shusha_project_BackUp
 
         public DbSet<HerdSales> HerdSales { get; set; }
 
+        public DbSet<Waste_Sales> Waste_Sales { get; set; }
+
 
 
 

@@ -32,35 +32,104 @@
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                 <input type="hidden" asp-for="Id" />
+
                 <div class="row">
                     <div class="col-md-6">
+
+                        <!--بيض ابيض عادي-->
                         <div class="form-group mb-3">
                             <label asp-for="NoOfWhiteEggs" class="fw-bold">أدخل عدد البيض الأبيض بالكرتونة</label>
                             <input asp-for="NoOfWhiteEggs" class="form-control" placeholder="أدخل عدد البيض الأبيض" />
                             <span asp-validation-for="NoOfWhiteEggs" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="WhiteEggPrice" class="fw-bold"> سعر البيض الأبيض بالكرتونة</label>
                             <input asp-for="WhiteEggPrice" class="form-control" placeholder="أدخل سعر البيض الأبيض" />
                             <span asp-validation-for="WhiteEggPrice" class="text-danger"></span>
                         </div>
+
+
+                        <!--بيض ابيض بشاير-->
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfNewWhiteEggs" class="fw-bold">أدخل عدد البيض الأبيض البشاير بالكرتونة</label>
+                            <input asp-for="NoOfNewWhiteEggs" class="form-control" placeholder="أدخل عدد البيض الأبيض البشاير" />
+                            <span asp-validation-for="NoOfNewWhiteEggs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NewWhiteEggPrice" class="fw-bold"> سعر البيض الأبيض البشاير بالكرتونة</label>
+                            <input asp-for="NewWhiteEggPrice" class="form-control" placeholder="أدخل سعر البيض البشاير الأبيض" />
+                            <span asp-validation-for="NewWhiteEggPrice" class="text-danger"></span>
+                        </div>
+
+
+                        <!--بيض ابيض وسط-->
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfMedWhiteEggs" class="fw-bold">أدخل عدد البيض الأبيض الوسط بالكرتونة</label>
+                            <input asp-for="NoOfMedWhiteEggs" class="form-control" placeholder="أدخل عدد البيض الوسط الأبيض" />
+                            <span asp-validation-for="NoOfMedWhiteEggs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="MedWhiteEggPrice" class="fw-bold"> سعر البيض الأبيض الوسط بالكرتونة</label>
+                            <input asp-for="MedWhiteEggPrice" class="form-control" placeholder="أدخل سعر البيض الوسط الأبيض" />
+                            <span asp-validation-for="MedWhiteEggPrice" class="text-danger"></span>
+                        </div>
+
+
+
+                        <!--بيض بني عادي-->
                         <div class="form-group mb-3">
                             <label asp-for="NoOfBrownEggs" class="fw-bold">أدخل عدد البيض البني بالكرتونة</label>
                             <input asp-for="NoOfBrownEggs" class="form-control" placeholder="أدخل عدد البيض البني" />
                             <span asp-validation-for="NoOfBrownEggs" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="BrownEggPrice" class="fw-bold">سعر البيض البني بالكرتونة</label>
                             <input asp-for="BrownEggPrice" class="form-control" placeholder="أدخل سعر البيض البني" />
                             <span asp-validation-for="BrownEggPrice" class="text-danger"></span>
                         </div>
+
+                        <!--بيض بني بشاير-->
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfNewBrownEggs" class="fw-bold">أدخل عدد البيض البني البشاير بالكرتونة</label>
+                            <input asp-for="NoOfNewBrownEggs" class="form-control" placeholder="أدخل عدد البيض البني البشاير" />
+                            <span asp-validation-for="NoOfNewBrownEggs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NewBrownEggPrice" class="fw-bold"> سعر البيض البني البشاير بالكرتونة</label>
+                            <input asp-for="NewBrownEggPrice" class="form-control" placeholder="أدخل سعر البيض البني البشاير" />
+                            <span asp-validation-for="NewBrownEggPrice" class="text-danger"></span>
+                        </div>
+
+                        <!--بيض بني وسط-->
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfMedBrownEggs" class="fw-bold">أدخل عدد البيض البني الوسط بالكرتونة</label>
+                            <input asp-for="NoOfMedBrownEggs" class="form-control" placeholder="  أدخل عدد البيض البني الوسط" />
+                            <span asp-validation-for="NoOfMedBrownEggs" class="text-danger"></span>
+                        </div>
+
+
                     </div>
+
                     <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="BrownMedEggPrice" class="fw-bold">سعر البيض البني الوسط بالكرتونة</label>
+                            <input asp-for="BrownMedEggPrice" class="form-control" placeholder="أدخل سعر البيض البني الوسط" />
+                            <span asp-validation-for="BrownMedEggPrice" class="text-danger"></span>
+                        </div>
+
+
+
                         <div class="form-group mb-3">
                             <label asp-for="NoOfBrokenEggs" class="fw-bold">أدخل عدد البيض الكسر بالكرتونة</label>
                             <input asp-for="NoOfBrokenEggs" class="form-control" placeholder="أدخل عدد البيض الكسر" />
                             <span asp-validation-for="NoOfBrokenEggs" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="BrokenEggPrice" class="fw-bold">سعر كرتونة البيض الكسر</label>
                             <input asp-for="BrokenEggPrice" class="form-control" placeholder="أدخل سعر البيض الكسر" />
@@ -71,28 +140,58 @@
                             <input asp-for="NoOfDoubleEggs" class="form-control" placeholder="أدخل عدد البيض المزدوج" />
                             <span asp-validation-for="NoOfDoubleEggs" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="DoubleEggPrice" class="fw-bold">سعر كرتونة البيض المزدوج</label>
                             <input asp-for="DoubleEggPrice" class="form-control" placeholder="أدخل سعر البيض المزدوج" />
                             <span asp-validation-for="DoubleEggPrice" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfNewDoubleEggs" class="fw-bold">أدخل عدد البيض المزدوج البشاير بالكرتونة</label>
+                            <input asp-for="NoOfNewDoubleEggs" class="form-control" placeholder="أدخل عدد البيض المزدوج" />
+                            <span asp-validation-for="NoOfNewDoubleEggs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NewDoubleEggPrice" class="fw-bold"> سعر كرتونة البيض المزدوج البشاير</label>
+                            <input asp-for="NewDoubleEggPrice" class="form-control" placeholder="أدخل سعر البيض المزدوج" />
+                            <span asp-validation-for="NewDoubleEggPrice" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NoOfMedDoubleEggs" class="fw-bold">أدخل عدد البيض المزدوج الوسط بالكرتونة</label>
+                            <input asp-for="NoOfMedDoubleEggs" class="form-control" placeholder="أدخل عدد البيض المزدوج الوسط " />
+                            <span asp-validation-for="NoOfMedDoubleEggs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="MedDoubleEggPrice" class="fw-bold">سعر كرتونة البيض الوسط المزدوج</label>
+                            <input asp-for="MedDoubleEggPrice" class="form-control" placeholder="أدخل سعر البيض الوسط المزدوج" />
+                            <span asp-validation-for="MedDoubleEggPrice" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group mb-3">
+                            <label asp-for="date" class="fw-bold">التاريخ</label>
+                            <input asp-for="date" type="date" class="form-control" />
+                            <span asp-validation-for="date" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="name_ofTrader" class="fw-bold"> اسم التاجر</label>
+                            <input asp-for="name_ofTrader" class="form-control" placeholder="أدخل اسم التاجر" />
+                            <span asp-validation-for="name_ofTrader" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group form-check mb-3">
+                            <label class="form-check-label fw-bold">
+                                <input class="form-check-input" asp-for="IsPaid" /> هل تم الدفع؟
+                            </label>
+                        </div>
                     </div>
-                </div>
-               
-                <div class="form-group mb-3">
-                    <label asp-for="date" class="fw-bold">التاريخ</label>
-                    <input asp-for="date" type="date" class="form-control" />
-                    <span asp-validation-for="date" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-3">
-                    <label asp-for="name_ofTrader" class="fw-bold"> اسم التاجر</label>
-                    <input asp-for="name_ofTrader" class="form-control" placeholder="أدخل اسم التاجر" />
-                    <span asp-validation-for="name_ofTrader" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check mb-3">
-                    <label class="form-check-label fw-bold">
-                        <input class="form-check-input" asp-for="IsPaid" /> هل تم الدفع؟
-                    </label>
                 </div>
                 <div class="text-center mt-3">
                     <button type="submit" class="btn btn-warning px-4">
