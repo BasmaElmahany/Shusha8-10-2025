@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
@@ -7,6 +8,8 @@ using Shusha_project_BackUp.Data;
 
 namespace Shusha_project_BackUp.Controllers
 {
+    [Authorize(Roles = "Admin,proceeds,Accountant")]
+
     public class TraderSalesController : Controller
     {
         private readonly ApplicationDbContext _context;

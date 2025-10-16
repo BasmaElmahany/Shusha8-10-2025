@@ -362,9 +362,11 @@
         <thead>
             <tr>
                 <th><i class="bi bi-calendar-event"></i> التاريخ</th>
+                <th><i class="bi bi-person-badge"></i> المحطة </th>
                 <th><i class="bi bi-person-badge"></i> اسم التاجر</th>
                 <th><i class="bi bi-rulers"></i> عدد الأمتار</th>
                 <th><i class="bi bi-currency-dollar"></i> السعر للمتر</th>
+                <th><i class="bi bi-currency-dollar"></i> اجرة تحميل </th>
                 <th><i class="bi bi-cash-stack"></i> الإجمالي</th>
                 <th><i class="bi bi-gear"></i> إجراءات</th>
             </tr>
@@ -374,13 +376,15 @@
             {
                 <tr>
                     <td>@item.date.ToString("yyyy-MM-dd")</td>
+                    <td><strong>@(item.branch?.branch_name ?? "غير محدد")</strong></td>
                     <td><strong>@(item.TraderName ?? "غير محدد")</strong></td>
                     <td>
                         <span class="badge bg-primary">@item.wasteMeters متر</span>
                     </td>
                     <td>@item.price.ToString("N2") جنيه</td>
+                    <td>@item.wasteFees.ToString("N2") جنيه</td>
                     <td>
-                        <span class="total-badge">@((item.wasteMeters * item.price).ToString("N2")) جنيه</span>
+                        <span class="total-badge">@(((item.wasteMeters * item.price) + item.wasteFees).ToString("N2")) جنيه</span>
                     </td>
                     <td>
                         <div class="action-buttons">
@@ -420,14 +424,7 @@
                 <small class="text-muted">جنيه</small>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="metric-card warning">
-                <i class="bi bi-calculator metric-icon text-warning"></i>
-                <div class="metric-label">متوسط السعر</div>
-                <div class="metric-value text-warning">@ViewBag.AveragePrice.ToString("N2")</div>
-                <small class="text-muted">جنيه/متر</small>
-            </div>
-        </div>
+    
         <div class="col-md-3">
             <div class="metric-card">
                 <i class="bi bi-cart-check metric-icon" style="color: var(--waste-color);"></i>

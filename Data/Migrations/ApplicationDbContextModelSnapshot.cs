@@ -773,6 +773,9 @@ namespace Shusha_project_BackUp.Data.Migrations
                     b.Property<decimal>("BrownMedEggPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateOnly>("Date_of_payment")
+                        .HasColumnType("date");
+
                     b.Property<decimal>("DoubleEggPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -898,16 +901,24 @@ namespace Shusha_project_BackUp.Data.Migrations
                     b.Property<string>("TraderName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("branchId")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("date")
                         .HasColumnType("date");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("wasteFees")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("wasteMeters")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("branchId");
 
                     b.ToTable("Waste_Sales");
                 });
@@ -1321,6 +1332,17 @@ namespace Shusha_project_BackUp.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ward");
+                });
+
+            modelBuilder.Entity("Shusha_project_BackUp.Data.Waste_Sales", b =>
+                {
+                    b.HasOne("Shusha_project_BackUp.Branch", "branch")
+                        .WithMany()
+                        .HasForeignKey("branchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("branch");
                 });
 
             modelBuilder.Entity("Shusha_project_BackUp.Data.Water_Invoices", b =>

@@ -7,272 +7,324 @@
 
 <style>
     :root {
-        --primary-color: #0d6efd;
-        --success-color: #198754;
-        --info-color: #0dcaf0;
+        --primary-color: #667eea;
+        --primary-dark: #764ba2;
+        --success-color: #11998e;
+        --info-color: #4facfe;
         --warning-color: #ffc107;
         --danger-color: #dc3545;
-        --white-egg-color: #e8f4f8;
-        --brown-egg-color: #d4a574;
-        --double-egg-color: #f0e68c;
+        --white-egg-color: #0d6efd;
+        --brown-egg-color: #8b5a2b;
+        --double-egg-color: #ffc107;
+        --broken-egg-color: #dc3545;
     }
 
     .page-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
         color: white;
-        padding: 2rem 0;
+        padding: 2.5rem 0;
         margin-bottom: 2rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+
+    @@keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
 
     .page-header h1 {
         margin: 0;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 2.5rem;
+        position: relative;
+        z-index: 1;
     }
 
     .stats-card {
         transition: all 0.3s ease;
         border: none;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
         overflow: hidden;
-        height: 100%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     }
 
     .stats-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .stats-card .card-header {
-        font-weight: 600;
-        font-size: 1.1rem;
-        padding: 1rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        padding: 1.25rem;
+        background: linear-gradient(135deg, var(--info-color) 0%, #00f2fe 100%);
     }
 
     .stats-card .card-body {
-        padding: 1.5rem;
+        padding: 2rem;
     }
 
     .egg-type-card {
         background: white;
-        border-radius: 0.75rem;
-        padding: 1.25rem;
+        border-radius: 1rem;
+        padding: 1.5rem;
         border: 2px solid #e9ecef;
         transition: all 0.3s ease;
+        height: 100%;
     }
 
     .egg-type-card:hover {
-        border-color: var(--primary-color);
-        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
 
     .egg-type-card.white {
-        background: linear-gradient(135deg, #ffffff 0%, var(--white-egg-color) 100%);
+        background: linear-gradient(135deg, #ffffff 0%, #e8f4f8 100%);
+        border-color: var(--white-egg-color);
     }
 
     .egg-type-card.brown {
         background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
+        border-color: var(--brown-egg-color);
     }
 
     .egg-type-card.double {
         background: linear-gradient(135deg, #fffef0 0%, #fff9d9 100%);
+        border-color: var(--double-egg-color);
     }
 
     .egg-type-card h6 {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 1.25rem;
+        font-weight: 800;
     }
 
     .egg-type-card p {
-        margin: 0.5rem 0;
-        font-size: 0.95rem;
+        margin: 0.75rem 0;
+        font-size: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .egg-type-card p strong {
-        color: #495057;
-    }
-
     .filter-section {
         background: white;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        margin-bottom: 1.5rem;
+        padding: 2rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
     }
 
     .filter-section label {
         font-weight: 600;
         color: #495057;
-        margin-bottom: 0.5rem;
-    }
-
-    .btn-action {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        border-radius: 0.5rem;
-        transition: all 0.3s ease;
-        display: inline-flex;
+        margin-bottom: 0.75rem;
+        display: flex;
         align-items: center;
         gap: 0.5rem;
     }
 
-    .btn-action:hover {
-        transform: translateY(-2px);
+    .form-control, .form-select {
+        border-radius: 0.75rem;
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-action {
+        padding: 0.875rem 1.75rem;
+        font-weight: 700;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-action:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .table-container {
         background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        overflow-x: auto;
-        max-height: 600px;
-        overflow-y: auto;
+        border-radius: 1.5rem;
+        padding: 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+
+    .table-wrapper {
         position: relative;
     }
     
-    .table-container::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+    .table-wrapper::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
     }
     
-    .table-container::-webkit-scrollbar-track {
+    .table-wrapper::-webkit-scrollbar-track {
         background: #f1f1f1;
         border-radius: 10px;
     }
     
-    .table-container::-webkit-scrollbar-thumb {
-        background: #888;
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         border-radius: 10px;
     }
     
-    .table-container::-webkit-scrollbar-thumb:hover {
-        background: #555;
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
     }
 
     #traderSalesTable {
         margin: 0;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
     }
 
+    /* Single Row Headers */
     #traderSalesTable thead th {
-        background: linear-gradient(135deg, #212529 0%, #343a40 100%);
         color: white;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 0.85rem;
         padding: 0.75rem 0.5rem;
         white-space: nowrap;
-        border: none;
-        position: sticky;
-        z-index: 10;
+        border: 1px solid rgba(255, 255, 255, 0.2);
         vertical-align: middle;
         text-align: center;
+        line-height: 1.3;
     }
-    
-    #traderSalesTable thead tr:first-child th {
-        top: 0;
-        font-size: 1rem;
-        padding: 1rem 0.5rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    #traderSalesTable thead tr:nth-child(2) th {
-        top: 54px;
-        font-size: 0.9rem;
-        padding: 0.75rem 0.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    #traderSalesTable thead tr:nth-child(3) th {
-        top: 100px;
-        font-size: 0.85rem;
-        padding: 0.6rem 0.5rem;
-    }
-    
+
+    /* Color-coded headers */
     .header-white {
-        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+        background: linear-gradient(135deg, var(--white-egg-color) 0%, #0a58ca 100%) !important;
     }
     
     .header-brown {
-        background: linear-gradient(135deg, #8b5a2b 0%, #6d4623 100%) !important;
+        background: linear-gradient(135deg, var(--brown-egg-color) 0%, #6d4623 100%) !important;
     }
     
     .header-double {
-        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+        background: linear-gradient(135deg, var(--double-egg-color) 0%, #e0a800 100%) !important;
         color: #000 !important;
     }
     
     .header-broken {
-        background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%) !important;
+        background: linear-gradient(135deg, var(--broken-egg-color) 0%, #b02a37 100%) !important;
     }
     
     .header-info {
         background: linear-gradient(135deg, #6c757d 0%, #565e64 100%) !important;
     }
 
+    /* Table Body */
     #traderSalesTable tbody td {
-        padding: 0.875rem 0.75rem;
+        padding: 1rem 0.75rem;
         vertical-align: middle;
         border-bottom: 1px solid #e9ecef;
         text-align: center;
+        white-space: nowrap;
+        font-size: 0.95rem;
     }
 
     #traderSalesTable tbody tr {
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
     }
 
     #traderSalesTable tbody tr:hover {
         background-color: #f8f9fa;
+        transform: scale(1.01);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Alternating row colors */
+    #traderSalesTable tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    #traderSalesTable tbody tr:nth-child(odd) {
+        background-color: white;
     }
 
     .summary-card {
         background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 1.25rem;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
-        border-left: 4px solid var(--primary-color);
+        border-left: 5px solid var(--primary-color);
+        height: 100%;
     }
 
     .summary-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .summary-card h5 {
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: #6c757d;
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .summary-card h3 {
-        font-size: 2rem;
+        font-size: 2.25rem;
         margin: 0;
+        font-weight: 800;
     }
 
     .badge-paid {
-        background: var(--success-color);
+        background: linear-gradient(135deg, var(--success-color) 0%, #38ef7d 100%);
         color: white;
-        padding: 0.35rem 0.75rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(17, 153, 142, 0.3);
     }
 
     .badge-unpaid {
-        background: var(--danger-color);
+        background: linear-gradient(135deg, var(--danger-color) 0%, #b02a37 100%);
         color: white;
-        padding: 0.35rem 0.75rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
     }
 
     .action-buttons {
@@ -280,33 +332,57 @@
         gap: 0.5rem;
         flex-wrap: nowrap;
         justify-content: center;
+        align-items: center;
     }
 
     .action-buttons .btn {
         padding: 0.5rem;
-        font-size: 1rem;
-        border-radius: 0.4rem;
-        transition: all 0.2s ease;
-        width: 36px;
-        height: 36px;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        width: 38px;
+        height: 38px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        position: relative;
+        border: none;
     }
 
     .action-buttons .btn:hover {
-        transform: scale(1.1);
+        transform: scale(1.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     
     .action-buttons .btn i {
         margin: 0;
     }
 
-    .icon-text {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
+    /* DataTables custom styling */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        padding: 1rem 1.5rem;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.5rem 1rem;
+        margin: 0 0.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: var(--primary-color);
+        color: white !important;
+        border-color: var(--primary-color);
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+        color: white !important;
+        border-color: var(--primary-color);
     }
 
     @@media (max-width: 768px) {
@@ -319,7 +395,35 @@
         }
 
         .summary-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .table-wrapper {
+            max-height: 500px;
+        }
+
+        #traderSalesTable {
+            font-size: 0.85rem;
+        }
+
+        #traderSalesTable thead tr:first-child th {
+            font-size: 0.9rem;
+            padding: 1rem 0.5rem;
+        }
+
+        #traderSalesTable thead tr:nth-child(2) th {
+            font-size: 0.85rem;
+            padding: 0.875rem 0.5rem;
+        }
+
+        #traderSalesTable thead tr:nth-child(3) th {
+            font-size: 0.8rem;
+            padding: 0.75rem 0.5rem;
+        }
+
+        #traderSalesTable tbody td {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.85rem;
         }
     }
 </style>
@@ -333,7 +437,7 @@
 
 <!-- Today's Sales Summary -->
 <div class="stats-card card shadow-sm mb-4">
-    <div class="card-header bg-info text-white text-center">
+    <div class="card-header text-white text-center">
         <i class="bi bi-calendar-day"></i>
         إجمالي مبيعات اليوم
     </div>
@@ -464,153 +568,114 @@
 
 <!-- Data Table -->
 <div class="table-container">
-    <table id="traderSalesTable" class="table table-striped table-hover text-center" style="width:100%">
-        <thead>
-            <tr>
-                <th colspan="6" class="header-white">
-                    <i class="bi bi-egg"></i>
-                    البيض الأبيض
-                </th>
-                <th colspan="6" class="header-brown">
-                    <i class="bi bi-egg-fill"></i>
-                    البيض البني
-                </th>
-                <th colspan="2" class="header-broken">
-                    <i class="bi bi-egg-fried"></i>
-                    البيض الكسر
-                </th>
-                <th colspan="6" class="header-double">
-                    <i class="bi bi-egg-fried"></i>
-                    البيض المزدوج
-                </th>
-                <th colspan="5" class="header-info">
-                    <i class="bi bi-info-circle"></i>
-                    معلومات الطلب
-                </th>
-            </tr>
-            <tr>
-                <!-- White Eggs -->
-                <th colspan="2" class="header-white">كبير</th>
-                <th colspan="2" class="header-white">بشاير</th>
-                <th colspan="2" class="header-white">وسط</th>
-                
-                <!-- Brown Eggs -->
-                <th colspan="2" class="header-brown">كبير</th>
-                <th colspan="2" class="header-brown">بشاير</th>
-                <th colspan="2" class="header-brown">وسط</th>
-                
-                <!-- Broken Eggs -->
-                <th colspan="2" class="header-broken">الكسر</th>
-                
-                <!-- Double Eggs -->
-                <th colspan="2" class="header-double">كبير</th>
-                <th colspan="2" class="header-double">بشاير</th>
-                <th colspan="2" class="header-double">وسط</th>
-                
-                <!-- Info Columns -->
-                <th class="header-info" rowspan="2"><i class="bi bi-cash-stack"></i><br/>الإجمالي</th>
-                <th class="header-info" rowspan="2"><i class="bi bi-check-circle"></i><br/>السداد</th>
-                <th class="header-info" rowspan="2"><i class="bi bi-calendar-event"></i><br/>التاريخ</th>
-                <th class="header-info" rowspan="2"><i class="bi bi-person-badge"></i><br/>التاجر</th>
-                <th class="header-info" rowspan="2"><i class="bi bi-gear"></i><br/>إجراءات</th>
-            </tr>
-            <tr>
-                <!-- White Eggs Data Columns -->
-                <th class="header-white"><i class="bi bi-hash"></i></th>
-                <th class="header-white"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-white"><i class="bi bi-hash"></i></th>
-                <th class="header-white"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-white"><i class="bi bi-hash"></i></th>
-                <th class="header-white"><i class="bi bi-currency-dollar"></i></th>
-                
-                <!-- Brown Eggs Data Columns -->
-                <th class="header-brown"><i class="bi bi-hash"></i></th>
-                <th class="header-brown"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-brown"><i class="bi bi-hash"></i></th>
-                <th class="header-brown"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-brown"><i class="bi bi-hash"></i></th>
-                <th class="header-brown"><i class="bi bi-currency-dollar"></i></th>
-                
-                <!-- Broken Eggs Data Columns -->
-                <th class="header-broken"><i class="bi bi-hash"></i></th>
-                <th class="header-broken"><i class="bi bi-currency-dollar"></i></th>
-                
-                <!-- Double Eggs Data Columns -->
-                <th class="header-double"><i class="bi bi-hash"></i></th>
-                <th class="header-double"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-double"><i class="bi bi-hash"></i></th>
-                <th class="header-double"><i class="bi bi-currency-dollar"></i></th>
-                <th class="header-double"><i class="bi bi-hash"></i></th>
-                <th class="header-double"><i class="bi bi-currency-dollar"></i></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-wrapper">
+        <table id="traderSalesTable" class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@item.NoOfWhiteEggs</td>
-                    <td>@item.WhiteEggPrice.ToString("C")</td>
-                    <td>@item.NoOfNewWhiteEggs</td>
-                    <td>@item.NewWhiteEggPrice.ToString("C")</td>
-                    <td>@item.NoOfMedWhiteEggs</td>
-                    <td>@item.MedWhiteEggPrice.ToString("C")</td>
-                    <td>@item.NoOfBrownEggs</td>
-                    <td>@item.BrownEggPrice.ToString("C")</td>
-                    <td>@item.NoOfNewBrownEggs</td>
-                    <td>@item.NewBrownEggPrice.ToString("C")</td>
-                    <td>@item.NoOfMedBrownEggs</td>
-                    <td>@item.BrownMedEggPrice.ToString("C")</td>
-                    <td>@item.NoOfBrokenEggs</td>
-                    <td>@item.BrokenEggPrice.ToString("C")</td>
-                    <td>@item.NoOfDoubleEggs</td>
-                    <td>@item.DoubleEggPrice.ToString("C")</td>
-                    <td>@item.NoOfNewDoubleEggs</td>
-                    <td>@item.NewDoubleEggPrice.ToString("C")</td>
-                    <td>@item.NoOfMedDoubleEggs</td>
-                    <td>@item.MedDoubleEggPrice.ToString("C")</td>
-                    <td><strong>@item.RequestProceed</strong></td>
-                    <td>
-                        @if (item.IsPaid)
-                        {
-                            <span class="badge-paid">
-                                <i class="bi bi-check-circle-fill"></i>
-                                نعم
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge-unpaid">
-                                <i class="bi bi-x-circle-fill"></i>
-                                لا
-                            </span>
-                        }
-                    </td>
-                    <td>@item.date.ToShortDateString()</td>
-                    <td><strong>@item.name_ofTrader</strong></td>
-                    <td>
-                        <div class="action-buttons">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="تعديل" data-bs-toggle="tooltip">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm" title="تفاصيل" data-bs-toggle="tooltip">
-                                <i class="bi bi-info-circle"></i>
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="حذف" data-bs-toggle="tooltip">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </div>
-                    </td>
+                    <!-- White Eggs -->
+                    <th class="header-white">بيض أبيض كبير (عدد)</th>
+                    <th class="header-white">بيض أبيض كبير (سعر)</th>
+                    <th class="header-white">بيض أبيض بشاير (عدد)</th>
+                    <th class="header-white">بيض أبيض بشاير (سعر)</th>
+                    <th class="header-white">بيض أبيض وسط (عدد)</th>
+                    <th class="header-white">بيض أبيض وسط (سعر)</th>
+                    
+                    <!-- Brown Eggs -->
+                    <th class="header-brown">بيض بني كبير (عدد)</th>
+                    <th class="header-brown">بيض بني كبير (سعر)</th>
+                    <th class="header-brown">بيض بني بشاير (عدد)</th>
+                    <th class="header-brown">بيض بني بشاير (سعر)</th>
+                    <th class="header-brown">بيض بني وسط (عدد)</th>
+                    <th class="header-brown">بيض بني وسط (سعر)</th>
+                    
+                    <!-- Broken Eggs -->
+                    <th class="header-broken">بيض كسر (عدد)</th>
+                    <th class="header-broken">بيض كسر (سعر)</th>
+                    
+                    <!-- Double Eggs -->
+                    <th class="header-double">بيض مزدوج كبير (عدد)</th>
+                    <th class="header-double">بيض مزدوج كبير (سعر)</th>
+                    <th class="header-double">بيض مزدوج بشاير (عدد)</th>
+                    <th class="header-double">بيض مزدوج بشاير (سعر)</th>
+                    <th class="header-double">بيض مزدوج وسط (عدد)</th>
+                    <th class="header-double">بيض مزدوج وسط (سعر)</th>
+                    
+                    <!-- Info Columns -->
+                    <th class="header-info">الإجمالي</th>
+                    <th class="header-info">حالة السداد</th>
+                    <th class="header-info">التاريخ</th>
+                    <th class="header-info">اسم التاجر</th>
+                    <th class="header-info">العمليات</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NoOfWhiteEggs</td>
+                        <td>@item.WhiteEggPrice.ToString("C")</td>
+                        <td>@item.NoOfNewWhiteEggs</td>
+                        <td>@item.NewWhiteEggPrice.ToString("C")</td>
+                        <td>@item.NoOfMedWhiteEggs</td>
+                        <td>@item.MedWhiteEggPrice.ToString("C")</td>
+                        <td>@item.NoOfBrownEggs</td>
+                        <td>@item.BrownEggPrice.ToString("C")</td>
+                        <td>@item.NoOfNewBrownEggs</td>
+                        <td>@item.NewBrownEggPrice.ToString("C")</td>
+                        <td>@item.NoOfMedBrownEggs</td>
+                        <td>@item.BrownMedEggPrice.ToString("C")</td>
+                        <td>@item.NoOfBrokenEggs</td>
+                        <td>@item.BrokenEggPrice.ToString("C")</td>
+                        <td>@item.NoOfDoubleEggs</td>
+                        <td>@item.DoubleEggPrice.ToString("C")</td>
+                        <td>@item.NoOfNewDoubleEggs</td>
+                        <td>@item.NewDoubleEggPrice.ToString("C")</td>
+                        <td>@item.NoOfMedDoubleEggs</td>
+                        <td>@item.MedDoubleEggPrice.ToString("C")</td>
+                        <td><strong>@item.RequestProceed</strong></td>
+                        <td>
+                            @if (item.IsPaid)
+                            {
+                                <span class="badge-paid">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    نعم
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-unpaid">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    لا
+                                </span>
+                            }
+                        </td>
+                        <td>@item.date.ToShortDateString()</td>
+                        <td><strong>@item.name_ofTrader</strong></td>
+                        <td>
+                            <div class="action-buttons">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="تعديل" data-bs-toggle="tooltip">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm" title="تفاصيل" data-bs-toggle="tooltip">
+                                    <i class="bi bi-info-circle"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="حذف" data-bs-toggle="tooltip">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Summary Statistics -->
 <div class="container mt-4">
     <div class="row text-center g-3">
         <div class="col-md-4">
-            <div class="summary-card" style="border-left-color: var(--info-color);">
+            <div class="summary-card" style="border-left-color: var(--white-egg-color);">
                 <h5>
                     <i class="bi bi-egg"></i>
                     إجمالي البيض الأبيض
@@ -619,7 +684,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="summary-card" style="border-left-color: #8b5a2b;">
+            <div class="summary-card" style="border-left-color: var(--brown-egg-color);">
                 <h5>
                     <i class="bi bi-egg-fill"></i>
                     إجمالي البيض البني
@@ -633,7 +698,7 @@
                     <i class="bi bi-basket3-fill"></i>
                     إجمالي البيض
                 </h5>
-                <h3 class="text-success fw-bold">@ViewBag.Total</h3>
+                <h3 class="fw-bold" style="color: var(--success-color);">@ViewBag.Total</h3>
             </div>
         </div>
     </div>
@@ -645,7 +710,7 @@
                     <i class="bi bi-cash-coin"></i>
                     إجمالي مبيعات البيض الأبيض
                 </h5>
-                <h3 class="text-success fw-bold">@ViewBag.total_Wh_sales</h3>
+                <h3 class="fw-bold" style="color: var(--success-color);">@ViewBag.total_Wh_sales</h3>
             </div>
         </div>
         <div class="col-md-4">
@@ -654,7 +719,7 @@
                     <i class="bi bi-cash-coin"></i>
                     إجمالي مبيعات البيض البني
                 </h5>
-                <h3 class="text-success fw-bold">@ViewBag.total_br_sales</h3>
+                <h3 class="fw-bold" style="color: var(--success-color);">@ViewBag.total_br_sales</h3>
             </div>
         </div>
         <div class="col-md-4">
@@ -663,7 +728,7 @@
                     <i class="bi bi-currency-dollar"></i>
                     إجمالي المبيعات
                 </h5>
-                <h3 class="text-warning fw-bold">@ViewBag.Total_sales</h3>
+                <h3 class="fw-bold" style="color: var(--warning-color);">@ViewBag.Total_sales</h3>
             </div>
         </div>
     </div>
@@ -671,9 +736,11 @@
 
 @section Scripts {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.bootstrap5.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js"></script>
     <script>
         $(document).ready(function() {
             // Initialize DataTables
@@ -694,13 +761,17 @@
                     "lengthMenu": "عرض _MENU_ سجل"
                 },
                 "pagingType": "full_numbers",
-                "responsive": true,
+                "responsive": false,
                 "ordering": true,
                 "pageLength": 25,
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "الكل"]],
-                "order": [[22, "desc"]], // Sort by date column (index 22) in descending order
-                "scrollY": false,
-                "scrollCollapse": false
+                "order": [[22, "desc"]], // Sort by date column
+                "scrollX": true,
+                "scrollY": "500px",
+                "scrollCollapse": true,
+                "fixedHeader": true,
+                "paging": true,
+                "dom": 'lfrtip'
             });
             
             // Initialize Bootstrap tooltips

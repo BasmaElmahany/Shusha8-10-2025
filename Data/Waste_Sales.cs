@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shusha_project_BackUp.Data
 {
@@ -9,7 +10,12 @@ namespace Shusha_project_BackUp.Data
 
         [Required, Range(0, double.MaxValue)]
         public decimal wasteMeters { get; set; }
+        public decimal wasteFees { get; set; }
 
+        public Branch? branch { get; set; }
+
+        [ForeignKey("branch")]
+        public int? branchId { get; set; }
 
         [Required, Range(0, double.MaxValue)]
         public decimal price { get; set; }

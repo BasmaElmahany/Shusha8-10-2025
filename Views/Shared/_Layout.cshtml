@@ -1,371 +1,664 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@inject Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html
+
 @{
-    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
-    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString() ?? "";
 }
 
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] مشروع دواجن شوشة</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <!-- Bootstrap CSS with RTL support -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-rtl/dist/bootstrap-rtl.min.css" />
+    <title>@ViewData["Title"] - مشروع دواجن شوشة</title>
+    
+    <!-- Bootstrap 5 RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <!-- Custom Stylesheets -->
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Shusha_project_BackUp.styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #764ba2;
+            --secondary-color: #11998e;
+            --secondary-light: #38ef7d;
+            --accent-color: #4facfe;
+            --danger-color: #fa709a;
+            --warning-color: #fee140;
+            --dark-bg: #1a202c;
+            --dark-secondary: #2d3748;
+            --light-bg: #f7fafc;
+            --sidebar-width: 280px;
+            --topbar-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            direction: rtl;
-            text-align: right;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
             overflow-x: hidden;
-            font-family: 'Arial', sans-serif;
-            background: #f8f9fa;
         }
 
-        #sidebar {
-            height: 100vh; /* Full viewport height */
-            width: 250px;
-            background: #3f87a6;
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        }
+
+        .sidebar-header .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-header h4 {
             color: white;
-            transition: transform 0.3s ease;
-            padding-top: 20px;
-            overflow-y: auto; /* Makes the sidebar scrollable */
-            overflow-x: hidden; /* Prevents horizontal scrolling */
-            scrollbar-width: thin; /* Makes the scrollbar slimmer in supported browsers */
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
         }
 
-            #sidebar::-webkit-scrollbar {
-                width: 8px; /* Slim scrollbar width for WebKit browsers */
-            }
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
 
-            #sidebar::-webkit-scrollbar-thumb {
-                background-color: rgba(255, 255, 255, 0.5); /* Light thumb for scrollbar */
-                border-radius: 4px;
-            }
+        .menu-section-title {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 1rem 1.5rem 0.5rem;
+            letter-spacing: 1px;
+        }
 
-            #sidebar.collapsed {
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            padding-right: 2rem;
+        }
+
+        .menu-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .menu-item.active {
+            background: rgba(102, 126, 234, 0.15);
+            color: white;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .menu-item i {
+            font-size: 1.25rem;
+            margin-left: 1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .menu-item .badge {
+            margin-right: auto;
+            background: linear-gradient(135deg, var(--danger-color), #fee140);
+            border: none;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            background: var(--dark-secondary);
+            border: none;
+            padding: 0.5rem 0;
+            margin: 0;
+        }
+
+        .dropdown-item {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .dropdown-item.active {
+            background: rgba(102, 126, 234, 0.2);
+            color: white;
+        }
+
+        .dropdown-item i {
+            margin-left: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-toggle::after {
+            margin-right: auto;
+        }
+
+        /* Topbar Styles */
+        .topbar {
+            position: fixed;
+            top: 0;
+            right: var(--sidebar-width);
+            left: 0;
+            height: var(--topbar-height);
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: var(--light-bg);
+            color: var(--primary-color);
+        }
+
+        .topbar-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .topbar-right {
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--light-bg);
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--dark-bg);
+        }
+
+        .user-menu:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu:hover .user-name {
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark-bg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            margin-top: var(--topbar-height);
+            padding: 2rem;
+            min-height: calc(100vh - var(--topbar-height));
+            transition: all 0.3s ease;
+        }
+
+        /* Sidebar Collapsed State */
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar.collapsed .sidebar-header h4,
+        .sidebar.collapsed .menu-section-title,
+        .sidebar.collapsed .menu-item span,
+        .sidebar.collapsed .menu-item .badge {
+            display: none;
+        }
+
+        .sidebar.collapsed .menu-item {
+            justify-content: center;
+            padding: 0.875rem 0;
+        }
+
+        .sidebar.collapsed .menu-item i {
+            margin-left: 0;
+        }
+
+        .sidebar.collapsed ~ .topbar {
+            right: 80px;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-right: 80px;
+        }
+
+        /* Responsive */
+        @@media (max-width: 992px) {
+            .sidebar {
                 transform: translateX(100%);
             }
 
-        #main-content {
-            margin-right: 250px;
-            transition: margin-right 0.3s ease;
-        }
+            .sidebar.show {
+                transform: translateX(0);
+            }
 
-            #main-content.expanded {
+            .topbar {
+                right: 0;
+            }
+
+            .main-content {
                 margin-right: 0;
             }
-
-        #sidebar .sidebar-header {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            background: #3f87a6;
         }
 
-        #sidebar .nav-item {
-            margin: 5px 0;
-        }
-
-        #sidebar .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: black;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-            #sidebar .nav-link:hover {
-                background: rgba(255, 255, 255, 0.2);
+        @@media (max-width: 576px) {
+            .topbar {
+                padding: 0 1rem;
             }
 
-            #sidebar .nav-link i {
-                margin-left: 10px;
+            .main-content {
+                padding: 1rem;
             }
 
-        .navbar {
-            background: linear-gradient(0.25turn, #f69d3c, #ebf8e1, #3f87a6);
-            color: white;
+            .topbar-brand {
+                font-size: 1rem;
+            }
         }
 
-            .navbar .navbar-brand {
-                color: black;
-                font-size: 1.25rem;
-            }
-
-            .navbar .btn {
-                background: white;
-                color: #3f87a6;
-                font-weight: bold;
-            }
-
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Mobile Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
 
-        .footer {
-            background: #3f87a6;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-        /* Style for scrollable render section */
-        .render-section-container {
-            position: relative;
-            max-height: calc(100vh - 200px); /* Adjust height based on your header and footer */
-            overflow-y: auto;
-            overflow-x: hidden; /* Optional: Avoid horizontal scrolling */
-        }
-
-            .render-section-container::-webkit-scrollbar {
-                width: 8px; /* Slim scrollbar width for WebKit browsers */
-            }
-
-            .render-section-container::-webkit-scrollbar-thumb {
-                background-color: rgba(63, 135, 166, 0.5); /* Custom scrollbar thumb color */
-                border-radius: 4px; /* Rounded scrollbar thumb */
-            }
-
-        .nav-link.active {
-            background: rgba(255, 255, 255, 0.4);
-            font-weight: bold;
+        .sidebar-overlay.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-
-    <div id="sidebar" class="position-fixed">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            لوحة التحكم
+            <div class="logo">
+                <i class="fas fa-egg"></i>
+            </div>
+            <h4>مشروع دواجن شوشة</h4>
         </div>
-        <ul class="nav flex-column">
-             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin")) {
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Home" ? "active" : "")" href="@Url.Action("Index", "Home")">
-                        <i class="icon fas fa-chart-line"></i> الرئيسية
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Chart" ? "active" : "")" href="@Url.Action("Index", "Chart")">
-                        <i class="icon fas fa-chart-pie"></i> رسوم بيانية واحصائيات
-                    </a>
-                </li>
-             }
+
+        <nav class="sidebar-menu">
+            @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
+            {
+                <div class="menu-section-title">القائمة الرئيسية</div>
+                
+                <a href="@Url.Action("Index", "Home")" class="menu-item @(currentController == "Home" ? "active" : "")">
+                    <i class="fas fa-chart-line"></i>
+                    <span>الرئيسية</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Chart")" class="menu-item @(currentController == "Chart" ? "active" : "")">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>رسوم بيانية واحصائيات</span>
+                </a>
+            }
+
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Lohman") || User.IsInRole("Bayad A") || User.IsInRole("Bayad B") || User.IsInRole("Magary"))
             {
+                <div class="menu-section-title">المشروعات والعنابر</div>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Branches" ? "active" : "")" href="@Url.Action("Index", "Branches")">
-                        <i class="icon fas fa-city"></i> المشروعات
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Wards" ? "active" : "")" href="@Url.Action("Index", "Wards")">
-                        <i class="icon fas fa-warehouse"></i> العنابر
-                    </a>
-                </li>
-            
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "DailySales" ? "active" : "")" href="@Url.Action("Index", "DailySales")">
-                        <i class="icon fas fa-dollar-sign"></i> سجلات المبيعات
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "WardsStocks" ? "active" : "")" href="@Url.Action("Index", "WardsStocks")">
-                        <i class="icon fas fa-egg"></i> مخزون العنبر
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Feeds_distribution" ? "active" : "")" href="@Url.Action("Index", "Feeds_distribution")">
-                        <i class="icon fas fa-leaf"></i> سجلات الاستهلاك اليومي العلف
-                    </a>
-                </li>
+                <a href="@Url.Action("Index", "Branches")" class="menu-item @(currentController == "Branches" ? "active" : "")">
+                    <i class="fas fa-city"></i>
+                    <span>المشروعات</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Wards")" class="menu-item @(currentController == "Wards" ? "active" : "")">
+                    <i class="fas fa-warehouse"></i>
+                    <span>العنابر</span>
+                </a>
+
+                <a href="@Url.Action("Index", "DailySales")" class="menu-item @(currentController == "DailySales" ? "active" : "")">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>سجلات المبيعات</span>
+                </a>
+
+                <a href="@Url.Action("Index", "WardsStocks")" class="menu-item @(currentController == "WardsStocks" ? "active" : "")">
+                    <i class="fas fa-egg"></i>
+                    <span>مخزون العنبر</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Feeds_distribution")" class="menu-item @(currentController == "Feeds_distribution" ? "active" : "")">
+                    <i class="fas fa-leaf"></i>
+                    <span>سجلات الاستهلاك اليومي العلف</span>
+                </a>
             }
+
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Lohman") || User.IsInRole("Bayad A") || User.IsInRole("Bayad B") || User.IsInRole("Magary") || User.IsInRole("Accountant"))
             {
-                <li class="nav-item">
-                    <a class="nav-link text-white @(currentController == "Daily_Production" ? "active" : "")" href="@Url.Action("Index", "Daily_Production")">
-                        <i class="icon fas fa-industry"></i> سجلات الانتاج اليومي
-                    </a>
-                </li>
-            }
-            @{
-                var proceedsControllers = new List<string> { "Request_Proceeds", "Proceeds", "TraderSales", "Daily_Distribution" };
+                <a href="@Url.Action("Index", "Daily_Production")" class="menu-item @(currentController == "Daily_Production" ? "active" : "")">
+                    <i class="fas fa-industry"></i>
+                    <span>سجلات الانتاج اليومي</span>
+                </a>
             }
 
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("proceeds") || User.IsInRole("Accountant"))
             {
-               
-                  <li class="nav-item dropdown">
-                         <a class="nav-link text-white dropdown-toggle @(proceedsControllers.Contains(currentController) ? "active" : "")" href="#" id="proceedsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="icon fas fa-hand-holding-usd"></i>  المديونية والمبيعات 
-                          </a>
-                   <ul class="dropdown-menu" aria-labelledby="proceedsDropdown">
-                 <li>
-                        
-                     <a class="dropdown-item @(currentController == "Request_Proceeds" ? "active" : "")" href="@Url.Action("Index", "Request_Proceeds")">
-                    <i class="icon fas fa-hand-holding-usd"></i> المديونية المراكز
-                   </a>
-                          </li>
-                        <li><a class="dropdown-item @(currentController == "Daily_Distribution" ? "active" : "")" href="@Url.Action("Index", "Daily_Distribution")"><i class="icon fas fa-truck"></i> توزيعات المراكز</a></li>
-                        <li><a class="dropdown-item @(currentController == "Prices" ? "active" : "")" href="@Url.Action("Index", "Prices")"><i class="icon fas fa-tag"></i> الاسعار اليومية للبيض</a></li>
-                  <li>
+                {
+                    var proceedsControllers = new List<string> { "Request_Proceeds", "Proceeds", "TraderSales", "Daily_Distribution", "WasteSales", "SalesReport", "HerdSales", "Prices" };
+                }
 
-                   <a class="dropdown-item @(currentController == "Proceeds" ? "active" : "")" href="@Url.Action("Index", "Proceeds")">
-                        <i class="icon fas fa-receipt"></i> المسدد
-                    </a>
-                  </li>
-                     <li>
-            <a class="dropdown-item @(currentController == "TraderSales" ? "active" : "")" href="@Url.Action("Index", "TraderSales")">
-                <i class="icon fas fa-receipt"></i> مبيعات المزرعة للتجار
-            </a>
-                            <a class="dropdown-item @(currentController == "WasteSales" ? "active" : "")" href="@Url.Action("Index", "WasteSales")">
-                                <i class="icon fas fa-receipt"></i> مبيعات السبلة
-                            </a>
+                <div class="menu-section-title">المديونية والمبيعات</div>
 
-                            <a class="dropdown-item @(currentController == "HerdSales" ? "active" : "")" href="@Url.Action("Index", "HerdSales")">
-                                <i class="fas fa-dove text-primary"></i> مبيعات القطيع
-                            </a>
-        </li>
-    </ul>
-</li>
+                <a href="@Url.Action("Index", "Request_Proceeds")" class="menu-item @(currentController == "Request_Proceeds" ? "active" : "")">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>المديونية المراكز</span>
+                </a>
 
+                <a href="@Url.Action("Index", "Daily_Distribution")" class="menu-item @(currentController == "Daily_Distribution" ? "active" : "")">
+                    <i class="fas fa-truck"></i>
+                    <span>توزيعات المراكز</span>
+                </a>
 
+                <a href="@Url.Action("Index", "Prices")" class="menu-item @(currentController == "Prices" ? "active" : "")">
+                    <i class="fas fa-tag"></i>
+                    <span>الاسعار اليومية للبيض</span>
+                </a>
 
+                <a href="@Url.Action("Index", "Proceeds")" class="menu-item @(currentController == "Proceeds" ? "active" : "")">
+                    <i class="fas fa-receipt"></i>
+                    <span>المسدد</span>
+                </a>
+
+                <a href="@Url.Action("Index", "TraderSales")" class="menu-item @(currentController == "TraderSales" ? "active" : "")">
+                    <i class="fas fa-egg"></i>
+                    <span>مبيعات المزرعة للتجار</span>
+                </a>
+
+                <a href="@Url.Action("Index", "WasteSales")" class="menu-item @(currentController == "WasteSales" ? "active" : "")">
+                    <i class="fas fa-recycle"></i>
+                    <span>مبيعات السبلة</span>
+                </a>
+
+                <a href="@Url.Action("Index", "HerdSales")" class="menu-item @(currentController == "HerdSales" ? "active" : "")">
+                    <i class="fas fa-dove"></i>
+                    <span>مبيعات القطيع</span>
+                </a>
+
+                <a href="@Url.Action("Index", "SalesReport")" class="menu-item @(currentController == "SalesReport" ? "active" : "")">
+                    <i class="fas fa-file-alt"></i>
+                    <span>التقرير الشامل للمبيعات</span>
+                    <span class="badge">جديد</span>
+                </a>
             }
 
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Accountant"))
             {
-                var financeControllers = new List<string> {"Prices", "Employees", "Contracts", "Eelectricity_Invoice", "Water_Invoices", "Solar_Invoices", "Medicine" };
+                {
+                    var financeControllers = new List<string> { "Employees", "Contracts", "Eelectricity_Invoice", "Water_Invoices", "Solar_Invoices", "Medicine" };
+                }
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white dropdown-toggle @(financeControllers.Contains(currentController) ? "active" : "")" href="#" id="financeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="icon fas fa-chart-line"></i> السجلات المالية
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="financeDropdown">
-                        
-                       
-                        <li><a class="dropdown-item @(currentController == "Employees" ? "active" : "")" href="@Url.Action("Index", "Employees")"><i class="icon fas fa-user-tie"></i> سجلات الموظفين</a></li>
-                        <li><a class="dropdown-item @(currentController == "Contracts" ? "active" : "")" href="@Url.Action("Index", "Contracts")"><i class="icon fas fa-file-signature"></i> سجلات عقود الموظفين</a></li>
-                        <li><a class="dropdown-item @(currentController == "Eelectricity_Invoice" ? "active" : "")" href="@Url.Action("Index", "Eelectricity_Invoice")"><i class="icon fas fa-bolt"></i> سجلات فواتير الكهرباء</a></li>
-                        <li><a class="dropdown-item @(currentController == "Water_Invoices" ? "active" : "")" href="@Url.Action("Index", "Water_Invoices")"><i class="icon fas fa-bolt"></i> سجلات فواتير المياه</a></li>
-                        <li><a class="dropdown-item @(currentController == "Solar_Invoices" ? "active" : "")" href="@Url.Action("Index", "Solar_Invoices")"><i class="icon fas fa-solar-panel"></i> سجلات فواتير السولار</a></li>
-                        <li><a class="dropdown-item @(currentController == "Medicine" ? "active" : "")" href="@Url.Action("Index", "Medicine")"><i class="icon fas fa-tablets"></i> سجلات الادوية</a></li>
-                    </ul>
-                </li>
+                <div class="menu-section-title">السجلات المالية</div>
+
+                <a href="@Url.Action("Index", "Employees")" class="menu-item @(currentController == "Employees" ? "active" : "")">
+                    <i class="fas fa-user-tie"></i>
+                    <span>سجلات الموظفين</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Contracts")" class="menu-item @(currentController == "Contracts" ? "active" : "")">
+                    <i class="fas fa-file-signature"></i>
+                    <span>سجلات عقود الموظفين</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Eelectricity_Invoice")" class="menu-item @(currentController == "Eelectricity_Invoice" ? "active" : "")">
+                    <i class="fas fa-bolt"></i>
+                    <span>سجلات فواتير الكهرباء</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Water_Invoices")" class="menu-item @(currentController == "Water_Invoices" ? "active" : "")">
+                    <i class="fas fa-tint"></i>
+                    <span>سجلات فواتير المياه</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Solar_Invoices")" class="menu-item @(currentController == "Solar_Invoices" ? "active" : "")">
+                    <i class="fas fa-solar-panel"></i>
+                    <span>سجلات فواتير السولار</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Medicine")" class="menu-item @(currentController == "Medicine" ? "active" : "")">
+                    <i class="fas fa-tablets"></i>
+                    <span>سجلات الادوية</span>
+                </a>
             }
 
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
             {
-                var medicineControllers = new List<string> { "MedicineUseds", "Medicine_Pruchase", "Admin" };
+                {
+                    var medicineControllers = new List<string> { "MedicineUseds", "Medicine_Pruchase", "Admin" };
+                }
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white dropdown-toggle @(medicineControllers.Contains(currentController) ? "active" : "")" href="#" id="medicineDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="icon fas fa-pills"></i> ادارة الادوية والمستخدمين
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="medicineDropdown">
-                        <li><a class="dropdown-item @(currentController == "MedicineUseds" ? "active" : "")" href="@Url.Action("Index", "MedicineUseds")"><i class="icon fas fa-prescription"></i> سجلات استهلاك الادوية</a></li>
-                        <li><a class="dropdown-item @(currentController == "Medicine_Pruchase" ? "active" : "")" href="@Url.Action("Index", "Medicine_Pruchase")"><i class="icon fas fa-cart-plus"></i> سجلات شراء الادوية</a></li>
-                        <li><a class="dropdown-item @(currentController == "Admin" ? "active" : "")" href="@Url.Action("Index", "Admin")"><i class="icon fas fa-user-cog"></i> المستخدمين</a></li>
-                    </ul>
-                </li>
+                <div class="menu-section-title">ادارة الادوية والمستخدمين</div>
+
+                <a href="@Url.Action("Index", "MedicineUseds")" class="menu-item @(currentController == "MedicineUseds" ? "active" : "")">
+                    <i class="fas fa-prescription"></i>
+                    <span>سجلات استهلاك الادوية</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Medicine_Pruchase")" class="menu-item @(currentController == "Medicine_Pruchase" ? "active" : "")">
+                    <i class="fas fa-cart-plus"></i>
+                    <span>سجلات شراء الادوية</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Admin")" class="menu-item @(currentController == "Admin" ? "active" : "")">
+                    <i class="fas fa-user-cog"></i>
+                    <span>المستخدمين</span>
+                </a>
             }
+        </nav>
+    </aside>
 
-        </ul>
-    </div>
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <div id="main-content">
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-dark">
-                <div class="container-fluid" dir="rtl">
-                    <!-- Sidebar Toggle Button -->
-                    <button class="btn me-3" id="toggle-sidebar">☰</button>
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
 
-                    <!-- Navbar Brand -->
-                    <a class="navbar-brand" href="@Url.Action("Index", "Home")">مشروع دواجن شوشة</a>
-
-                    <!-- Navbar Items -->
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav ms-auto">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <!-- User Dropdown Menu -->
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-person-circle"></i> @User.Identity?.Name
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <li>
-                                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
-                                                    <i class="bi bi-gear"></i> اعدادات الحساب
-                                                </a>
-                                            </li>
-                                        }
-
-                                        <li>
-                                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "LandingPage", new { area = "" })" class="d-inline">
-                                                <button type="submit" class="dropdown-item">
-                                                    <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
-
-                                                </button>
-                                            </form>
-
-
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-
-        <main class="container-fluid mt-4 render-section-container">
-            <div class="scrollable-section">
-                @RenderBody()
-          
+            <div class="topbar-brand">
+                مشروع دواجن شوشة
             </div>
-        </main>
+        </div>
 
+        <div class="topbar-right">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="dropdown">
+                    <a href="#" class="user-menu" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">
+                            @(User.Identity?.Name?.Substring(0, 2).ToUpper() ?? "US")
+                        </div>
+                        <div class="user-name">@User.Identity?.Name</div>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                    <i class="bi bi-gear"></i> اعدادات الحساب
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "LandingPage", new { area = "" })" class="d-inline">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </header>
 
-        <footer class="footer">
-            <p>&copy; 2025 مشروع دواجن شوشة. جميع الحقوق محفوظة.</p>
-        </footer>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Main Content -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        document.getElementById("toggle-sidebar").addEventListener("click", function () {
-            document.getElementById("sidebar").classList.toggle("collapsed");
-            document.getElementById("main-content").classList.toggle("expanded");
+        $(document).ready(function() {
+            // Menu Toggle
+            $('#menuToggle').on('click', function() {
+                if (window.innerWidth > 992) {
+                    $('#sidebar').toggleClass('collapsed');
+                } else {
+                    $('#sidebar').toggleClass('show');
+                    $('#sidebarOverlay').toggleClass('show');
+                }
+            });
+
+            // Close sidebar on overlay click (mobile)
+            $('#sidebarOverlay').on('click', function() {
+                $('#sidebar').removeClass('show');
+                $(this).removeClass('show');
+            });
+
+            // Close sidebar on menu item click (mobile)
+            $('.menu-item').on('click', function() {
+                if (window.innerWidth <= 992) {
+                    $('#sidebar').removeClass('show');
+                    $('#sidebarOverlay').removeClass('show');
+                }
+            });
         });
     </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

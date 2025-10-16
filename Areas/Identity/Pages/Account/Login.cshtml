@@ -2,7 +2,7 @@
 @model LoginModel
 
 @{
-    Layout = null; // Disable the shared layout
+    Layout = null;
     ViewData["Title"] = "تسجيل دخول";
 }
 
@@ -11,20 +11,114 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - My Application</title>
+    <title>@ViewData["Title"] - مشروع دواجن شوشة</title>
+
+    <!-- Bootstrap CSS RTL -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-image: url("/uploads/OIP (2).jpg");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #764ba2;
+            --secondary-color: #11998e;
+            --secondary-light: #38ef7d;
+            --accent-color: #4facfe;
+            --danger-color: #fa709a;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            width: 100%;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
             overflow: hidden;
+            position: relative;
+        }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: url("/uploads/OIP (2).jpg");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                opacity: 0.1;
+                z-index: 0;
+            }
+
+        /* Floating Shapes */
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+            .shape:nth-child(1) {
+                top: 10%;
+                right: 10%;
+                width: 150px;
+                height: 150px;
+                background: white;
+                border-radius: 50%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                top: 60%;
+                left: 10%;
+                width: 200px;
+                height: 200px;
+                background: white;
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                animation-delay: 2s;
+            }
+
+            .shape:nth-child(3) {
+                bottom: 10%;
+                right: 20%;
+                width: 180px;
+                height: 180px;
+                background: white;
+                border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+                animation-delay: 4s;
+            }
+
+        @@keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
         }
 
         .login-container {
@@ -32,133 +126,493 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.85); /* Semi-transparent background */
-            overflow: hidden;
+        .login-wrapper {
             width: 100%;
+            max-width: 480px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo Section */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            color: var(--primary-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Card */
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .card-header {
-            background: #f8f9fa;
-            color: #333;
-            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
             text-align: center;
-            font-size: 1.6rem;
-            font-weight: bold;
-            border-bottom: 1px solid #e0e0e0;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .card-header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                animation: rotate 15s linear infinite;
+            }
+
+        @@keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
         }
 
         .card-body {
-            padding: 40px;
-            background: none;
+            padding: 3rem;
         }
 
-        .form-floating input {
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-            font-size: 1rem;
-            padding: 10px;
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .form-control {
+            border-radius: 1rem;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 1.25rem 1rem 3.5rem;
+            font-size: 1.05rem;
             transition: all 0.3s ease;
+            background: white;
+            height: auto;
         }
 
-            .form-floating input:focus {
-                border-color: #4a90e2;
-                box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+            .form-control:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
                 outline: none;
+                transform: translateY(-2px);
             }
 
-        .btn-primary {
-            background-color: #4a90e2;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
-            padding: 12px 20px;
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: block;
         }
 
-            .btn-primary:hover {
-                background-color: #3a78c1;
-                transform: translateY(-2px);
+        .form-check {
+            padding-right: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-top: 0.15rem;
+            border: 2px solid #cbd5e0;
+            cursor: pointer;
+        }
+
+            .form-check-input:checked {
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
             }
 
         .form-check-label {
             font-size: 1rem;
+            color: #4a5568;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .text-center a {
-            color: #4a90e2;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: color 0.3s ease;
+        /* Button */
+        .btn-login {
+            width: 100%;
+            padding: 1.25rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 1rem;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
         }
 
-            .text-center a:hover {
-                color: #3a78c1;
+            .btn-login::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
             }
 
+            .btn-login:hover::before {
+                width: 400px;
+                height: 400px;
+            }
+
+            .btn-login:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            }
+
+            .btn-login:active {
+                transform: translateY(-1px);
+            }
+
+            .btn-login span {
+                position: relative;
+                z-index: 1;
+            }
+
+        /* Alert */
         .alert-danger {
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-top: 15px;
+            border-radius: 1rem;
+            border: none;
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.1) 0%, rgba(254, 225, 64, 0.1) 100%);
+            border: 2px solid rgba(250, 112, 154, 0.3);
+            color: #c53030;
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
-        /* Responsiveness */
-     
+            .alert-danger ul {
+                margin: 0;
+                padding-right: 1.25rem;
+            }
+
+        .text-danger {
+            color: #c53030;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* Links */
+        .login-links {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .login-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+            .login-link:hover {
+                color: var(--primary-dark);
+                transform: translateX(-3px);
+            }
+
+            .login-link i {
+                margin-left: 0.5rem;
+            }
+
+        /* Back to Home */
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .btn-back:hover {
+                background: white;
+                color: var(--primary-color);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+        /* Responsive */
+        @@media (max-width: 576px) {
+            .login-container {
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .card-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .back-home {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .btn-back {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Loading State */
+        .btn-login.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+            .btn-login.loading::after {
+                content: '';
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                top: 50%;
+                left: 50%;
+                margin-left: -10px;
+                margin-top: -10px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: white;
+                animation: spin 0.8s linear infinite;
+            }
+
+        @@keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container login-container">
-        <div class="col-lg-5 col-md-8 col-sm-10">
-            <div class="card">
-                <div class="card-header">
-                    تسجيل دخول
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="back-home">
+        <a href="/" class="btn-back">
+            <i class="fas fa-arrow-right"></i>
+            <span>العودة للرئيسية</span>
+        </a>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-wrapper">
+            <!-- Logo Section -->
+            <div class="login-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-egg"></i>
                 </div>
+                <h1 class="logo-text">مشروع دواجن شوشة</h1>
+                <p class="logo-subtitle">نظام إدارة متكامل</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="login-card">
+                <div class="card-header">
+                    <h2>تسجيل الدخول</h2>
+                    <p>مرحباً بك! الرجاء تسجيل الدخول للمتابعة</p>
+                </div>
+
                 <div class="card-body">
                     <form id="account" method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
                         <!-- Email Input -->
-                        <div class="form-floating mb-4">
-                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
-                            <label asp-for="Input.Email">اسم المستخدم</label>
+                        <div class="form-group">
+                            <label asp-for="Input.Email" class="form-label">اسم المستخدم</label>
+                            <div class="input-group-custom">
+                                <i class="fas fa-user input-icon"></i>
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="أدخل اسم المستخدم" />
+                            </div>
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
 
                         <!-- Password Input -->
-                        <div class="form-floating mb-4">
-                            <input asp-for="Input.Password" type="password" class="form-control" autocomplete="current-password" placeholder="password" />
-                            <label asp-for="Input.Password">كلمة المرور</label>
+                        <div class="form-group">
+                            <label asp-for="Input.Password" class="form-label">كلمة المرور</label>
+                            <div class="input-group-custom">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input asp-for="Input.Password" type="password" class="form-control" autocomplete="current-password" placeholder="أدخل كلمة المرور" />
+                            </div>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
 
                         <!-- Remember Me -->
-                        <div class="form-check mb-4">
+                        <div class="form-check">
                             <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe" />
-                            <label class="form-check-label" for="rememberMe">تذكرني</label>
+                            <label class="form-check-label" for="rememberMe">
+                                تذكرني على هذا الجهاز
+                            </label>
                         </div>
 
                         <!-- Login Button -->
                         <div class="d-grid">
-                            <button id="login-submit" type="submit" class="btn btn-primary">تسجيل دخول</button>
+                            <button id="login-submit" type="submit" class="btn-login">
+                                <span>تسجيل الدخول</span>
+                            </button>
                         </div>
 
-                        <!-- Links -->
-                        @*<div class="text-center mt-4">
-                            <a id="forgot-password" asp-page="./ForgotPassword">هل نسيت كلمة المرور؟</a>
-                        </div>
-                        <div class="text-center mt-2">
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">تسجيل مستخدم جديد</a>
-                        </div>
-                        <div class="text-center mt-2">
-                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">إعادة إرسال تأكيد البريد الإلكتروني</a>
+                        <!-- Links (Commented out as in original) -->
+                        @*<div class="login-links">
+                            <div>
+                                <a id="forgot-password" asp-page="./ForgotPassword" class="login-link">
+                                    <i class="fas fa-key"></i>
+                                    هل نسيت كلمة المرور؟
+                                </a>
+                            </div>
+                            <div>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="login-link">
+                                    <i class="fas fa-user-plus"></i>
+                                    تسجيل مستخدم جديد
+                                </a>
+                            </div>
+                            <div>
+                                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="login-link">
+                                    <i class="fas fa-envelope"></i>
+                                    إعادة إرسال تأكيد البريد الإلكتروني
+                                </a>
+                            </div>
                         </div>*@
                     </form>
                 </div>
@@ -166,7 +620,30 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Add loading state to button on submit
+        document.getElementById('account').addEventListener('submit', function() {
+            const btn = document.getElementById('login-submit');
+            btn.classList.add('loading');
+            btn.querySelector('span').textContent = 'جاري تسجيل الدخول...';
+        });
+
+        // Add animation to inputs on focus
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('.input-icon').style.transform = 'translateY(-50%) scale(1.1)';
+                this.parentElement.querySelector('.input-icon').style.color = 'var(--primary-color)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('.input-icon').style.transform = 'translateY(-50%) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
+

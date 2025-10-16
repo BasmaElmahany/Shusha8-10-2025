@@ -96,7 +96,7 @@ namespace Shusha_project_BackUp.Data
 
         [Required, Column(TypeName = "decimal(18,2)")]
         public decimal RequestProceed { get; set; } // Now mapped to the database
-
+        public DateOnly Date_of_payment { get; set; }
         public string name_ofTrader { get; set; }
 
         // Method to calculate total revenue
