@@ -233,7 +233,7 @@ namespace Shusha_project_BackUp.Controllers
                 foreach (var sale in salesList)
                 {
                     worksheet.Cells[row, 1].Value = sale.date.ToString("yyyy-MM-dd");
-                    worksheet.Cells[row, 2].Value = sale.branch.branch_name ?? "غير محدد";
+                    worksheet.Cells[row, 2].Value = sale.branch?.branch_name ?? "غير محدد";
                     worksheet.Cells[row, 3].Value = sale.TraderName ?? "غير محدد";
                     worksheet.Cells[row, 4].Value = sale.wasteMeters;
                     worksheet.Cells[row, 5].Value = sale.price;

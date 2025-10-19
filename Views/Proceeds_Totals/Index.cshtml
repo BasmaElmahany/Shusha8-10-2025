@@ -1,0 +1,682 @@
+﻿@{
+    ViewData["Title"] = "إجمالي الإيرادات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        backdrop-filter: blur(10px);
+        color: #2d3748;
+        padding: 2.5rem 0;
+        margin-bottom: 2.5rem;
+        border-radius: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: slideDown 0.6s ease-out;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+            .page-header h1 i {
+                background: var(--primary-gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .main-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        margin-bottom: 2rem;
+        animation: fadeInUp 0.8s ease-out;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .filter-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        padding: 2rem;
+        border-radius: 1.5rem;
+        margin-bottom: 2rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        transition: all 0.4s ease;
+    }
+
+        .filter-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .filter-section h5 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .form-label i {
+            color: #667eea;
+        }
+
+    .form-control, .form-select {
+        border-radius: 1rem;
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+    .btn-custom {
+        padding: 0.75rem 2rem;
+        font-weight: 700;
+        border-radius: 1rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-custom:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-custom i, .btn-custom span {
+            position: relative;
+            z-index: 1;
+        }
+
+    .btn-primary-custom {
+        background: var(--primary-gradient);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+        .btn-primary-custom:hover {
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+    .btn-success-custom {
+        background: var(--success-gradient);
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    }
+
+        .btn-success-custom:hover {
+            box-shadow: 0 15px 40px rgba(17, 153, 142, 0.4);
+        }
+
+    .btn-info-custom {
+        background: var(--info-gradient);
+        box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+    }
+
+        .btn-info-custom:hover {
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+        }
+
+    .btn-danger-custom {
+        background: var(--danger-gradient);
+        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+    }
+
+        .btn-danger-custom:hover {
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+        .action-buttons .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+    /* DataTables Custom Styling */
+    .dataTables_wrapper {
+        padding: 1.5rem 0;
+    }
+
+    .dataTables_filter input {
+        border-radius: 1rem;
+        border: 2px solid #e2e8f0;
+        padding: 0.5rem 1rem;
+        margin-left: 0.5rem;
+    }
+
+        .dataTables_filter input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+    table.dataTable {
+        border-radius: 1rem;
+        overflow: hidden;
+        border-collapse: separate !important;
+        border-spacing: 0;
+    }
+
+        table.dataTable thead th {
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 700;
+            padding: 1rem;
+            border: none;
+            text-align: center;
+        }
+
+            table.dataTable thead th:first-child {
+                border-radius: 1rem 0 0 0;
+            }
+
+            table.dataTable thead th:last-child {
+                border-radius: 0 1rem 0 0;
+            }
+
+        table.dataTable tbody td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        table.dataTable tbody tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        table.dataTable tbody tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.5);
+        }
+
+    .dataTables_paginate .paginate_button {
+        border-radius: 0.5rem !important;
+        margin: 0 0.25rem;
+        padding: 0.5rem 1rem !important;
+        border: 2px solid #e2e8f0 !important;
+        background: white !important;
+        color: #667eea !important;
+    }
+
+        .dataTables_paginate .paginate_button:hover {
+            background: var(--primary-gradient) !important;
+            color: white !important;
+            border-color: transparent !important;
+        }
+
+        .dataTables_paginate .paginate_button.current {
+            background: var(--primary-gradient) !important;
+            color: white !important;
+            border-color: transparent !important;
+        }
+
+    .alert-custom {
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        animation: slideDown 0.5s ease-out;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .alert-success-custom {
+        background: var(--success-gradient);
+        color: white;
+    }
+
+    .floating-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    .shape {
+        position: absolute;
+        opacity: 0.1;
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    .shape:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        width: 100px;
+        height: 100px;
+        background: var(--primary-gradient);
+        border-radius: 50%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        top: 60%;
+        right: 10%;
+        width: 150px;
+        height: 150px;
+        background: var(--success-gradient);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        bottom: 10%;
+        left: 20%;
+        width: 120px;
+        height: 120px;
+        background: var(--info-gradient);
+        border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+        animation-delay: 4s;
+    }
+</style>
+
+<div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-cash-stack"></i>
+        إجمالي الإيرادات
+    </h1>
+</div>
+
+<div class="container-fluid">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success-custom alert-custom">
+            <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="main-card">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h5>
+                <i class="bi bi-funnel-fill"></i>
+                البحث والتصفية
+            </h5>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="fromDate" class="form-label">
+                        <i class="bi bi-calendar-check"></i>
+                        من تاريخ
+                    </label>
+                    <input type="date" id="fromDate" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label for="toDate" class="form-label">
+                        <i class="bi bi-calendar-check"></i>
+                        إلى تاريخ
+                    </label>
+                    <input type="date" id="toDate" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label for="month" class="form-label">
+                        <i class="bi bi-calendar-month"></i>
+                        الشهر
+                    </label>
+                    <select id="month" class="form-select">
+                        <option value="">-- اختر الشهر --</option>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option value="@i">
+                                @System.Globalization.CultureInfo.GetCultureInfo("ar-EG").DateTimeFormat.GetMonthName(i)
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end gap-2">
+                    <button type="button" id="filterBtn" class="btn btn-custom btn-primary-custom flex-fill">
+                        <i class="bi bi-search"></i>
+                        <span>بحث</span>
+                    </button>
+                    <button type="button" id="resetBtn" class="btn btn-custom btn-info-custom flex-fill">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <span>إعادة تعيين</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a asp-action="Create" class="btn btn-custom btn-success-custom">
+                <i class="bi bi-plus-circle-fill"></i>
+                <span>إضافة جديد</span>
+            </a>
+            <button type="button" id="exportBtn" class="btn btn-custom btn-success-custom">
+                <i class="bi bi-file-earmark-excel-fill"></i>
+                <span>تصدير إلى Excel</span>
+            </button>
+        </div>
+
+        <!-- DataTable -->
+        <div class="table-responsive">
+            <table id="proceedsTotalsTable" class="table table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>البيض</th>
+                        <th>البيض المكسور</th>
+                        <th>البيض المزدوج</th>
+                        <th>القطيع</th>
+                        <th>المخلفات</th>
+                        <th>رسوم المخلفات</th>
+                        <th>متنوعات</th>
+                        <th>الإجمالي</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        var table;
+
+        $(document).ready(function() {
+            // Initialize DataTable
+            table = $('#proceedsTotalsTable').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetData", "Proceeds_Totals")',
+                    type: 'GET',
+                    data: function(d) {
+                        d.fromDate = $('#fromDate').val();
+                        d.toDate = $('#toDate').val();
+                        d.month = $('#month').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'date',
+                        render: function(data) {
+                            return new Date(data).toLocaleDateString('ar-EG');
+                        }
+                    },
+                    {
+                        data: 'egg',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'broken_Egg',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'double_Egg',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'herd',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'waste',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'waste_fees',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'miscellaneous',
+                        render: function(data) {
+                            return parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        }
+                    },
+                    {
+                        data: 'total',
+                        render: function(data) {
+                            return '<strong>' + parseFloat(data).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</strong>';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        orderable: false,
+                        render: function(data) {
+                            return `
+                                <div class="action-buttons">
+                                    <a href="/Proceeds_Totals/Details/${data}" class="btn btn-custom btn-info-custom btn-sm">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    <a href="/Proceeds_Totals/Edit/${data}" class="btn btn-custom btn-primary-custom btn-sm">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="/Proceeds_Totals/Delete/${data}" class="btn btn-custom btn-danger-custom btn-sm">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json'
+                },
+                order: [[0, 'desc']],
+                pageLength: 25,
+                responsive: true
+            });
+
+            // Filter button
+            $('#filterBtn').on('click', function() {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                var month = $('#month').val();
+
+                // Validation
+                if ((fromDate && !toDate) || (!fromDate && toDate)) {
+                    alert('يرجى تحديد تاريخ البداية والنهاية معاً');
+                    return;
+                }
+
+                if (fromDate && toDate && fromDate > toDate) {
+                    alert('تاريخ البداية يجب أن يكون قبل تاريخ النهاية');
+                    return;
+                }
+
+                table.ajax.reload();
+            });
+
+            // Reset button
+            $('#resetBtn').on('click', function() {
+                $('#fromDate').val('');
+                $('#toDate').val('');
+                $('#month').val('');
+                table.ajax.reload();
+            });
+
+            // Export button
+            $('#exportBtn').on('click', function() {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                var month = $('#month').val();
+
+                var url = '@Url.Action("ExportToExcel", "Proceeds_Totals")';
+                var params = [];
+
+                if (fromDate) params.push('fromDate=' + fromDate);
+                if (toDate) params.push('toDate=' + toDate);
+                if (month) params.push('month=' + month);
+
+                if (params.length > 0) {
+                    url += '?' + params.join('&');
+                }
+
+                window.location.href = url;
+            });
+
+            // Clear other filters when one is selected
+            $('#fromDate, #toDate').on('change', function() {
+                if ($(this).val()) {
+                    $('#month').val('');
+                }
+            });
+
+            $('#month').on('change', function() {
+                if ($(this).val()) {
+                    $('#fromDate').val('');
+                    $('#toDate').val('');
+                }
+            });
+        });
+    </script>
+}
+

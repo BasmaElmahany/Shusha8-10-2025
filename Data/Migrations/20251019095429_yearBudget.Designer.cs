@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shusha_project_BackUp;
 
@@ -11,9 +12,11 @@ using Shusha_project_BackUp;
 namespace Shusha_project_BackUp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251019095429_yearBudget")]
+    partial class yearBudget
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -379,9 +382,6 @@ namespace Shusha_project_BackUp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<decimal>("Miscellaneous")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("egg")
                         .HasColumnType("decimal(18,2)");
 
@@ -745,46 +745,6 @@ namespace Shusha_project_BackUp.Data.Migrations
                     b.HasIndex("centerId");
 
                     b.ToTable("Proceeds");
-                });
-
-            modelBuilder.Entity("Shusha_project_BackUp.Data.Proceeds_Totals", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<decimal>("Egg")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Miscellaneous")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Waste")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("broken_Egg")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("double_Egg")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("herd")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("waste_fees")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("proceeds_Totals");
                 });
 
             modelBuilder.Entity("Shusha_project_BackUp.Data.Request_Proceeds", b =>

@@ -70,11 +70,11 @@ namespace Shusha_project_BackUp
         public DbSet<Waste_Sales> Waste_Sales { get; set; }
 
 
+        public DbSet<Budget> Budget { get; set; }
 
 
 
-
-
+        public DbSet<Proceeds_Totals> proceeds_Totals { get; set; }
 
 
 

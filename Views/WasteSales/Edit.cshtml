@@ -118,7 +118,18 @@
                 <input asp-for="date" type="date" class="form-control" />
                 <span asp-validation-for="date" class="validation-message"></span>
             </div>
-
+            <div class="col-md-6">
+                <label asp-for="branchId" class="form-label">اسم المحطة</label>
+                <select asp-for="branchId" class="form-control">
+                    <option value="">اختر المحطة</option>
+                    @* Use this if ViewBag.ward_id contains the available options *@
+                    @foreach (var item in ViewBag.BranchID as SelectList)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="branchId" class="text-danger"></span>
+            </div>
             <div class="col-md-6">
                 <label asp-for="TraderName" class="form-label">
                     <i class="bi bi-person-badge form-icon"></i>

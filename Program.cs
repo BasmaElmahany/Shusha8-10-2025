@@ -5,6 +5,7 @@ using Shusha_project_BackUp.Data;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Authentication;
 using OfficeOpenXml;
+using Shusha_project_BackUp.Services;
 
 namespace Shusha_project_BackUp
 {
@@ -34,6 +35,7 @@ namespace Shusha_project_BackUp
 
             // Register WardService for Hangfire
             builder.Services.AddScoped<WardService>();
+            builder.Services.AddScoped<IBudgetService, BudgetService>();
 
             // MVC and Razor Pages
             builder.Services.AddControllersWithViews();

@@ -1,69 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|c:\\users\\basma.khalaf\\source\\repos\\final edit\\shusha_project_backup-20250109t102425z-001\\shusha_project_backup\\controllers\\wastesalescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|solutionrelative:controllers\\wastesalescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|c:\\users\\basma.khalaf\\source\\repos\\final edit\\shusha_project_backup-20250109t102425z-001\\shusha_project_backup\\views\\wastesales\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|solutionrelative:views\\wastesales\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|c:\\users\\basma.khalaf\\source\\repos\\final edit\\shusha_project_backup-20250109t102425z-001\\shusha_project_backup\\data\\waste_sales.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6600085E-320F-44DF-A72C-91D017CBB45B}|Shusha_project_BackUp.csproj|solutionrelative:data\\waste_sales.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Views\\WasteSales\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\WasteSales\\Index.cshtml",
-              "ToolTip": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Views\\WasteSales\\Index.cshtml",
-              "RelativeToolTip": "Views\\WasteSales\\Index.cshtml",
-              "ViewState": "AgIAAG8BAAAAAAAAAAAAAHoBAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-16T13:17:48.935Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Waste_Sales.cs",
-              "DocumentMoniker": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Data\\Waste_Sales.cs",
-              "RelativeDocumentMoniker": "Data\\Waste_Sales.cs",
-              "ToolTip": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Data\\Waste_Sales.cs",
-              "RelativeToolTip": "Data\\Waste_Sales.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T13:57:41.947Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "WasteSalesController.cs",
-              "DocumentMoniker": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Controllers\\WasteSalesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\WasteSalesController.cs",
-              "ToolTip": "C:\\Users\\basma.khalaf\\source\\repos\\final Edit\\Shusha_project_BackUp-20250109T102425Z-001\\Shusha_project_BackUp\\Controllers\\WasteSalesController.cs",
-              "RelativeToolTip": "Controllers\\WasteSalesController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAnwDcAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T13:49:11.457Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

@@ -321,6 +321,87 @@ namespace Shusha_project_BackUp.Controllers
                 Total = (double)totalTraderSales + totalHerdSales + totalWasteSales
             };
         }
+
+        [HttpGet]
+        public async Task<IActionResult> PreviewSalesData(DateTime? from, DateTime? to, int? month)
+        {
+            List<ExcelMonthData> monthlyData = new List<ExcelMonthData>();
+
+            if (month.HasValue && month.Value >= 1 && month.Value <= 12)
+            {
+                // Single month report
+                var data = await GetMonthData(month.Value);
+                monthlyData.Add(data);
+            }
+            else if (from.HasValue && to.HasValue)
+            {
+                // Date range report - group by month
+                var startDate = DateOnly.FromDateTime(from.Value);
+                var endDate = DateOnly.FromDateTime(to.Value);
+
+                // Get all months in the range
+                var months = new List<int>();
+                var currentDate = startDate;
+                while (currentDate <= endDate)
+                {
+                    if (!months.Contains(currentDate.Month))
+                    {
+                        months.Add(currentDate.Month);
+                    }
+                    currentDate = currentDate.AddMonths(1);
+                }
+
+                foreach (var m in months.OrderBy(x => x))
+                {
+                    var data = await GetMonthData(m, startDate, endDate);
+                    monthlyData.Add(data);
+                }
+            }
+            else
+            {
+                // All months in current year
+                var currentYear = DateTime.Now.Year;
+                for (int m = 1; m <= 12; m++)
+                {
+                    var data = await GetMonthData(m);
+                    if (data.Total > 0) // Only include months with data
+                    {
+                        monthlyData.Add(data);
+                    }
+                }
+            }
+
+            // Calculate totals and percentages
+            double grandTotal = monthlyData.Sum(d => d.Total);
+            double traderTotal = monthlyData.Sum(d => d.total_traderSales);
+            double wasteTotal = monthlyData.Sum(d => d.total_wasteSales);
+            double herdTotal = monthlyData.Sum(d => d.total_HerdSales);
+
+            var result = new
+            {
+                monthlyData = monthlyData.Select(d => new
+                {
+                    monthName = System.Globalization.CultureInfo.GetCultureInfo("ar-EG").DateTimeFormat.GetMonthName(d.month),
+                    monthNumber = d.month,
+                    eggSales = d.total_traderSales,
+                    wasteSales = d.total_wasteSales,
+                    herdSales = d.total_HerdSales,
+                    total = d.Total
+                }),
+                summary = new
+                {
+                    totalEggSales = traderTotal,
+                    totalWasteSales = wasteTotal,
+                    totalHerdSales = herdTotal,
+                    grandTotal = grandTotal,
+                    eggPercentage = grandTotal > 0 ? (traderTotal / grandTotal * 100) : 0,
+                    wastePercentage = grandTotal > 0 ? (wasteTotal / grandTotal * 100) : 0,
+                    herdPercentage = grandTotal > 0 ? (herdTotal / grandTotal * 100) : 0
+                }
+            };
+
+            return Json(result);
+        }
     }
 }
 

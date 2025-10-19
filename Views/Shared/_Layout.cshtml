@@ -419,6 +419,72 @@
                     <span>رسوم بيانية واحصائيات</span>
                 </a>
             }
+            @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("proceeds") || User.IsInRole("Accountant"))
+            {
+                {
+                    var proceedsControllers = new List<string> { "Request_Proceeds", "Proceeds", "TraderSales", "Daily_Distribution", "WasteSales", "SalesReport", "HerdSales", "Prices", "Budget", "Proceeds_Totals" };
+                }
+                <a href="@Url.Action("Index", "TraderSales")" class="menu-item @(currentController == "TraderSales" ? "active" : "")">
+                    <i class="fas fa-egg"></i>
+                    <span>مبيعات المزرعة للتجار</span>
+                </a>
+
+                <a href="@Url.Action("Index", "WasteSales")" class="menu-item @(currentController == "WasteSales" ? "active" : "")">
+                    <i class="fas fa-recycle"></i>
+                    <span>مبيعات السبلة</span>
+                    <span class="badge">جديد</span>
+                </a>
+
+                <a href="@Url.Action("Index", "HerdSales")" class="menu-item @(currentController == "HerdSales" ? "active" : "")">
+                    <i class="fas fa-dove"></i>
+                    <span>مبيعات القطيع</span>
+                </a>
+
+                <a href="@Url.Action("Index", "SalesReport")" class="menu-item @(currentController == "SalesReport" ? "active" : "")">
+                    <i class="fas fa-file-alt"></i>
+                    <span>التقرير الشامل للمبيعات</span>
+                    <span class="badge">جديد</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Proceeds_Totals")"
+                   class="menu-item @(currentController == "Proceeds_Totals" ? "active" : "")">
+                    <i class="bi bi-receipt-cutoff"></i>
+                    <span>التوريد</span>
+                    <span class="badge">جديد</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Budget")"
+                   class="menu-item @(currentController == "Budget" ? "active" : "")">
+                    <i class="bi bi-wallet2"></i>
+                    <span>الميزانية</span>
+                    <span class="badge">جديد</span>
+                </a>
+
+
+                <div class="menu-section-title">المديونية والمبيعات للمراكز</div>
+
+                <a href="@Url.Action("Index", "Request_Proceeds")" class="menu-item @(currentController == "Request_Proceeds" ? "active" : "")">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>المديونية المراكز</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Daily_Distribution")" class="menu-item @(currentController == "Daily_Distribution" ? "active" : "")">
+                    <i class="fas fa-truck"></i>
+                    <span>توزيعات المراكز</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Prices")" class="menu-item @(currentController == "Prices" ? "active" : "")">
+                    <i class="fas fa-tag"></i>
+                    <span>الاسعار اليومية للبيض</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Proceeds")" class="menu-item @(currentController == "Proceeds" ? "active" : "")">
+                    <i class="fas fa-receipt"></i>
+                    <span>المسدد</span>
+                </a>
+
+
+            }
 
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Lohman") || User.IsInRole("Bayad A") || User.IsInRole("Bayad B") || User.IsInRole("Magary"))
             {
@@ -458,55 +524,7 @@
                 </a>
             }
 
-            @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("proceeds") || User.IsInRole("Accountant"))
-            {
-                {
-                    var proceedsControllers = new List<string> { "Request_Proceeds", "Proceeds", "TraderSales", "Daily_Distribution", "WasteSales", "SalesReport", "HerdSales", "Prices" };
-                }
-
-                <div class="menu-section-title">المديونية والمبيعات</div>
-
-                <a href="@Url.Action("Index", "Request_Proceeds")" class="menu-item @(currentController == "Request_Proceeds" ? "active" : "")">
-                    <i class="fas fa-hand-holding-usd"></i>
-                    <span>المديونية المراكز</span>
-                </a>
-
-                <a href="@Url.Action("Index", "Daily_Distribution")" class="menu-item @(currentController == "Daily_Distribution" ? "active" : "")">
-                    <i class="fas fa-truck"></i>
-                    <span>توزيعات المراكز</span>
-                </a>
-
-                <a href="@Url.Action("Index", "Prices")" class="menu-item @(currentController == "Prices" ? "active" : "")">
-                    <i class="fas fa-tag"></i>
-                    <span>الاسعار اليومية للبيض</span>
-                </a>
-
-                <a href="@Url.Action("Index", "Proceeds")" class="menu-item @(currentController == "Proceeds" ? "active" : "")">
-                    <i class="fas fa-receipt"></i>
-                    <span>المسدد</span>
-                </a>
-
-                <a href="@Url.Action("Index", "TraderSales")" class="menu-item @(currentController == "TraderSales" ? "active" : "")">
-                    <i class="fas fa-egg"></i>
-                    <span>مبيعات المزرعة للتجار</span>
-                </a>
-
-                <a href="@Url.Action("Index", "WasteSales")" class="menu-item @(currentController == "WasteSales" ? "active" : "")">
-                    <i class="fas fa-recycle"></i>
-                    <span>مبيعات السبلة</span>
-                </a>
-
-                <a href="@Url.Action("Index", "HerdSales")" class="menu-item @(currentController == "HerdSales" ? "active" : "")">
-                    <i class="fas fa-dove"></i>
-                    <span>مبيعات القطيع</span>
-                </a>
-
-                <a href="@Url.Action("Index", "SalesReport")" class="menu-item @(currentController == "SalesReport" ? "active" : "")">
-                    <i class="fas fa-file-alt"></i>
-                    <span>التقرير الشامل للمبيعات</span>
-                    <span class="badge">جديد</span>
-                </a>
-            }
+            
 
             @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Accountant"))
             {

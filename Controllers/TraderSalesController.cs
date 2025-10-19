@@ -113,7 +113,7 @@ namespace Shusha_project_BackUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NoOfWhiteEggs,WhiteEggPrice,NoOfNewWhiteEggs,NewWhiteEggPrice,NoOfMedWhiteEggs,MedWhiteEggPrice,NoOfBrownEggs,BrownEggPrice,NoOfNewBrownEggs,NewBrownEggPrice,NoOfMedBrownEggs,BrownMedEggPrice,NoOfBrokenEggs,BrokenEggPrice,NoOfDoubleEggs,DoubleEggPrice,NoOfNewDoubleEggs,NewDoubleEggPrice,NoOfMedDoubleEggs,MedDoubleEggPrice,IsPaid,date,name_ofTrader")] TraderSales traderSales)
+        public async Task<IActionResult> Create([Bind("Id,NoOfWhiteEggs,WhiteEggPrice,NoOfNewWhiteEggs,NewWhiteEggPrice,NoOfMedWhiteEggs,MedWhiteEggPrice,NoOfBrownEggs,BrownEggPrice,NoOfNewBrownEggs,NewBrownEggPrice,NoOfMedBrownEggs,BrownMedEggPrice,NoOfBrokenEggs,BrokenEggPrice,NoOfDoubleEggs,DoubleEggPrice,NoOfNewDoubleEggs,NewDoubleEggPrice,NoOfMedDoubleEggs,MedDoubleEggPrice,IsPaid,date,name_ofTrader,Date_of_payment")] TraderSales traderSales)
         {
             if (ModelState.IsValid)
             {
@@ -178,7 +178,7 @@ namespace Shusha_project_BackUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NoOfWhiteEggs,WhiteEggPrice,NoOfNewWhiteEggs,NewWhiteEggPrice,NoOfMedWhiteEggs,MedWhiteEggPrice,NoOfBrownEggs,BrownEggPrice,NoOfNewBrownEggs,NewBrownEggPrice,NoOfMedBrownEggs,BrownMedEggPrice,NoOfBrokenEggs,BrokenEggPrice,NoOfDoubleEggs,DoubleEggPrice,NoOfNewDoubleEggs,NewDoubleEggPrice,NoOfMedDoubleEggs,MedDoubleEggPrice,IsPaid,date,name_ofTrader")] TraderSales traderSales)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NoOfWhiteEggs,WhiteEggPrice,NoOfNewWhiteEggs,NewWhiteEggPrice,NoOfMedWhiteEggs,MedWhiteEggPrice,NoOfBrownEggs,BrownEggPrice,NoOfNewBrownEggs,NewBrownEggPrice,NoOfMedBrownEggs,BrownMedEggPrice,NoOfBrokenEggs,BrokenEggPrice,NoOfDoubleEggs,DoubleEggPrice,NoOfNewDoubleEggs,NewDoubleEggPrice,NoOfMedDoubleEggs,MedDoubleEggPrice,IsPaid,date,name_ofTrader,Date_of_payment")] TraderSales traderSales)
         {
             if (id != traderSales.Id)
                 return NotFound();
@@ -293,6 +293,7 @@ namespace Shusha_project_BackUp.Controllers
                 ws.Cells[1, c++].Value = "Id";
                 ws.Cells[1, c++].Value = "اسم التاجر";
                 ws.Cells[1, c++].Value = "التاريخ";
+                ws.Cells[1, c++].Value = "تاريخ التوريد";
 
                 ws.Cells[1, c++].Value = "عدد الأبيض (كرتون)";
                 ws.Cells[1, c++].Value = "سعر الأبيض";
@@ -336,6 +337,7 @@ namespace Shusha_project_BackUp.Controllers
                     ws.Cells[row, col++].Value = s.Id;
                     ws.Cells[row, col++].Value = s.name_ofTrader;
                     ws.Cells[row, col++].Value = s.date.ToString("yyyy-MM-dd");
+                    ws.Cells[row, col++].Value = s.Date_of_payment.ToString("yyyy-MM-dd");
 
                     ws.Cells[row, col++].Value = s.NoOfWhiteEggs;
                     ws.Cells[row, col++].Value = s.WhiteEggPrice;

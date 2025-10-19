@@ -1,0 +1,271 @@
+﻿@model IEnumerable<Shusha_project_BackUp.Data.Budget>
+
+@{
+    ViewData["Title"] = "الميزانية السنوية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem 0;
+        margin-bottom: 2.5rem;
+        border-radius: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.6s ease-out;
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .main-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .budget-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        transition: all 0.3s ease;
+    }
+
+        .budget-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        }
+
+    .budget-year {
+        font-size: 2rem;
+        font-weight: 800;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .budget-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .stat-item {
+        background: white;
+        padding: 1rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #718096;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2d3748;
+    }
+
+    .total-badge {
+        background: var(--success-gradient);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        display: inline-block;
+        margin-top: 1rem;
+    }
+
+    .btn-custom {
+        padding: 0.75rem 2rem;
+        font-weight: 700;
+        border-radius: 1rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary-custom {
+        background: var(--primary-gradient);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-success-custom {
+        background: var(--success-gradient);
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    }
+
+    .btn-info-custom {
+        background: var(--info-gradient);
+        box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+    }
+
+    .btn-warning-custom {
+        background: var(--warning-gradient);
+        box-shadow: 0 10px 30px rgba(250, 112, 154, 0.3);
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-3px);
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-wallet2"></i>
+        الميزانية السنوية
+    </h1>
+</div>
+
+<div class="container-fluid">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="main-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex gap-2">
+                <a asp-action="Comparison" class="btn btn-custom btn-primary-custom">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>مقارنة السنوات</span>
+                </a>
+                <a asp-action="RecalculateAll" class="btn btn-custom btn-warning-custom" onclick="return confirm('هل أنت متأكد من إعادة حساب جميع الميزانيات؟')">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <span>إعادة حساب الكل</span>
+                </a>
+            </div>
+            <a asp-action="ExportToExcel" class="btn btn-custom btn-success-custom">
+                <i class="bi bi-file-earmark-excel-fill"></i>
+                <span>تصدير إلى Excel</span>
+            </a>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle-fill"></i>
+                لا توجد بيانات ميزانية حتى الآن. سيتم إنشاء الميزانية تلقائياً عند إضافة سجلات الإيرادات.
+            </div>
+        }
+        else
+        {
+            @foreach (var budget in Model)
+            {
+                <div class="budget-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="budget-year">
+                                السنة المالية @budget.year/@(budget.year + 1)
+                            </div>
+                            <div class="text-muted mb-3">
+                                <i class="bi bi-calendar-range"></i>
+                                من 1 يوليو @budget.year إلى 30 يونيو @(budget.year + 1)
+                            </div>
+
+                            <div class="budget-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">🥚 البيض</div>
+                                    <div class="stat-value">@budget.egg.ToString("N2")</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">♻️ المخلفات</div>
+                                    <div class="stat-value">@budget.waste.ToString("N2")</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">🐔 القطيع</div>
+                                    <div class="stat-value">@budget.herd.ToString("N2")</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">📦 متنوعات</div>
+                                    <div class="stat-value">@budget.Miscellaneous.ToString("N2")</div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="total-badge">
+                                    الإجمالي: @budget.total.ToString("N2")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2">
+                            
+                            <a asp-action="Recalculate" asp-route-year="@budget.year" class="btn btn-custom btn-warning-custom btn-sm" onclick="return confirm('هل أنت متأكد من إعادة الحساب؟')">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                <span>إعادة حساب</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

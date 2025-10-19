@@ -604,6 +604,8 @@
                     <th class="header-info">الإجمالي</th>
                     <th class="header-info">حالة السداد</th>
                     <th class="header-info">التاريخ</th>
+                    <th class="header-info">تاريخ السداد</th>
+
                     <th class="header-info">اسم التاجر</th>
                     <th class="header-info">العمليات</th>
                 </tr>
@@ -650,6 +652,7 @@
                             }
                         </td>
                         <td>@item.date.ToShortDateString()</td>
+                        <td>@item.Date_of_payment.ToShortDateString()</td>
                         <td><strong>@item.name_ofTrader</strong></td>
                         <td>
                             <div class="action-buttons">

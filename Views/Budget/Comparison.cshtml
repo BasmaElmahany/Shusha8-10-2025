@@ -1,0 +1,337 @@
+﻿@model Shusha_project_BackUp.Services.BudgetComparison
+
+@{
+    ViewData["Title"] = "مقارنة الميزانية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem 0;
+        margin-bottom: 2.5rem;
+        border-radius: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.6s ease-out;
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .main-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .year-selector {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        padding: 2rem;
+        border-radius: 1.5rem;
+        margin-bottom: 2rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 1rem;
+        overflow: hidden;
+        margin: 2rem 0;
+    }
+
+        .comparison-table thead th {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .comparison-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.5);
+        }
+
+        .comparison-table tfoot td {
+            background: var(--success-gradient);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+    .positive-change {
+        color: #11998e;
+        font-weight: 700;
+    }
+
+    .negative-change {
+        color: #f5576c;
+        font-weight: 700;
+    }
+
+    .percentage-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+        .percentage-badge.positive {
+            background: rgba(17, 153, 142, 0.1);
+            color: #11998e;
+        }
+
+        .percentage-badge.negative {
+            background: rgba(245, 87, 108, 0.1);
+            color: #f5576c;
+        }
+
+    .btn-custom {
+        padding: 0.75rem 2rem;
+        font-weight: 700;
+        border-radius: 1rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        color: white;
+    }
+
+    .btn-info-custom {
+        background: var(--info-gradient);
+        box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+    }
+
+    .btn-success-custom {
+        background: var(--success-gradient);
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-3px);
+    }
+
+    .form-select {
+        border-radius: 1rem;
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+    }
+
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-bar-chart-fill"></i>
+        مقارنة الميزانية
+    </h1>
+</div>
+
+<div class="container-fluid">
+    <div class="main-card">
+        <!-- Year Selector -->
+        <div class="year-selector">
+            <form method="get" asp-action="Comparison">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">السنة السابقة</label>
+                        <select name="previousYear" class="form-select">
+                            @foreach (var year in ViewBag.AvailableYears)
+                            {
+                                <option value="@year" selected="@(year == ViewBag.PreviousYear)">
+                                    @year/@(year + 1)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">السنة الحالية</label>
+                        <select name="currentYear" class="form-select">
+                            @foreach (var year in ViewBag.AvailableYears)
+                            {
+                                <option value="@year" selected="@(year == ViewBag.CurrentYear)">
+                                    @year/@(year + 1)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-custom btn-info-custom w-100">
+                            <i class="bi bi-search"></i>
+                            <span>مقارنة</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @if (Model != null)
+        {
+            <!-- Comparison Table -->
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>البند</th>
+                        <th>السنة السابقة<br>(@Model.PreviousYear/@(Model.PreviousYear + 1))</th>
+                        <th>السنة الحالية<br>(@Model.CurrentYear/@(Model.CurrentYear + 1))</th>
+                        <th>الفرق</th>
+                        <th>نسبة التغيير</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">🥚 البيض</td>
+                        <td>@Model.PreviousBudget.egg.ToString("N2")</td>
+                        <td>@Model.CurrentBudget.egg.ToString("N2")</td>
+                        <td class="@(Model.EggDifference >= 0 ? "positive-change" : "negative-change")">
+                            @(Model.EggDifference >= 0 ? "+" : "")@Model.EggDifference.ToString("N2")
+                        </td>
+                        <td>
+                            <span class="percentage-badge @(Model.EggPercentageChange >= 0 ? "positive" : "negative")">
+                                @(Model.EggPercentageChange >= 0 ? "+" : "")@Model.EggPercentageChange.ToString("N2")%
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">♻️ المخلفات</td>
+                        <td>@Model.PreviousBudget.waste.ToString("N2")</td>
+                        <td>@Model.CurrentBudget.waste.ToString("N2")</td>
+                        <td class="@(Model.WasteDifference >= 0 ? "positive-change" : "negative-change")">
+                            @(Model.WasteDifference >= 0 ? "+" : "")@Model.WasteDifference.ToString("N2")
+                        </td>
+                        <td>
+                            <span class="percentage-badge @(Model.WastePercentageChange >= 0 ? "positive" : "negative")">
+                                @(Model.WastePercentageChange >= 0 ? "+" : "")@Model.WastePercentageChange.ToString("N2")%
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">🐔 القطيع</td>
+                        <td>@Model.PreviousBudget.herd.ToString("N2")</td>
+                        <td>@Model.CurrentBudget.herd.ToString("N2")</td>
+                        <td class="@(Model.HerdDifference >= 0 ? "positive-change" : "negative-change")">
+                            @(Model.HerdDifference >= 0 ? "+" : "")@Model.HerdDifference.ToString("N2")
+                        </td>
+                        <td>
+                            <span class="percentage-badge @(Model.HerdPercentageChange >= 0 ? "positive" : "negative")">
+                                @(Model.HerdPercentageChange >= 0 ? "+" : "")@Model.HerdPercentageChange.ToString("N2")%
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">📦 متنوعات</td>
+                        <td>@Model.PreviousBudget.Miscellaneous.ToString("N2")</td>
+                        <td>@Model.CurrentBudget.Miscellaneous.ToString("N2")</td>
+                        <td class="@(Model.MiscellaneousDifference >= 0 ? "positive-change" : "negative-change")">
+                            @(Model.MiscellaneousDifference >= 0 ? "+" : "")@Model.MiscellaneousDifference.ToString("N2")
+                        </td>
+                        <td>
+                            <span class="percentage-badge @(Model.MiscellaneousPercentageChange >= 0 ? "positive" : "negative")">
+                                @(Model.MiscellaneousPercentageChange >= 0 ? "+" : "")@Model.MiscellaneousPercentageChange.ToString("N2")%
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>الإجمالي</td>
+                        <td>@Model.PreviousBudget.total.ToString("N2")</td>
+                        <td>@Model.CurrentBudget.total.ToString("N2")</td>
+                        <td>@(Model.TotalDifference >= 0 ? "+" : "")@Model.TotalDifference.ToString("N2")</td>
+                        <td>@(Model.TotalPercentageChange >= 0 ? "+" : "")@Model.TotalPercentageChange.ToString("N2")%</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-custom btn-info-custom">
+                    <i class="bi bi-arrow-right-circle"></i>
+                    <span>رجوع للقائمة</span>
+                </a>
+                <a asp-action="ExportComparisonToExcel" asp-route-currentYear="@Model.CurrentYear" asp-route-previousYear="@Model.PreviousYear" class="btn btn-custom btn-success-custom">
+                    <i class="bi bi-file-earmark-excel-fill"></i>
+                    <span>تصدير المقارنة</span>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                لا توجد بيانات للمقارنة. يرجى التأكد من وجود بيانات للسنتين المحددتين.
+            </div>
+        }
+    </div>
+</div>
+

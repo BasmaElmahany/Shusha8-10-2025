@@ -155,7 +155,13 @@
         </div>
         <div class="detail-value">@Model.date.ToString("yyyy-MM-dd")</div>
     </div>
-
+    <div class="detail-row">
+        <div class="detail-label">
+            <i class="bi bi-home-badge"></i>
+            اسم المحطة
+        </div>
+        <div class="detail-value">@(Model.branch?.branch_name ?? "غير محدد")</div>
+    </div>
     <div class="detail-row">
         <div class="detail-label">
             <i class="bi bi-person-badge"></i>

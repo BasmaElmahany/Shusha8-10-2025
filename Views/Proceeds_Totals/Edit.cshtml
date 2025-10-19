@@ -1,0 +1,398 @@
+﻿@model Shusha_project_BackUp.Data.Proceeds_Totals
+
+@{
+    ViewData["Title"] = "تعديل الإيراد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        backdrop-filter: blur(10px);
+        color: #2d3748;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.6s ease-out;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 2rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.8s ease-out;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .form-section h5 {
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: #667eea;
+    }
+
+    .form-control {
+        border-radius: 1rem;
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .btn-custom {
+        padding: 0.75rem 2rem;
+        font-weight: 700;
+        border-radius: 1rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-custom::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-custom:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-3px);
+    }
+
+    .btn-custom i, .btn-custom span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-success-custom {
+        background: var(--success-gradient);
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    }
+
+    .btn-success-custom:hover {
+        box-shadow: 0 15px 40px rgba(17, 153, 142, 0.4);
+    }
+
+    .btn-info-custom {
+        background: var(--info-gradient);
+        box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+    }
+
+    .btn-info-custom:hover {
+        box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+    }
+
+    .total-display {
+        background: var(--success-gradient);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        text-align: center;
+        margin-top: 1.5rem;
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    }
+
+    .total-display h4 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .total-display .amount {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-top: 0.5rem;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-pencil-square"></i>
+        تعديل الإيراد
+    </h1>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="form-card">
+                <form asp-action="Edit" id="editForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" />
+
+                    <!-- Date Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-calendar-event"></i>
+                            التاريخ
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label asp-for="Date" class="form-label">
+                                    <i class="bi bi-calendar-check"></i>
+                                    التاريخ
+                                </label>
+                                <input asp-for="Date" class="form-control" type="date" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Egg Sales Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-egg"></i>
+                            مبيعات البيض
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label asp-for="Egg" class="form-label">
+                                    <i class="bi bi-egg-fill"></i>
+                                    البيض
+                                </label>
+                                <input asp-for="Egg" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="Egg" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="broken_Egg" class="form-label">
+                                    <i class="bi bi-egg-fried"></i>
+                                    البيض المكسور
+                                </label>
+                                <input asp-for="broken_Egg" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="broken_Egg" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="double_Egg" class="form-label">
+                                    <i class="bi bi-egg"></i>
+                                    البيض المزدوج
+                                </label>
+                                <input asp-for="double_Egg" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="double_Egg" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Sales Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-cash-stack"></i>
+                            إيرادات أخرى
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label asp-for="herd" class="form-label">
+                                    <i class="bi bi-layers-fill"></i>
+                                    القطيع
+                                </label>
+                                <input asp-for="herd" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="herd" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Waste" class="form-label">
+                                    <i class="bi bi-recycle"></i>
+                                    المخلفات
+                                </label>
+                                <input asp-for="Waste" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="Waste" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="waste_fees" class="form-label">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    رسوم المخلفات
+                                </label>
+                                <input asp-for="waste_fees" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="waste_fees" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Miscellaneous Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-three-dots"></i>
+                            متنوعات
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label asp-for="Miscellaneous" class="form-label">
+                                    <i class="bi bi-plus-square"></i>
+                                    متنوعات
+                                </label>
+                                <input asp-for="Miscellaneous" class="form-control calculate-total" type="number" step="0.01" />
+                                <span asp-validation-for="Miscellaneous" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Display -->
+                    <div class="total-display">
+                        <h4>الإجمالي الكلي</h4>
+                        <div class="amount" id="totalAmount">0.00</div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-custom btn-info-custom">
+                            <i class="bi bi-arrow-right-circle"></i>
+                            <span>رجوع للقائمة</span>
+                        </a>
+                        <button type="submit" class="btn btn-custom btn-success-custom">
+                            <i class="bi bi-save-fill"></i>
+                            <span>حفظ التعديلات</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+        <script>
+            $(document).ready(function() {
+                // Calculate total on input change
+                $('.calculate-total').on('input', function() {
+                    calculateTotal();
+                });
+
+                function calculateTotal() {
+                    var egg = parseFloat($('#Egg').val()) || 0;
+                    var brokenEgg = parseFloat($('#broken_Egg').val()) || 0;
+                    var doubleEgg = parseFloat($('#double_Egg').val()) || 0;
+                    var herd = parseFloat($('#herd').val()) || 0;
+                    var waste = parseFloat($('#Waste').val()) || 0;
+                    var wasteFees = parseFloat($('#waste_fees').val()) || 0;
+                    var miscellaneous = parseFloat($('#Miscellaneous').val()) || 0;
+
+                    var total = egg + brokenEgg + doubleEgg + herd + waste + wasteFees + miscellaneous;
+
+                    $('#totalAmount').text(total.toLocaleString('ar-EG', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }));
+                }
+
+                // Initialize total
+                calculateTotal();
+
+                // Form validation
+                $('#editForm').on('submit', function(e) {
+                    var date = $('#Date').val();
+                    if (!date) {
+                        e.preventDefault();
+                        alert('يرجى تحديد التاريخ');
+                        return false;
+                    }
+                });
+            });
+        </script>
+}
+

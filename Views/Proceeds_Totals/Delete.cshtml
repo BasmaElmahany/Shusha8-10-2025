@@ -1,0 +1,380 @@
+﻿@model Shusha_project_BackUp.Data.Proceeds_Totals
+
+@{
+    ViewData["Title"] = "حذف الإيراد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        backdrop-filter: blur(10px);
+        color: #2d3748;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.6s ease-out;
+    }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2rem;
+            background: var(--danger-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .delete-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.8s ease-out;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .warning-box {
+        background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+        border: 3px solid rgba(245, 87, 108, 0.3);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        animation: shake 0.5s ease-in-out;
+    }
+
+    @@keyframes shake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-10px);
+        }
+
+        75% {
+            transform: translateX(10px);
+        }
+    }
+
+    .warning-box i {
+        font-size: 4rem;
+        color: #f5576c;
+        margin-bottom: 1rem;
+    }
+
+    .warning-box h3 {
+        color: #f5576c;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .warning-box p {
+        color: #2d3748;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .info-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+        .info-section h5 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: white;
+        border-radius: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #2d3748;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .info-label i {
+            color: #667eea;
+        }
+
+    .info-value {
+        font-weight: 700;
+        color: #667eea;
+    }
+
+    .total-highlight {
+        background: var(--danger-gradient);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+        .total-highlight h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .total-highlight .amount {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+    .btn-custom {
+        padding: 0.75rem 2rem;
+        font-weight: 700;
+        border-radius: 1rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-custom:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-custom i, .btn-custom span {
+            position: relative;
+            z-index: 1;
+        }
+
+    .btn-danger-custom {
+        background: var(--danger-gradient);
+        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+    }
+
+        .btn-danger-custom:hover {
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+        }
+
+    .btn-info-custom {
+        background: var(--info-gradient);
+        box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+    }
+
+        .btn-info-custom:hover {
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 1rem;
+        text-align: center;
+        border: 2px solid #e2e8f0;
+    }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+</style>
+
+<div class="page-header text-center">
+    <h1>
+        <i class="bi bi-trash-fill"></i>
+        حذف الإيراد
+    </h1>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="delete-card">
+                <!-- Warning Box -->
+                <div class="warning-box">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <h3>تحذير!</h3>
+                    <p>هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                </div>
+
+                <!-- Date Section -->
+                <div class="info-section">
+                    <h5>
+                        <i class="bi bi-calendar-event"></i>
+                        معلومات السجل
+                    </h5>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="bi bi-calendar-check"></i>
+                            التاريخ
+                        </div>
+                        <div class="info-value">
+                            @Model.Date.ToString("yyyy-MM-dd")
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">البيض</div>
+                        <div class="value">@Model.Egg.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">البيض المكسور</div>
+                        <div class="value">@Model.broken_Egg.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">البيض المزدوج</div>
+                        <div class="value">@Model.double_Egg.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">القطيع</div>
+                        <div class="value">@Model.herd.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">المخلفات</div>
+                        <div class="value">@Model.Waste.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">رسوم المخلفات</div>
+                        <div class="value">@Model.waste_fees.ToString("N2")</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">متنوعات</div>
+                        <div class="value">@Model.Miscellaneous.ToString("N2")</div>
+                    </div>
+                </div>
+
+                <!-- Total Highlight -->
+                <div class="total-highlight">
+                    <h4>الإجمالي الكلي</h4>
+                    <div class="amount">@Model.total.ToString("N2")</div>
+                </div>
+
+                <!-- Delete Form -->
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="id" />
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-custom btn-info-custom">
+                            <i class="bi bi-arrow-right-circle"></i>
+                            <span>إلغاء</span>
+                        </a>
+                        <button type="submit" class="btn btn-custom btn-danger-custom">
+                            <i class="bi bi-trash-fill"></i>
+                            <span>تأكيد الحذف</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                if (!confirm('هل أنت متأكد تماماً من حذف هذا السجل؟')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
