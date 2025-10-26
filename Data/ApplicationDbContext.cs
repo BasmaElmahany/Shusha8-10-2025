@@ -76,6 +76,12 @@ namespace Shusha_project_BackUp
 
         public DbSet<Proceeds_Totals> proceeds_Totals { get; set; }
 
+        public DbSet<Expenses> Expenses { get; set; }
+         
+
+        public DbSet<Expenses_total> Expenses_total { get; set; } 
+
+
 
 
 
