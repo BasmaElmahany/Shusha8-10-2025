@@ -151,6 +151,35 @@ namespace Shusha_project_BackUp.Controllers
                 // Check if budget data exists
                 ViewBag.HasBudgetData = currentYearBudget != null || previousYearBudget != null;
 
+
+
+
+                // ✅ Fetch Expenses Totals
+                var currentExpenses = await _context.Expenses_total
+                    .FirstOrDefaultAsync(e => e.year == currentFiscalYear);
+                var previousExpenses = await _context.Expenses_total
+                    .FirstOrDefaultAsync(e => e.year == previousFiscalYear);
+
+                ViewBag.CurrentYearExpenses = currentExpenses?.Total ?? 0;
+                ViewBag.PreviousYearExpenses = previousExpenses?.Total ?? 0;
+
+                // ✅ Calculate difference & percentage
+                ViewBag.ExpensesDifference = ViewBag.CurrentYearExpenses - ViewBag.PreviousYearExpenses;
+                ViewBag.ExpensesPercentage = previousExpenses != null && previousExpenses.Total > 0
+                    ? Math.Round(((ViewBag.CurrentYearExpenses - ViewBag.PreviousYearExpenses) / (decimal)previousExpenses.Total) * 100, 1)
+                    : (ViewBag.CurrentYearExpenses > 0 ? 100 : 0);
+
+                // ✅ Chart data (revenues vs expenses)
+                ViewBag.RevenueExpensesChart = new[]
+                {
+            new { Year = $"{previousFiscalYear}/{previousFiscalYear + 1}",
+                  Revenues = (decimal)ViewBag.PreviousYearTotal,
+                  Expenses = (decimal)ViewBag.PreviousYearExpenses },
+            new { Year = $"{currentFiscalYear}/{currentFiscalYear + 1}",
+                  Revenues = (decimal)ViewBag.CurrentYearTotal,
+                  Expenses = (decimal)ViewBag.CurrentYearExpenses }
+        };
+
                 return View();
             }
             catch (Exception ex)
