@@ -91,10 +91,20 @@ namespace Shusha_project_BackUp.Controllers
         {
             if (ModelState.IsValid)
             {
-             //   dailySales.Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1));
+                //   dailySales.Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1));
+
+                DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 
 
+                var existRecord = _context.DailySales.Where(c=>c.Date==dailySales.Date && c.wardID==dailySales.wardID).FirstOrDefault();
 
+                if (existRecord != null)
+                {
+                    ModelState.AddModelError("", "عفواً يوجد تسجيل لنفس هذا اليوم");
+                    ViewBag.wardID = new SelectList(_context.Wards, "Ward_ID", "WardName", dailySales.wardID);
+                    return View(dailySales);
+
+                }
                 // Fetch the corresponding stock record
                 var wardStock = await _context.wardsStocks
                     .Where(ws => ws.wardID == dailySales.wardID )
@@ -318,7 +328,7 @@ namespace Shusha_project_BackUp.Controllers
 
                 // Fetch the corresponding stock record
                 var wardStock = await _context.wardsStocks
-                    .Where(ws => ws.wardID == dailySales.wardID && ws.Date == dailySales.Date)
+                    .Where(ws => ws.wardID == dailySales.wardID)
                     .FirstOrDefaultAsync();
 
                 if (dailyProduction != null && wardStock != null)
@@ -326,10 +336,7 @@ namespace Shusha_project_BackUp.Controllers
                     // Add back the sales quantities to production and stock
                     if (previousSales != null)
                     {
-                        dailyProduction.No_of_Wheggs += previousSales.no_of_carton_WhEggs;
-                        dailyProduction.No_of_Breggs += previousSales.no_of_carton_BrEggs;
-                        dailyProduction.no_of_carton_broken += previousSales.no_of_carton_broken;
-                        dailyProduction.double_eggs += previousSales.double_eggs;
+                     
 
                         wardStock.whiteEggs += previousSales.no_of_carton_WhEggs;
                         wardStock.brownEggs += previousSales.no_of_carton_BrEggs;
